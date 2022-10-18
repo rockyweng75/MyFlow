@@ -1,0 +1,32 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+    var paramDao = DataModel.Substring(0, 1).ToLower() + DataModel.Substring(1); 
+#>
+
+using MyFlow.Data.DAOs;
+using MyFlow.Data.DAOs.Basic;
+using MyFlow.Data.Models;
+using MyFlow.Domain.Models;
+
+namespace MyFlow.Service.Impl
+{
+    public class <#= DataModel #>Service : BasicCRUDService<<#= DataModel #>Dao, <#= DataModel #>, <#= DataModel #>VM>
+    {
+        private I<#= DataModel #>Dao <#= paramDao #>Dao;
+
+        public override BasicDao<<#= DataModel #>> dao {
+            get{
+                return (BasicDao<<#= DataModel #>>)<#= paramDao #>Dao;
+            }
+        }
+
+        public <#= DataModel #>Service(I<#= DataModel #>Dao <#= paramDao #>Dao)
+        {
+            this.<#= paramDao #>Dao = <#= paramDao #>Dao;
+        }
+    }
+}

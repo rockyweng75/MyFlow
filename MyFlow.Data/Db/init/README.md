@@ -1,0 +1,2 @@
+﻿# db frist script
+Scaffold-DbContext "Data Source=(LocalDb)\MSSQLLocalDB;Integrated Security=SSPI;Trusted_Connection=True;AttachDBFilename=C:\Users\rocky\source\repos\MyFlow\MyFlow.Data\Db\TestDatabase.mdf" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
