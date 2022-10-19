@@ -18,9 +18,9 @@ namespace MyFlow.Template.Tt
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
+    #line 1 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DIServiceTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
-    public partial class CRUDServiceTemplate : CRUDServiceTemplateBase
+    public partial class DIServiceTemplate : DIServiceTemplateBase
     {
 #line hidden
         /// <summary>
@@ -28,115 +28,30 @@ namespace MyFlow.Template.Tt
         /// </summary>
         public virtual string TransformText()
         {
+            this.Write("\r\nusing Microsoft.Extensions.DependencyInjection;\r\n\r\nnamespace MyFlow.Service\r\n{\r" +
+                    "\n\tpublic static class DIServiceExtensions\r\n\t{\r\n\r\n        public static void AddS" +
+                    "ervices(this IServiceCollection services)\r\n        {\r\n\r\n");
             
-            #line 6 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-
-    var paramDao = DataModel.Substring(0, 1).ToLower() + DataModel.Substring(1); 
-
-            
-            #line default
-            #line hidden
-            this.Write("\r\nusing MyFlow.Data.DAOs;\r\nusing MyFlow.Data.DAOs.Basic;\r\nusing MyFlow.Data.Model" +
-                    "s;\r\nusing MyFlow.Domain.Models;\r\n\r\nnamespace MyFlow.Service.Impl\r\n{\r\n    public " +
-                    "class ");
-            
-            #line 17 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(DataModel));
+            #line 17 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DIServiceTemplate.tt"
+ foreach(var service in Services){ 
             
             #line default
             #line hidden
-            this.Write("Service : BasicCRUDService<");
+            this.Write("\t\t\tservices.AddScoped<");
             
-            #line 17 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(DataModel));
-            
-            #line default
-            #line hidden
-            this.Write("Dao, ");
-            
-            #line 17 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(DataModel));
+            #line 18 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DIServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(service));
             
             #line default
             #line hidden
-            this.Write(", ");
+            this.Write(">();\r\n");
             
-            #line 17 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(DataModel));
-            
-            #line default
-            #line hidden
-            this.Write("VM>, IService\r\n    {\r\n        private I");
-            
-            #line 19 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(DataModel));
+            #line 19 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DIServiceTemplate.tt"
+ } 
             
             #line default
             #line hidden
-            this.Write("Dao ");
-            
-            #line 19 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(paramDao));
-            
-            #line default
-            #line hidden
-            this.Write("Dao;\r\n\r\n        public override BasicDao<");
-            
-            #line 21 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(DataModel));
-            
-            #line default
-            #line hidden
-            this.Write("> dao {\r\n            get{\r\n                return (BasicDao<");
-            
-            #line 23 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(DataModel));
-            
-            #line default
-            #line hidden
-            this.Write(">)");
-            
-            #line 23 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(paramDao));
-            
-            #line default
-            #line hidden
-            this.Write("Dao;\r\n            }\r\n        }\r\n\r\n        public ");
-            
-            #line 27 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(DataModel));
-            
-            #line default
-            #line hidden
-            this.Write("Service(I");
-            
-            #line 27 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(DataModel));
-            
-            #line default
-            #line hidden
-            this.Write("Dao ");
-            
-            #line 27 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(paramDao));
-            
-            #line default
-            #line hidden
-            this.Write("Dao)\r\n        {\r\n            this.");
-            
-            #line 29 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(paramDao));
-            
-            #line default
-            #line hidden
-            this.Write("Dao = ");
-            
-            #line 29 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDServiceTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(paramDao));
-            
-            #line default
-            #line hidden
-            this.Write("Dao;\r\n        }\r\n    }\r\n}\r\n");
+            this.Write("\t\t}\r\n\t}\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -148,7 +63,7 @@ namespace MyFlow.Template.Tt
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
-    public class CRUDServiceTemplateBase
+    public class DIServiceTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

@@ -33,6 +33,7 @@ namespace MyFlow.Data.Connection
         {
             if (!optionsBuilder.IsConfigured)
             {
+                // for Test
                 optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=SSPI;Trusted_Connection=True;AttachDBFilename=C:\\Users\\rocky\\source\\repos\\MyFlow\\MyFlow.Data\\Db\\TestDatabase.mdf");
             }
         }

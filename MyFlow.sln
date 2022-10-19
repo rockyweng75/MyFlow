@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFlow", "MyFlow\MyFlow.csproj", "{AA76A9E4-1A6C-4E52-8B93-9770F52149AA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFlow.Data", "MyFlow.Data\MyFlow.Data.csproj", "{68A6CD0D-2698-4AD8-BC02-CCD1B6C5037A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFlow.Domain", "MyFlow.Domain\MyFlow.Domain.csproj", "{4A80D425-EA21-4606-9489-D3858BB37D0A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFlow.Test", "MyFlow.Test\MyFlow.Test.csproj", "{9EB55026-69A0-4194-99DC-DE71E147EBDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFlow.Service", "MyFlow.Service\MyFlow.Service.csproj", "{F56670C9-2940-4F3B-8909-35EE4A699109}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFlow.Service", "MyFlow.Service\MyFlow.Service.csproj", "{F56670C9-2940-4F3B-8909-35EE4A699109}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFlow.Template", "MyFlow.Template\MyFlow.Template.csproj", "{18551CD1-2524-49D8-99D3-74C587CD9723}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFlow.Template", "MyFlow.Template\MyFlow.Template.csproj", "{18551CD1-2524-49D8-99D3-74C587CD9723}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFlow.WebApi", "MyFlow.WebApi\MyFlow.WebApi.csproj", "{78312B49-A4E6-41EA-A784-DA2E0ADDD806}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AA76A9E4-1A6C-4E52-8B93-9770F52149AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA76A9E4-1A6C-4E52-8B93-9770F52149AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA76A9E4-1A6C-4E52-8B93-9770F52149AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA76A9E4-1A6C-4E52-8B93-9770F52149AA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{68A6CD0D-2698-4AD8-BC02-CCD1B6C5037A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{68A6CD0D-2698-4AD8-BC02-CCD1B6C5037A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68A6CD0D-2698-4AD8-BC02-CCD1B6C5037A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{18551CD1-2524-49D8-99D3-74C587CD9723}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18551CD1-2524-49D8-99D3-74C587CD9723}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18551CD1-2524-49D8-99D3-74C587CD9723}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78312B49-A4E6-41EA-A784-DA2E0ADDD806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78312B49-A4E6-41EA-A784-DA2E0ADDD806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78312B49-A4E6-41EA-A784-DA2E0ADDD806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78312B49-A4E6-41EA-A784-DA2E0ADDD806}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

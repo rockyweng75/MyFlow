@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -12,13 +12,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyFlow.Data\MyFlow.Data.csproj" />
     <ProjectReference Include="..\MyFlow.Domain\MyFlow.Domain.csproj" />
+    <ProjectReference Include="..\MyFlow.Service\MyFlow.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Tt\CRUDServiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CRUDServiceTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Tt\DIDaoTemplate.tt">
+      <LastGenOutput>DIDaoTemplate.cs</LastGenOutput>
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+    </None>
+    <None Update="Tt\DIServiceTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DIServiceTemplate.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -31,6 +41,16 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>CRUDServiceTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Tt\DIDaoTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DIDaoTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Tt\DIServiceTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DIServiceTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

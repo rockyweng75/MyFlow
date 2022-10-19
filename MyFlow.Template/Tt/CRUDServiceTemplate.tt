@@ -14,7 +14,7 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-    public class <#= DataModel #>Service : BasicCRUDService<<#= DataModel #>Dao, <#= DataModel #>, <#= DataModel #>VM>
+    public class <#= DataModel #>Service : BasicCRUDService<<#= DataModel #>Dao, <#= DataModel #>, <#= DataModel #>VM>, IService
     {
         private I<#= DataModel #>Dao <#= paramDao #>Dao;
 
