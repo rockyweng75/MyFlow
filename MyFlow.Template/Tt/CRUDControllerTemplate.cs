@@ -18,9 +18,9 @@ namespace MyFlow.Template.Tt
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DIDaoTemplate.tt"
+    #line 1 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
-    public partial class DIDaoTemplate : DIDaoTemplateBase
+    public partial class CRUDControllerTemplate : CRUDControllerTemplateBase
     {
 #line hidden
         /// <summary>
@@ -28,71 +28,114 @@ namespace MyFlow.Template.Tt
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write(@"
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using MyFlow.Data.Connection;
-using MyFlow.Data.DAOs;
-
-namespace MyFlow.Data
-{
-	public static class DIServiceExtensions
-	{
-	    public static void AddDbContext(this IServiceCollection services, string connectionString) 
-        {
-            services.AddDbContext<TestDbContext>(options => {
-                options.UseSqlServer(connectionString);
-            });
-        }
-
-		public static void AddDAOs(this IServiceCollection services)
-		{
-			");
+            this.Write("using Microsoft.AspNetCore.Mvc;\r\nusing MyFlow.Domain.Models;\r\nusing MyFlow.Servic" +
+                    "e.Impl;\r\n\r\nnamespace MyFlow.WebApi.Controllers\r\n{\r\n    [Route(\"api/[controller]\"" +
+                    ")]\r\n    [ApiController]\r\n    public class ");
             
-            #line 25 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DIDaoTemplate.tt"
- foreach(var dao in Daos){ 
+            #line 14 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ControllerName));
             
             #line default
             #line hidden
-            this.Write("\t\t\tservices.AddScoped<I");
+            this.Write(" : ControllerBase\r\n    {\r\n        private ");
             
-            #line 26 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DIDaoTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(dao));
-            
-            #line default
-            #line hidden
-            this.Write(", ");
-            
-            #line 26 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DIDaoTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(dao));
+            #line 16 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ServiceName));
             
             #line default
             #line hidden
-            this.Write(">(injectDbContext<");
+            this.Write(" service;\r\n        public ");
             
-            #line 26 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DIDaoTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(dao));
-            
-            #line default
-            #line hidden
-            this.Write(">);\r\n\t\t\t");
-            
-            #line 27 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DIDaoTemplate.tt"
- } 
+            #line 17 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ControllerName));
             
             #line default
             #line hidden
-            this.Write(@"		}
-
-		private static TDao injectDbContext<TDao>(IServiceProvider serviceProvider) where TDao : class
-		{
-			var type = typeof(TDao);
-			var dbContext = serviceProvider.GetService<TestDbContext>();
-			TDao resultClass = (TDao)Activator.CreateInstance(type, dbContext);
-			return resultClass;
-		}
-	}
-}");
+            this.Write("(");
+            
+            #line 17 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ServiceName));
+            
+            #line default
+            #line hidden
+            this.Write(" service) \r\n        {\r\n            this.service = service;\r\n        }\r\n        //" +
+                    " GET: api/<");
+            
+            #line 21 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ControllerName));
+            
+            #line default
+            #line hidden
+            this.Write(">\r\n        [HttpGet]\r\n        public async Task<IEnumerable<");
+            
+            #line 23 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewModelName));
+            
+            #line default
+            #line hidden
+            this.Write(">> Get(");
+            
+            #line 23 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewModelName));
+            
+            #line default
+            #line hidden
+            this.Write(" vm)\r\n        {\r\n            return await service.GetList(vm);\r\n        }\r\n\r\n    " +
+                    "    // GET api/<");
+            
+            #line 28 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ControllerName));
+            
+            #line default
+            #line hidden
+            this.Write(">/5\r\n        [HttpGet(\"{id}\")]\r\n        public async Task<");
+            
+            #line 30 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewModelName));
+            
+            #line default
+            #line hidden
+            this.Write("> Get(int id)\r\n        {\r\n            return await service.Get(id);\r\n        }\r\n\r" +
+                    "\n        // POST api/<");
+            
+            #line 35 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ControllerName));
+            
+            #line default
+            #line hidden
+            this.Write(">\r\n        [HttpPost]\r\n        public async Task<int> Post([FromBody] ");
+            
+            #line 37 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewModelName));
+            
+            #line default
+            #line hidden
+            this.Write(" vm)\r\n        {\r\n            return await service.Create(vm);\r\n        }\r\n\r\n     " +
+                    "   // PUT api/<");
+            
+            #line 42 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ControllerName));
+            
+            #line default
+            #line hidden
+            this.Write(">/5\r\n        [HttpPut(\"{id}\")]\r\n        public async Task Put(int id, [FromBody] " +
+                    "");
+            
+            #line 44 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ViewModelName));
+            
+            #line default
+            #line hidden
+            this.Write(" vm)\r\n        {\r\n            await service.Update(vm);\r\n        }\r\n\r\n        // D" +
+                    "ELETE api/<");
+            
+            #line 49 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\CRUDControllerTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(ControllerName));
+            
+            #line default
+            #line hidden
+            this.Write(">/5\r\n        [HttpDelete(\"{id}\")]\r\n        public async Task Delete(int id)\r\n    " +
+                    "    {\r\n            await service.Delete(id);\r\n        }\r\n    }\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -104,7 +147,7 @@ namespace MyFlow.Data
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
-    public class DIDaoTemplateBase
+    public class CRUDControllerTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

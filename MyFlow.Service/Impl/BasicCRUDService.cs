@@ -48,10 +48,9 @@ namespace MyFlow.Service.Impl
             await dao.SaveChangesAsync();
         }
 
-        public async Task Delete(TViewModel vm)
+        public async Task Delete(int Id)
         {
-            IViewModel _vm = (IViewModel)vm;
-            TDataModel dataModel = _vm.ToDataModel<TDataModel>();
+            TDataModel dataModel = await dao.Get(Id);
             dao.Delete(dataModel);
             await dao.SaveChangesAsync();
         }

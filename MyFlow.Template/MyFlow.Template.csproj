@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Tt\CRUDControllerTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CRUDControllerTemplate.cs</LastGenOutput>
+    </None>
     <None Update="Tt\CRUDServiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CRUDServiceTemplate.cs</LastGenOutput>
@@ -37,6 +41,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Tt\CRUDControllerTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CRUDControllerTemplate.tt</DependentUpon>
+    </Compile>
     <Compile Update="Tt\CRUDServiceTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

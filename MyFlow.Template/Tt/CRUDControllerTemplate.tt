@@ -1,0 +1,56 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using Microsoft.AspNetCore.Mvc;
+using MyFlow.Domain.Models;
+using MyFlow.Service.Impl;
+
+namespace MyFlow.WebApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class <#= ControllerName #> : ControllerBase
+    {
+        private <#= ServiceName #> service;
+        public <#= ControllerName #>(<#= ServiceName #> service) 
+        {
+            this.service = service;
+        }
+        // GET: api/<<#= ControllerName #>>
+        [HttpGet]
+        public async Task<IEnumerable<<#= ViewModelName #>>> Get(<#= ViewModelName #> vm)
+        {
+            return await service.GetList(vm);
+        }
+
+        // GET api/<<#= ControllerName #>>/5
+        [HttpGet("{id}")]
+        public async Task<<#= ViewModelName #>> Get(int id)
+        {
+            return await service.Get(id);
+        }
+
+        // POST api/<<#= ControllerName #>>
+        [HttpPost]
+        public async Task<int> Post([FromBody] <#= ViewModelName #> vm)
+        {
+            return await service.Create(vm);
+        }
+
+        // PUT api/<<#= ControllerName #>>/5
+        [HttpPut("{id}")]
+        public async Task Put(int id, [FromBody] <#= ViewModelName #> vm)
+        {
+            await service.Update(vm);
+        }
+
+        // DELETE api/<<#= ControllerName #>>/5
+        [HttpDelete("{id}")]
+        public async Task Delete(int id)
+        {
+            await service.Delete(id);
+        }
+    }
+}

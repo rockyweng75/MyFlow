@@ -38,7 +38,7 @@ namespace MyFlow.Service
 
 			services.ConfigureDynamicProxy(config => { 
 				config.Interceptors.AddTyped<LoggerAttribute>(Predicates.ForService("*Service"));
-				config.Interceptors.AddTyped<TransactionAttribute>(Predicates.ForService("*Service"));
+				//config.Interceptors.AddTyped<TransactionAttribute>(Predicates.ForService("*Service"));
 			});
 
 			services.BuildDynamicProxyProvider();

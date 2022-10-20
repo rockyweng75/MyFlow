@@ -23,8 +23,16 @@ namespace MyFlow.Data
 		public static void AddDAOs(this IServiceCollection services)
 		{
 			<# foreach(var dao in Daos){ #>
-			services.AddScoped<I<#= dao #>, <#= dao #>>();
+			services.AddScoped<I<#= dao #>, <#= dao #>>(injectDbContext<<#= dao #>>);
 			<# } #>
+		}
+
+		private static TDao injectDbContext<TDao>(IServiceProvider serviceProvider) where TDao : class
+		{
+			var type = typeof(TDao);
+			var dbContext = serviceProvider.GetService<TestDbContext>();
+			TDao resultClass = (TDao)Activator.CreateInstance(type, dbContext);
+			return resultClass;
 		}
 	}
 }
