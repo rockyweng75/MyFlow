@@ -1,5 +1,5 @@
 ﻿using MyFlow.Data.DAOs.Basic;
-using MyFlow.Domain.Models;
+using MyFlow.Domain.Models.Basic;
 using MyFlow.Service.Impl;
 using MyFlow.Template.Tt;
 using System.Reflection;

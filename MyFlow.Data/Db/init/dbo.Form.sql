@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[Form]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
-    [FormType] NVARCHAR(MAX) NULL,
-    [FormName] INT NULL, 
+    [FormType] INT NULL,
+    [FormName] NVARCHAR(MAX) NULL,
     [Close] INT NULL
 )
 

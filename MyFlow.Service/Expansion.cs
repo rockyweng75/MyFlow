@@ -1,5 +1,5 @@
 ﻿using MyFlow.Data.Models;
-using MyFlow.Domain.Models;
+using MyFlow.Domain.Models.Basic;
 using MyFlow.Domain.Tools;
 
 namespace MyFlow.Service

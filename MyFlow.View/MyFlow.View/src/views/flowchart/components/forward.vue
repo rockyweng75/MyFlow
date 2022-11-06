@@ -1,0 +1,31 @@
+<template>
+    <el-select v-model="state.formData" v-on:change="change">
+        <el-option v-for="item in data" v-bind:key="item.ActionName" :label="item.ActionName" :value="item.ActionClass"></el-option>
+    </el-select>
+</template>
+<script>
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
+
+export default{
+    props:['modelValue', 'disabled'],
+    emits:['update:modelValue'],
+    setup(props, {emit}) {
+        const state = reactive({
+            formData : props.modelValue
+        })
+        const store = useStore()
+        const data = computed(()=>{
+            return store.getters['action/forward']
+        })
+        const change = () =>{
+            emit('update:modelValue', state.formData)
+        }
+        return {
+            state,
+            data,
+            change
+        }
+    },
+}
+</script>

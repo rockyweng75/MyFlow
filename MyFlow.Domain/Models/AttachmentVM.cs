@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MyFlow.Domain.Models.Basic;
+using System;
 using System.Collections.Generic;
 
 namespace MyFlow.Domain.Models
 {
-    public partial class AttachmentVM : IViewModel
+    public partial class AttachmentVM : PaginationVM
     {
         public int Id { get; set; }
         public int? ApplyId { get; set; }

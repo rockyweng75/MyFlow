@@ -22,4 +22,8 @@
     <ProjectReference Include="..\MyFlow.Service\MyFlow.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mid\" />
+  </ItemGroup>
+
 </Project>

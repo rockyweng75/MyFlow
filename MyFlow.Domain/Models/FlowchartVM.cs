@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MyFlow.Domain.Models.Basic;
+using System;
 using System.Collections.Generic;
 
 namespace MyFlow.Domain.Models
 {
-    public partial class FlowchartVM : IViewModel
+    public partial class FlowchartVM : PaginationVM
     {
         public int Id { get; set; }
         public string? FlowName { get; set; }

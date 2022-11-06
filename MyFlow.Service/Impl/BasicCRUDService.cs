@@ -1,6 +1,6 @@
 ﻿using MyFlow.Data.DAOs.Basic;
 using MyFlow.Data.Models;
-using MyFlow.Domain.Models;
+using MyFlow.Domain.Models.Basic;
 
 namespace MyFlow.Service.Impl
 {

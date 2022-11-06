@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyFlow.Domain.Models.Basic;
 
 namespace MyFlow.Domain.Models
 {
-    public partial class JobLogVM : IViewModel
+    public partial class JobLogVM : PaginationVM
     {
         public int Id { get; set; }
         public int? FlowId { get; set; }

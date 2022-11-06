@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MyFlow.Domain.Models.Basic;
+using System;
 using System.Collections.Generic;
 
 namespace MyFlow.Domain.Models
 {
-    public partial class ApplyDataVM : IViewModel
+    public partial class ApplyDataVM : PaginationVM
     {
         public int Id { get; set; }
         public int? FlowId { get; set; }

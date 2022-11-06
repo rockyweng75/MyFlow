@@ -9,5 +9,6 @@ namespace MyFlow.Data.Models
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
         public string? DeadlineClass { get; set; }
+        public string DeadlineRemark { get; set; }
     }
 }

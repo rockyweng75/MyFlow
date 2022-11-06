@@ -18,19 +18,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Tt\CRUDControllerTemplate.tt">
+    <None Update="Tt\Controller\CRUDControllerTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CRUDControllerTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Tt\CRUDServiceTemplate.tt">
+    <None Update="Tt\Service\CRUDServiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>CRUDServiceTemplate.cs</LastGenOutput>
     </None>
-    <None Update="Tt\DIDaoTemplate.tt">
+    <None Update="Tt\DI_Dao\DIDaoTemplate.tt">
       <LastGenOutput>DIDaoTemplate.cs</LastGenOutput>
       <Generator>TextTemplatingFilePreprocessor</Generator>
     </None>
-    <None Update="Tt\DIServiceTemplate.tt">
+    <None Update="Tt\DI_Service\DIServiceTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>DIServiceTemplate.cs</LastGenOutput>
     </None>
@@ -41,22 +41,22 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Tt\CRUDControllerTemplate.cs">
+    <Compile Update="Tt\Controller\CRUDControllerTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>CRUDControllerTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Tt\CRUDServiceTemplate.cs">
+    <Compile Update="Tt\Service\CRUDServiceTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>CRUDServiceTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Tt\DIDaoTemplate.cs">
+    <Compile Update="Tt\DI_Dao\DIDaoTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DIDaoTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Update="Tt\DIServiceTemplate.cs">
+    <Compile Update="Tt\DI_Service\DIServiceTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>DIServiceTemplate.tt</DependentUpon>
@@ -65,6 +65,8 @@
 
   <ItemGroup>
     <Folder Include="output\" />
+    <Folder Include="Tt\Model\" />
+    <Folder Include="Tt\NewFolder\" />
   </ItemGroup>
 
 </Project>

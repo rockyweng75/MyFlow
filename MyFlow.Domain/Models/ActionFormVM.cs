@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using MyFlow.Domain.Enums;
+using MyFlow.Domain.Models.Basic;
 
 namespace MyFlow.Domain.Models
 {
-    public partial class ActionFormVM : IViewModel
+    public partial class ActionFormVM : PaginationVM, IViewModel
     {
         public int Id { get; set; }
         public int? StageId { get; set; }

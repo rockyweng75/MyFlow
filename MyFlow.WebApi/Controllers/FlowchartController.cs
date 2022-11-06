@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using MyFlow.Domain;
 using MyFlow.Domain.Models;
+using MyFlow.Domain.Models.Basic;
 using MyFlow.Service.Impl;
 
 namespace MyFlow.WebApi.Controllers
@@ -15,7 +17,7 @@ namespace MyFlow.WebApi.Controllers
         }
         // GET: api/<FlowchartController>
         [HttpGet]
-        public async Task<IEnumerable<FlowchartVM>> Get(FlowchartVM vm)
+        public async Task<IEnumerable<FlowchartVM>> Get([FromQuery]FlowchartVM vm)
         {
             return await service.GetList(vm);
         }

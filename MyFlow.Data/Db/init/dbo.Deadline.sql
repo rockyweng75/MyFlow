@@ -3,7 +3,8 @@
 	[Id] INT NOT NULL PRIMARY KEY, 
     [BeginDate] DATETIME NULL, 
     [EndDate] DATETIME NULL, 
-    [DeadlineClass] NVARCHAR(MAX) NULL
+    [DeadlineClass] NVARCHAR(MAX) NULL,
+    [DeadlineRemark] NVARCHAR(MAX) NULL
 )
 
 create SEQUENCE [dbo].[DeadlineSeq] as int
