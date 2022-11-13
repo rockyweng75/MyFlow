@@ -1,11 +1,17 @@
-﻿using MyFlow.Data.DAOs;
+
+using MyFlow.Data.DAOs;
 using MyFlow.Data.DAOs.Basic;
 using MyFlow.Data.Models;
 using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-    public class TestService : BasicCRUDService<TestDao, Test, TestVM>
+
+    public interface ITestService : IBasicCRUDService<TestVM> 
+    { 
+    }
+
+    public class TestService : BasicCRUDService<TestDao, Test, TestVM>, ITestService
     {
         private ITestDao testDao;
 
@@ -19,8 +25,5 @@ namespace MyFlow.Service.Impl
         {
             this.testDao = testDao;
         }
-
-    
-
     }
 }

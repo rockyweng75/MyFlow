@@ -6,7 +6,12 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-    public class DeadlineService : BasicCRUDService<DeadlineDao, Deadline, DeadlineVM>
+
+    public interface IDeadlineService : IBasicCRUDService<DeadlineVM> 
+    { 
+    }
+
+    public class DeadlineService : BasicCRUDService<DeadlineDao, Deadline, DeadlineVM>, IDeadlineService
     {
         private IDeadlineDao deadlineDao;
 

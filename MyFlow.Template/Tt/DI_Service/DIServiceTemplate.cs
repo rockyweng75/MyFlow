@@ -28,25 +28,33 @@ namespace MyFlow.Template.Tt.DI_Service
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\nusing Microsoft.Extensions.DependencyInjection;\r\n\r\nnamespace MyFlow.Service\r\n{\r" +
-                    "\n\tpublic static class DIServiceExtensions\r\n\t{\r\n\r\n        public static void AddS" +
-                    "ervices(this IServiceCollection services)\r\n        {\r\n\r\n");
+            this.Write("\r\nusing Microsoft.Extensions.DependencyInjection;\r\nusing MyFlow.Service.Impl;\r\n\r\n" +
+                    "namespace MyFlow.Service\r\n{\r\n\tpublic static class DIServiceExtensions\r\n\t{\r\n\r\n   " +
+                    "     public static void AddServices(this IServiceCollection services)\r\n        {" +
+                    "\r\n\r\n");
             
-            #line 17 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DI_Service\DIServiceTemplate.tt"
+            #line 18 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DI_Service\DIServiceTemplate.tt"
  foreach(var service in Services){ 
             
             #line default
             #line hidden
-            this.Write("\t\t\tservices.AddScoped<");
+            this.Write("\t\t\tservices.AddScoped<I");
             
-            #line 18 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DI_Service\DIServiceTemplate.tt"
+            #line 19 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DI_Service\DIServiceTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(service));
+            
+            #line default
+            #line hidden
+            this.Write(",");
+            
+            #line 19 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DI_Service\DIServiceTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(service));
             
             #line default
             #line hidden
             this.Write(">();\r\n");
             
-            #line 19 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DI_Service\DIServiceTemplate.tt"
+            #line 20 "C:\Users\rocky\source\repos\MyFlow\MyFlow.Template\Tt\DI_Service\DIServiceTemplate.tt"
  } 
             
             #line default

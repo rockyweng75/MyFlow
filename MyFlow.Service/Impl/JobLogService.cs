@@ -6,7 +6,12 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-    public class JobLogService : BasicCRUDService<JobLogDao, JobLog, JobLogVM>
+
+    public interface IJobLogService : IBasicCRUDService<JobLogVM> 
+    { 
+    }
+
+    public class JobLogService : BasicCRUDService<JobLogDao, JobLog, JobLogVM>, IJobLogService
     {
         private IJobLogDao jobLogDao;
 

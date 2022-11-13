@@ -1,4 +1,4 @@
-﻿
+
 using MyFlow.Data.DAOs;
 using MyFlow.Data.DAOs.Basic;
 using MyFlow.Data.Models;
@@ -6,7 +6,12 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-    public class ApplyDataService : BasicCRUDService<ApplyDataDao, ApplyData, ApplyDataVM>
+
+    public interface IApplyDataService : IBasicCRUDService<ApplyDataVM> 
+    { 
+    }
+
+    public class ApplyDataService : BasicCRUDService<ApplyDataDao, ApplyData, ApplyDataVM>, IApplyDataService
     {
         private IApplyDataDao applyDataDao;
 

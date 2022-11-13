@@ -5,6 +5,7 @@
 <#@ import namespace="System.Collections.Generic" #>
 
 using Microsoft.Extensions.DependencyInjection;
+using MyFlow.Service.Impl;
 
 namespace MyFlow.Service
 {
@@ -15,7 +16,7 @@ namespace MyFlow.Service
         {
 
 <# foreach(var service in Services){ #>
-			services.AddScoped<<#= service #>>();
+			services.AddScoped<I<#= service #>,<#= service #>>();
 <# } #>
 		}
 	}

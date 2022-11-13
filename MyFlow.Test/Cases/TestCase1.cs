@@ -83,7 +83,7 @@ namespace MyFlow.Test.Cases
                 ActionType = (int)ActionType.送出,
                 ActionName = "Submit",
                 ButtonName = "送出",
-                ActionClass = "Submit"
+                //ActionClass = "Submit"
             },
             new ActionFormVM(){
                 Id = 2,
@@ -93,7 +93,7 @@ namespace MyFlow.Test.Cases
                 ActionType = (int)ActionType.同意,
                 ActionName = "Confirm",
                 ButtonName = "同意",
-                ActionClass = "Confirm"
+                //ActionClass = "Confirm"
             },
             new ActionFormVM(){
                 Id = 3,
@@ -103,7 +103,7 @@ namespace MyFlow.Test.Cases
                 ActionType = (int)ActionType.不同意,
                 ActionName = "Rollback",
                 ButtonName = "不同意",
-                ActionClass = "Rollback"
+                //ActionClass = "Rollback"
             },
         };
 
@@ -115,6 +115,60 @@ namespace MyFlow.Test.Cases
                 DeadlineClass = "AnyTime",
                 DeadlineRemark = "全開放"
             },
+        };
+
+        public IList<SwitchVM> switchVMs = new SwitchVM[] {
+            new SwitchVM(){
+                Id = 1,
+                FlowId = 1,
+                OrderId = 1,
+                StageId = 1,
+                NextStageId = 2,
+                ActionType = (int)ActionType.送出,
+                ActionClass = "Next",
+                DecisionClass = null,      
+            },
+            new SwitchVM(){
+                Id = 2,
+                FlowId = 1,
+                StageId = 2,
+                OrderId = 1,
+                NextStageId = 3,
+                ActionType = (int)ActionType.同意,
+                ActionClass = "Next",
+                DecisionClass = null,
+            },
+            new SwitchVM(){
+                Id = 3,
+                FlowId = 1,
+                StageId = 2,
+                OrderId = 2,
+                NextStageId = 1,
+                ActionType = (int)ActionType.不同意,
+                ActionClass = "Rollback",
+                DecisionClass = null,
+            },
+            new SwitchVM(){
+                Id = 4,
+                FlowId = 1,
+                StageId = 3,
+                OrderId = 1,
+                NextStageId = 0,
+                ActionType = (int)ActionType.同意,
+                ActionClass = "Next",
+                DecisionClass = null,
+            },
+            new SwitchVM(){
+                Id = 5,
+                FlowId = 1,
+                StageId = 3,
+                OrderId = 2,
+                NextStageId = 1,
+                ActionType = (int)ActionType.不同意,
+                ActionClass = "Next",
+                DecisionClass = "Rollback",
+            },
+
         };
 
         public IList<FormItemVM> formItemVMs = new FormItemVM[] {
@@ -202,6 +256,38 @@ namespace MyFlow.Test.Cases
                 Disabled = null,
                 Required = "Y"
             }
+        };
+
+        public IList<JobVM> jobVMs = new List<JobVM>()
+        {
+            new JobVM(){ 
+                Id = 1,
+                StageId = 1,
+                OrderId = 1,
+                JobType = (int)JobType.After,
+                JobClass = "MailToApplyUser"
+            },
+            new JobVM(){
+                Id = 2,
+                StageId = 1,
+                OrderId = 2,
+                JobType = (int)JobType.After,
+                JobClass = "MailToNextApprover"
+            },
+            new JobVM(){
+                Id = 3,
+                StageId = 2,
+                OrderId = 1,
+                JobType = (int)JobType.After,
+                JobClass = "MailToNextApprover"
+            },
+            new JobVM(){
+                Id = 4,
+                StageId = 3,
+                OrderId = 1,
+                JobType = (int)JobType.After,
+                JobClass = "MailForFinish",   
+            },
 
         };
 

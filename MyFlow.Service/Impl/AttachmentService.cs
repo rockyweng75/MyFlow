@@ -6,7 +6,12 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-    public class AttachmentService : BasicCRUDService<AttachmentDao, Attachment, AttachmentVM>
+
+    public interface IAttachmentService : IBasicCRUDService<AttachmentVM> 
+    { 
+    }
+
+    public class AttachmentService : BasicCRUDService<AttachmentDao, Attachment, AttachmentVM>, IAttachmentService
     {
         private IAttachmentDao attachmentDao;
 

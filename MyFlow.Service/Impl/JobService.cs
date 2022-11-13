@@ -1,11 +1,17 @@
-﻿using MyFlow.Data.DAOs;
+
+using MyFlow.Data.DAOs;
 using MyFlow.Data.DAOs.Basic;
 using MyFlow.Data.Models;
 using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-    public class JobService : BasicCRUDService<JobDao, Job, JobVM>
+
+    public interface IJobService : IBasicCRUDService<JobVM> 
+    { 
+    }
+
+    public class JobService : BasicCRUDService<JobDao, Job, JobVM>, IJobService
     {
         private IJobDao jobDao;
 

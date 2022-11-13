@@ -84,7 +84,7 @@ namespace MyFlow.Test.Service.Impl
         {
             var task = Task.Run(async () =>
             {
-                await service.Delete(getOne);
+                await service.Delete(getOne.Id);
                 return 0;
             });
             var result = task.Result;

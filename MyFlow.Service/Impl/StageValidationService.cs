@@ -6,7 +6,12 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-    public class StageValidationService : BasicCRUDService<StageValidationDao, StageValidation, StageValidationVM>
+
+    public interface IStageValidationService : IBasicCRUDService<StageValidationVM> 
+    { 
+    }
+
+    public class StageValidationService : BasicCRUDService<StageValidationDao, StageValidation, StageValidationVM>, IStageValidationService
     {
         private IStageValidationDao stageValidationDao;
 

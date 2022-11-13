@@ -6,7 +6,12 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-    public class SwitchService : BasicCRUDService<SwitchDao, Switch, SwitchVM>
+
+    public interface ISwitchService : IBasicCRUDService<SwitchVM> 
+    { 
+    }
+
+    public class SwitchService : BasicCRUDService<SwitchDao, Switch, SwitchVM>, ISwitchService
     {
         private ISwitchDao switchDao;
 

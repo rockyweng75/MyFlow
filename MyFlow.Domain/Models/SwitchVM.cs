@@ -13,6 +13,7 @@ namespace MyFlow.Domain.Models
         public int? NextStageId { get; set; }
         public int? ActionType { get; set; }
         public string? ActionClass { get; set; }
+        //if
         public string? DecisionClass { get; set; }
     }
 }

@@ -20,6 +20,10 @@ namespace MyFlow.Domain.Models
         public string? JobName { get; set; }
         public string? StatusCode { get; set; }
         public string? FormData { get; set; }
+        public dynamic? DynamicFormData
+        {
+            get { return this.FormData != null ? Newtonsoft.Json.JsonConvert.DeserializeObject(this.FormData) : null; }
+        }
         public DateTime? CreatedDate { get; set; }
         public DateTime? SubmitDate { get; set; }
         public DateTime? CloseDate { get; set; }

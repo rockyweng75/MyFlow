@@ -2,6 +2,10 @@
 using MyFlow.Domain.Models.Basic;
 using MyFlow.Service.Impl;
 using MyFlow.Template.Tt;
+using MyFlow.Template.Tt.Controller;
+using MyFlow.Template.Tt.DI_Dao;
+using MyFlow.Template.Tt.DI_Service;
+using MyFlow.Template.Tt.Service;
 using System.Reflection;
 
 namespace MyFlow.Template
@@ -96,7 +100,7 @@ namespace MyFlow.Template
                .Where(t => String.Equals(t.Namespace, modelNameSpace, StringComparison.Ordinal))
                .ToArray();
 
-            var dir = $"{outputPath}/Data/DAOs";
+            var dir = $"{outputPath}/service";
             if (!Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);

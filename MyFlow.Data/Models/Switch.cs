@@ -9,6 +9,7 @@ namespace MyFlow.Data.Models
         public int? FlowId { get; set; }
         public int? OrderId { get; set; }
         public int? StageId { get; set; }
+        public int? PrevStageId { get; set; }
         public int? NextStageId { get; set; }
         public int? ActionType { get; set; }
         public string? ActionClass { get; set; }

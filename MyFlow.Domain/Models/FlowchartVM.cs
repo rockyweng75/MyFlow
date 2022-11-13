@@ -15,5 +15,16 @@ namespace MyFlow.Domain.Models
         public int? Close { get; set; }
         public string? TagFormat { get; set; }
         public string? TitleFormat { get; set; }
+
+        public IList<StageVM> StageList { get; set; }
+
+        public IList<SwitchVM> SwitchList { get; set; }
+
+        public IList<JobVM> JobList { get; set; }
+
+        public IList<DeadlineVM> DeadlineList { get; set; }
+
+        public IList<ActionFormVM> ActionFormList { get; set; }
+
     }
 }

@@ -43,4 +43,11 @@
     <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Actions\Backward\" />
+    <Folder Include="Jobs\Mail\" />
+    <Folder Include="Interface\" />
+    <Folder Include="Rules\" />
+  </ItemGroup>
+
 </Project>

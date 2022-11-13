@@ -6,7 +6,12 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-    public class FormService : BasicCRUDService<FormDao, Form, FormVM>
+
+    public interface IFormService : IBasicCRUDService<FormVM> 
+    { 
+    }
+
+    public class FormService : BasicCRUDService<FormDao, Form, FormVM>, IFormService
     {
         private IFormDao formDao;
 

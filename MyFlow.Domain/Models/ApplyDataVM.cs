@@ -18,6 +18,10 @@ namespace MyFlow.Domain.Models
         public string? Tag { get; set; }
         public string? Title { get; set; }
         public string? FormData { get; set; }
+        public dynamic? DynamicFormData
+        {
+            get { return this.FormData != null ? Newtonsoft.Json.JsonConvert.DeserializeObject(this.FormData) : null; }
+        }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
     }

@@ -4,8 +4,7 @@ using MyFlow.Domain.Models.Basic;
 
 namespace MyFlow.Service.Impl
 {
-    public abstract class BasicCRUDService<TDao, TDataModel, TViewModel> : IService
-        where TDao : BasicDao<TDataModel>
+    public abstract class BasicCRUDService<TDao, TDataModel, TViewModel> : IBasicCRUDService<TViewModel> where TDao : BasicDao<TDataModel>
         where TDataModel : class, new()
         where TViewModel : class, new()
     {
@@ -13,7 +12,7 @@ namespace MyFlow.Service.Impl
 
         public async Task<TViewModel> Get(int Id)
         {
-            IDataModel result = (IDataModel) await dao.Get(Id);
+            IDataModel result = (IDataModel)await dao.Get(Id);
             return result != null ? result.ToViewModel<TViewModel>() : null;
         }
 
@@ -22,7 +21,7 @@ namespace MyFlow.Service.Impl
             IViewModel _vm = (IViewModel)vm;
             TDataModel dataModel = _vm.ToDataModel<TDataModel>();
             var task = await dao.GetList(dataModel);
-            
+
             var result = task
                 .Cast<IDataModel>()
                 .Select(o => o.ToViewModel<TViewModel>())
