@@ -22,7 +22,7 @@ namespace MyFlow.WebApi.Controllers
 
         // GET api/<AttachmentController>/5
         [HttpGet("{id}")]
-        public async Task<AttachmentVM> Get(int id)
+        public async Task<AttachmentVM?> Get(int id)
         {
             return await service.Get(id);
         }

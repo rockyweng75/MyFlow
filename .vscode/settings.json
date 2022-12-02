@@ -1,0 +1,5 @@
+{
+    "dataworkspace.excludedProjects": [
+        "MyFlow.Data/Db/MyTestDb/MyTestDb.sqlproj"
+    ]
+}

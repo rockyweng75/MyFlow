@@ -17,7 +17,7 @@ namespace MyFlow.Domain.Tools
 
             foreach (PropertyInfo info in infos)
             {
-                PropertyInfo rp = rInfos.Where((o) => o.Name.Equals(info.Name)).FirstOrDefault();
+                PropertyInfo? rp = rInfos.Where((o) => o.Name.Equals(info.Name)).FirstOrDefault();
                 if (rp != null)
                 {
                     try

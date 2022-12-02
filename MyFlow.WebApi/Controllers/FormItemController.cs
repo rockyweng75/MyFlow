@@ -22,7 +22,7 @@ namespace MyFlow.WebApi.Controllers
 
         // GET api/<FormItemController>/5
         [HttpGet("{id}")]
-        public async Task<FormItemVM> Get(int id)
+        public async Task<FormItemVM?> Get(int id)
         {
             return await service.Get(id);
         }

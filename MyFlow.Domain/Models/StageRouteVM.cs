@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using MyFlow.Domain.Models.Basic;
 
-namespace MyFlow.Data.Models
+namespace MyFlow.Domain.Models
 {
-    public partial class Switch : IDataModel
+    public partial class StageRouteVM : PaginationVM
     {
         public int Id { get; set; }
         public int? FlowId { get; set; }
-        public int? OrderId { get; set; }
         public int? StageId { get; set; }
-        public int? PrevStageId { get; set; }
         public int? NextStageId { get; set; }
         public int? ActionType { get; set; }
-        public string? ActionClass { get; set; }
-        public string? DecisionClass { get; set; }
+        public string? RouteName { get; set; }
+        public string? SwitchClass { get; set; }
     }
 }

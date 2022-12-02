@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyFlow.Data.DAOs.Basic;
-using Switch = MyFlow.Data.Models.Switch;
+using MyFlow.Data.Models;
 
 namespace MyFlow.Data.DAOs
 {
-    public interface ISwitchDao : IDao<Switch> { 
+    public interface IStageValidationDao : IDao<StageValidation> { 
     
     } 
-    public class SwitchDao : BasicDao<Switch>, ISwitchDao
+    public class StageValidationDao : BasicDao<StageValidation>, IStageValidationDao
     {
-        public SwitchDao(DbContext dbContext) : base(dbContext) 
+        public StageValidationDao(DbContext dbContext) : base(dbContext) 
         {
         
         }

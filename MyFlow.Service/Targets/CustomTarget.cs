@@ -6,7 +6,7 @@ namespace MyFlow.Service.Targets
     {
         public string Name => "自訂";
 
-        public Task<string> Invoke(StageVM stage, ApplyDataVM applyData, ApproveDataVM approveDataVM)
+        public Task<string> Invoke(StageVM stage, ApplyDataVM applyData, ApproveDataVM? approveDataVM)
         {
             if (approveDataVM == null)
             {

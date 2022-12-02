@@ -22,7 +22,7 @@ namespace MyFlow.WebApi.Controllers
 
         // GET api/<JobLogController>/5
         [HttpGet("{id}")]
-        public async Task<JobLogVM> Get(int id)
+        public async Task<JobLogVM?> Get(int id)
         {
             return await service.Get(id);
         }

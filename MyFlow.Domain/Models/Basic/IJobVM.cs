@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using MyFlow.Domain.Models.Basic;
 
-namespace MyFlow.Data.Models
+namespace MyFlow.Domain.Models
 {
-    public partial class Job : IDataModel
+    public interface IJobVM 
     {
         public int Id { get; set; }
-        public int? StageId { get; set; }
         public int? OrderId { get; set; }
         public int? JobType { get; set; }
         public string? JobClass { get; set; }

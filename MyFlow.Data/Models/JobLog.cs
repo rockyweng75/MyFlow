@@ -8,6 +8,7 @@ namespace MyFlow.Data.Models
         public int Id { get; set; }
         public int? FlowId { get; set; }
         public int? StageId { get; set; }
+        public int? ActionId { get; set; }
         public int? JobId { get; set; }
         public int? ApplyId { get; set; }
         public int? ApprId { get; set; }

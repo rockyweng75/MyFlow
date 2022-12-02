@@ -9,7 +9,7 @@ namespace MyFlow.Domain.Models
         public int Id { get; set; }
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public string DeadlineClass { get; set; }
-        public string DeadlineRemark { get; set; }
+        public string? DeadlineClass { get; set; }
+        public string? DeadlineRemark { get; set; }
     }
 }

@@ -4,14 +4,13 @@ using MyFlow.Data.Models;
 
 namespace MyFlow.Data.DAOs
 {
-    public interface IJobDao : IDao<Job> { 
+    public interface IJobLogDao : IDao<JobLog> { 
     
     } 
-    public class JobDao : BasicDao<Job>, IJobDao
+    public class JobLogDao : BasicDao<JobLog>, IJobLogDao
     {
-        public JobDao(DbContext dbContext) : base(dbContext) 
+        public JobLogDao(DbContext dbContext) : base(dbContext) 
         {
-        
         }
     }
 }

@@ -22,7 +22,7 @@ namespace MyFlow.WebApi.Controllers
 
         // GET api/<ApproveDataController>/5
         [HttpGet("{id}")]
-        public async Task<ApproveDataVM> Get(int id)
+        public async Task<ApproveDataVM?> Get(int id)
         {
             return await service.Get(id);
         }

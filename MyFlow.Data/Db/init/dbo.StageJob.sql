@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Job]
+﻿CREATE TABLE [dbo].[StageJob]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [StageId] INT NULL, 
@@ -8,10 +8,10 @@
     [JobParam] NVARCHAR(MAX) NULL, 
 )
 
-create SEQUENCE [dbo].[JobSeq] as int
+create SEQUENCE [dbo].[StageJobSeq] as int
 start with 1
 INCREMENT BY 1;
 
-ALTER TABLE [dbo].[Job]
-ADD CONSTRAINT [JobId]
-DEFAULT (NEXT VALUE FOR [dbo].[JobSeq]) FOR [Id]
+ALTER TABLE [dbo].[StageJob]
+ADD CONSTRAINT [StageJobId]
+DEFAULT (NEXT VALUE FOR [dbo].[StageJobSeq]) FOR [Id]

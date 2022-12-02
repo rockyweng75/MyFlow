@@ -1,8 +1,10 @@
 ﻿CREATE TABLE [dbo].[ApplyData]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
-    [FlowId] INT NULL, 
+    [FlowId] INT NULL,
+    [FlowName] NVARCHAR(MAX) NULL, 
     [StatusCode] INT NULL, 
+    [ApplyYear] INT NULL,
     [ApplyUser] NVARCHAR(100), 
     [ApplyName] NVARCHAR(100) NULL, 
     [DeptCode] NVARCHAR(50) NULL, 

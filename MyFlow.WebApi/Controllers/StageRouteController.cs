@@ -6,42 +6,42 @@ namespace MyFlow.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SwitchController : ControllerBase
+    public class StageRouteController : ControllerBase
     {
-        private SwitchService service;
-        public SwitchController(SwitchService service) 
+        private StageRouteService service;
+        public StageRouteController(StageRouteService service) 
         {
             this.service = service;
         }
-        // GET: api/<SwitchController>
+        // GET: api/<StageRouteController>
         [HttpGet]
-        public async Task<IEnumerable<SwitchVM>> Get(SwitchVM vm)
+        public async Task<IEnumerable<StageRouteVM>> Get(StageRouteVM vm)
         {
             return await service.GetList(vm);
         }
 
-        // GET api/<SwitchController>/5
+        // GET api/<StageRouteController>/5
         [HttpGet("{id}")]
-        public async Task<SwitchVM> Get(int id)
+        public async Task<StageRouteVM?> Get(int id)
         {
             return await service.Get(id);
         }
 
-        // POST api/<SwitchController>
+        // POST api/<StageRouteController>
         [HttpPost]
-        public async Task<int> Post([FromBody] SwitchVM vm)
+        public async Task<int> Post([FromBody] StageRouteVM vm)
         {
             return await service.Create(vm);
         }
 
-        // PUT api/<SwitchController>/5
+        // PUT api/<StageRouteController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] SwitchVM vm)
+        public async Task Put(int id, [FromBody] StageRouteVM vm)
         {
             await service.Update(vm);
         }
 
-        // DELETE api/<SwitchController>/5
+        // DELETE api/<StageRouteController>/5
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {

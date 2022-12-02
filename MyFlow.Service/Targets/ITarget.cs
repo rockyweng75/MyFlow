@@ -10,6 +10,6 @@ namespace MyFlow.Service.Targets
     public interface ITarget
     {
         string Name { get; }
-        Task<string> Invoke(StageVM stage, ApplyDataVM applyData, ApproveDataVM approveDataVM);
+        Task<string> Invoke(StageVM stage, ApplyDataVM applyData, ApproveDataVM? approveDataVM);
     }
 }

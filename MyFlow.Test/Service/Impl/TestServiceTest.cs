@@ -8,8 +8,8 @@ namespace MyFlow.Test.Service.Impl
 {
     public class TestServiceTest
     {
-        private TestDao dao;
-        private TestService service;
+        private TestDao? dao;
+        private TestService? service;
 
         [SetUp]
         public void init()
@@ -21,79 +21,79 @@ namespace MyFlow.Test.Service.Impl
 
 
         [Test, Order(1)]
-        public void testCreate()
+        public async Task testCreate()
         {
-            var task = Task.Run(async ()=> {
-                var _result = await service.Create(new TestVM()
+            var task = await Task.Run(async ()=> {
+                var _result = await service!.Create(new TestVM()
                 {
                     Column1 = "Test",
                     Column2 = 1
                 });
-                await dao.SaveChangesAsync();
+                await dao!.SaveChangesAsync();
                 return _result;
             });
-            var result = task.Result;
+            var result = task;
            
 
             Assert.IsTrue(result > 0);
         }
 
-        private TestVM getOne { get; set; }
+        private TestVM? getOne { get; set; }
         [Test, Order(2)]
-        public void testGetList()
+        public async Task testGetList()
         {
-            var task = Task.Run(async () =>
+            var task = await Task.Run(async () =>
             {
-                var list = await service.GetList(new TestVM
+                var list = await service!.GetList(new TestVM
                 {
                     Column1 = "Test",
                     Column2 = 1
                 });
                 return list.FirstOrDefault();
             });
-            getOne = task.Result;
+            getOne = task;
             Assert.True(getOne != null);
         }
 
         [Test, Order(3)]
-        public void testUpdate()
+        public async Task testUpdate()
         {
-            var task = Task.Run(async() =>
+            var task = await Task.Run(async() =>
             {
-                getOne.Column3 = DateTime.Now;
-                await service.Update(getOne);
+                getOne!.Column3 = DateTime.Now;
+                await service!.Update(getOne);
                 return 0;
             });
-            var result = task.Result;
+            var result = task;
         }
 
         [Test, Order(4)]
         public async Task testGet()
         {
-            var task = Task.Run(async () =>
+            var task = await Task.Run(async () =>
             {
-                return await service.Get(getOne.Id);
+                return await service!.Get(getOne!.Id);
             });
-            var result = task.Result;
+            var result = task;
             Assert.True(result != null);
-            Assert.True(result.Column3 != null);
+            Assert.True(result!.Column3 != null);
         }
 
         [Test, Order(5)]
         public async Task testDelete()
         {
-            var task = Task.Run(async () =>
+            var task = await Task.Run(async () =>
             {
-                await service.Delete(getOne.Id);
+                await service!.Delete(getOne!.Id);
                 return 0;
             });
-            var result = task.Result;
+            var result = task;
         }
 
         [TearDown]
         public void Fin()
         {
-            dao.Dispose();
+            dao!.Dispose();
             dao = null;
         }
     }

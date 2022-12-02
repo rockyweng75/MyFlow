@@ -22,11 +22,12 @@ namespace MyFlow.Data.Connection
         public virtual DbSet<Flowchart> Flowcharts { get; set; } = null!;
         public virtual DbSet<Form> Forms { get; set; } = null!;
         public virtual DbSet<FormItem> FormItems { get; set; } = null!;
-        public virtual DbSet<Job> Jobs { get; set; } = null!;
+        public virtual DbSet<ActionJob> ActionJobs { get; set; } = null!;
+        public virtual DbSet<StageJob> StageJobs { get; set; } = null!;
         public virtual DbSet<JobLog> JobLogs { get; set; } = null!;
         public virtual DbSet<Stage> Stages { get; set; } = null!;
         public virtual DbSet<StageValidation> StageValidations { get; set; } = null!;
-        public virtual DbSet<Switch> Switches { get; set; } = null!;
+        public virtual DbSet<StageRoute> StageRoutes { get; set; } = null!;
         public virtual DbSet<Test> Tests { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -34,7 +35,8 @@ namespace MyFlow.Data.Connection
             if (!optionsBuilder.IsConfigured)
             {
                 // for Test
-                optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=SSPI;Trusted_Connection=True;AttachDBFilename=C:\\Users\\rocky\\source\\repos\\MyFlow\\MyFlow.Data\\Db\\TestDatabase.mdf");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=master;Trusted_Connection=True;");
+                // optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=SSPI;Trusted_Connection=True;AttachDBFilename=C:\\Users\\rocky\\source\\repos\\MyFlow\\MyFlow.Data\\Db\\TestDatabase.mdf");
             }
         }
 
@@ -134,11 +136,18 @@ namespace MyFlow.Data.Connection
                 entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[FormItemSeq])");
             });
 
-            modelBuilder.Entity<Job>(entity =>
+            modelBuilder.Entity<ActionJob>(entity =>
             {
-                entity.ToTable("Job");
+                entity.ToTable("ActionJob");
 
-                entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[JobSeq])");
+                entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[ActionJobSeq])");
+            });
+
+            modelBuilder.Entity<StageJob>(entity =>
+            {
+                entity.ToTable("StageJob");
+
+                entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[StageJobSeq])");
             });
 
             modelBuilder.Entity<JobLog>(entity =>
@@ -168,11 +177,11 @@ namespace MyFlow.Data.Connection
                 entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[StageValidationSeq])");
             });
 
-            modelBuilder.Entity<Switch>(entity =>
+            modelBuilder.Entity<StageRoute>(entity =>
             {
-                entity.ToTable("Switch");
+                entity.ToTable("StageRoute");
 
-                entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[SwitchSeq])");
+                entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[StageRouteSeq])");
             });
 
             modelBuilder.Entity<Test>(entity =>

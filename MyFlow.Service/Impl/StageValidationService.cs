@@ -6,7 +6,6 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-
     public interface IStageValidationService : IBasicCRUDService<StageValidationVM> 
     { 
     }

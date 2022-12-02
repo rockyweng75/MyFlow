@@ -13,7 +13,7 @@ namespace MyFlow.Service.Aop
     public class TransactionAttribute : AbstractInterceptorAttribute
     {
         [FromServiceContext]
-        public ILogger<TransactionAttribute> Logger { get; set; }
+        public ILogger<TransactionAttribute>? Logger { get; set; }
 
         public async override Task Invoke(AspectContext context, AspectDelegate next)
         {
@@ -26,7 +26,7 @@ namespace MyFlow.Service.Aop
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex.ToString());  // 記錄例外錯誤...
+                    Logger!.LogError(ex.ToString());  // 記錄例外錯誤...
                     throw;
                 }
             }

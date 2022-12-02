@@ -12,6 +12,5 @@ namespace MyFlow.Data.Models
         public int? ActionType { get; set; }
         public string? ActionName { get; set; }
         public string? ButtonName { get; set; }
-        public string? ActionClass { get; set; }
     }
 }

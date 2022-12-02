@@ -27,7 +27,7 @@ namespace MyFlow.WebApi.Controllers
 
         // GET api/<<#= ControllerName #>>/5
         [HttpGet("{id}")]
-        public async Task<<#= ViewModelName #>> Get(int id)
+        public async Task<<#= ViewModelName #>?> Get(int id)
         {
             return await service.Get(id);
         }

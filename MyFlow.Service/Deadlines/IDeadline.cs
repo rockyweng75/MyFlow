@@ -9,11 +9,12 @@ namespace MyFlow.Service.Deadlines
 {
     public interface IDeadline
     {
+        string Name { get; }
 
-        public Task<DateTime?> Invoke(
+        Task<DateTime?> Invoke(
               FlowchartVM flowchart,
               StageVM stage,
               ApplyDataVM applyData,
-              ApproveDataVM approveData);
+              ApproveDataVM? approveData);
     }
 }

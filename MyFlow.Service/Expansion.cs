@@ -10,7 +10,7 @@ namespace MyFlow.Service
         public static TEntity ToDataModel<TEntity>(this IViewModel viewModel)
         {
             var entityType = typeof(TEntity);
-            TEntity result = (TEntity)Activator.CreateInstance(entityType);
+            TEntity result = (TEntity)Activator.CreateInstance(entityType)!;
             ObjectClone.Clone(viewModel, result);
             return result;
         }
@@ -18,7 +18,7 @@ namespace MyFlow.Service
         public static TEntity ToViewModel<TEntity>(this IDataModel viewModel)
         {
             var entityType = typeof(TEntity);
-            TEntity result = (TEntity)Activator.CreateInstance(entityType);
+            TEntity result = (TEntity)Activator.CreateInstance(entityType)! ;
             ObjectClone.Clone(viewModel, result);
             return result;
         }

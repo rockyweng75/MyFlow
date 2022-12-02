@@ -7,9 +7,9 @@ namespace MyFlow.Service.Jobs
     {
         public bool Success { get; set; }
 
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
-        public string Data { get; set; }
+        public string? Data { get; set; }
 
     }
 
@@ -24,6 +24,6 @@ namespace MyFlow.Service.Jobs
             FlowchartVM flowchart,
             StageVM stage,
             ApplyDataVM applyData,
-            ApproveDataVM approveData);
+            ApproveDataVM? approveData);
     }
 }

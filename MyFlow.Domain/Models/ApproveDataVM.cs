@@ -18,7 +18,7 @@ namespace MyFlow.Domain.Models
         public string? DeptName { get; set; }
         public string? JobCode { get; set; }
         public string? JobName { get; set; }
-        public string? StatusCode { get; set; }
+        public int? StatusCode { get; set; }
         public string? FormData { get; set; }
         public dynamic? DynamicFormData
         {

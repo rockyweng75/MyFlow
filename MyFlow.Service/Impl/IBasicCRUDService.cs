@@ -4,7 +4,7 @@
     {
         Task<int> Create(TViewModel vm);
         Task Delete(int Id);
-        Task<TViewModel> Get(int Id);
+        Task<TViewModel?> Get(int Id);
         Task<IList<TViewModel>> GetList(TViewModel vm);
         Task Update(TViewModel vm);
     }

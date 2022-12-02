@@ -6,37 +6,38 @@ namespace MyFlow.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JobController : ControllerBase
+    public class StageJobController : ControllerBase
     {
-        private JobService service;
-        public JobController(JobService service) 
+        private StageJobService service;
+        public StageJobController(StageJobService service) 
         {
             this.service = service;
         }
+        
         // GET: api/<JobController>
         [HttpGet]
-        public async Task<IEnumerable<JobVM>> Get(JobVM vm)
+        public async Task<IEnumerable<StageJobVM>> Get(StageJobVM vm)
         {
             return await service.GetList(vm);
         }
 
         // GET api/<JobController>/5
         [HttpGet("{id}")]
-        public async Task<JobVM> Get(int id)
+        public async Task<StageJobVM?> Get(int id)
         {
             return await service.Get(id);
         }
 
         // POST api/<JobController>
         [HttpPost]
-        public async Task<int> Post([FromBody] JobVM vm)
+        public async Task<int> Post([FromBody] StageJobVM vm)
         {
             return await service.Create(vm);
         }
 
         // PUT api/<JobController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] JobVM vm)
+        public async Task Put(int id, [FromBody] StageJobVM vm)
         {
             await service.Update(vm);
         }

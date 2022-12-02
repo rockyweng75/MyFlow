@@ -24,7 +24,7 @@ namespace MyFlow.WebApi.Controllers
 
         // GET api/<FlowchartController>/5
         [HttpGet("{id}")]
-        public async Task<FlowchartVM> Get(int id)
+        public async Task<FlowchartVM?> Get(int id)
         {
             return await service.Get(id);
         }

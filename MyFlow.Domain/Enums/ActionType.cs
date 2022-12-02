@@ -12,7 +12,8 @@ namespace MyFlow.Domain.Enums
         同意,
         不同意,
         取消,
-        照會,
+        轉送,
         關閉
+        
     }
 }

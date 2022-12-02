@@ -22,7 +22,7 @@ namespace MyFlow.WebApi.Controllers
 
         // GET api/<DeadlineController>/5
         [HttpGet("{id}")]
-        public async Task<DeadlineVM> Get(int id)
+        public async Task<DeadlineVM?> Get(int id)
         {
             return await service.Get(id);
         }

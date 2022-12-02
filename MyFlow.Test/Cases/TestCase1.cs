@@ -1,10 +1,5 @@
 ﻿using MyFlow.Domain.Enums;
 using MyFlow.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyFlow.Test.Cases
 {
@@ -18,8 +13,8 @@ namespace MyFlow.Test.Cases
             AdminUser = "PA",
             Target = "Personnel",
             Close = 0,
-            TagFormat = "LeaveForm",
-            TitleFormat = "LeaveForm"
+            TagFormat = "A000",
+            TitleFormat = "A000"
         };
 
         public IList<StageVM> stageVMs = new StageVM[] { 
@@ -83,7 +78,7 @@ namespace MyFlow.Test.Cases
                 ActionType = (int)ActionType.送出,
                 ActionName = "Submit",
                 ButtonName = "送出",
-                //ActionClass = "Submit"
+                ActionClass = "Next",
             },
             new ActionFormVM(){
                 Id = 2,
@@ -93,7 +88,7 @@ namespace MyFlow.Test.Cases
                 ActionType = (int)ActionType.同意,
                 ActionName = "Confirm",
                 ButtonName = "同意",
-                //ActionClass = "Confirm"
+                ActionClass = "Next",
             },
             new ActionFormVM(){
                 Id = 3,
@@ -103,7 +98,46 @@ namespace MyFlow.Test.Cases
                 ActionType = (int)ActionType.不同意,
                 ActionName = "Rollback",
                 ButtonName = "不同意",
-                //ActionClass = "Rollback"
+                ActionClass = "Previous",
+            },
+        };
+
+       public IList<ActionJobVM> actionJobVMs = new List<ActionJobVM>()
+        {
+            new ActionJobVM(){ 
+                Id = 1,
+                ActionId = 1,
+                OrderId = 1,
+                JobType = (int)JobType.After,
+                JobClass = "MailToApplyUser"
+            },
+            new ActionJobVM(){
+                Id = 2,
+                ActionId = 1,
+                OrderId = 2,
+                JobType = (int)JobType.After,
+                JobClass = "MailToNextApprover"
+            },
+            new ActionJobVM(){
+                Id = 3,
+                ActionId = 2,
+                OrderId = 1,
+                JobType = (int)JobType.After,
+                JobClass = "MailToNextApprover"
+            },
+            new ActionJobVM(){
+                Id = 4,
+                ActionId = 3,
+                OrderId = 1,
+                JobType = (int)JobType.After,
+                JobClass = "MailForFinish",   
+            },
+           new ActionJobVM(){ 
+                Id = 5,
+                ActionId = 3,
+                OrderId = 1,
+                JobType = (int)JobType.After,
+                JobClass = "MailToNextApprover"
             },
         };
 
@@ -117,56 +151,54 @@ namespace MyFlow.Test.Cases
             },
         };
 
-        public IList<SwitchVM> switchVMs = new SwitchVM[] {
-            new SwitchVM(){
+        public IList<StageRouteVM> routeVMs = new StageRouteVM[] {
+            new StageRouteVM(){
                 Id = 1,
                 FlowId = 1,
-                OrderId = 1,
                 StageId = 1,
                 NextStageId = 2,
                 ActionType = (int)ActionType.送出,
-                ActionClass = "Next",
-                DecisionClass = null,      
+                SwitchClass = null,      
             },
-            new SwitchVM(){
+            new StageRouteVM(){
                 Id = 2,
                 FlowId = 1,
                 StageId = 2,
-                OrderId = 1,
                 NextStageId = 3,
                 ActionType = (int)ActionType.同意,
-                ActionClass = "Next",
-                DecisionClass = null,
+                SwitchClass = null,
             },
-            new SwitchVM(){
+            new StageRouteVM(){
                 Id = 3,
                 FlowId = 1,
                 StageId = 2,
-                OrderId = 2,
-                NextStageId = 1,
-                ActionType = (int)ActionType.不同意,
-                ActionClass = "Rollback",
-                DecisionClass = null,
+                NextStageId = 4,
+                ActionType = (int)ActionType.同意,
+                SwitchClass = null,
             },
-            new SwitchVM(){
+            new StageRouteVM(){
                 Id = 4,
                 FlowId = 1,
-                StageId = 3,
-                OrderId = 1,
-                NextStageId = 0,
-                ActionType = (int)ActionType.同意,
-                ActionClass = "Next",
-                DecisionClass = null,
+                StageId = 2,
+                NextStageId = 1,
+                ActionType = (int)ActionType.不同意,
+                SwitchClass = null,
             },
-            new SwitchVM(){
+            new StageRouteVM(){
                 Id = 5,
                 FlowId = 1,
                 StageId = 3,
-                OrderId = 2,
+                NextStageId = 0,
+                ActionType = (int)ActionType.同意,
+                SwitchClass = null,
+            },
+            new StageRouteVM(){
+                Id = 6,
+                FlowId = 1,
+                StageId = 3,
                 NextStageId = 1,
                 ActionType = (int)ActionType.不同意,
-                ActionClass = "Next",
-                DecisionClass = "Rollback",
+                SwitchClass = null,
             },
 
         };
@@ -258,39 +290,7 @@ namespace MyFlow.Test.Cases
             }
         };
 
-        public IList<JobVM> jobVMs = new List<JobVM>()
-        {
-            new JobVM(){ 
-                Id = 1,
-                StageId = 1,
-                OrderId = 1,
-                JobType = (int)JobType.After,
-                JobClass = "MailToApplyUser"
-            },
-            new JobVM(){
-                Id = 2,
-                StageId = 1,
-                OrderId = 2,
-                JobType = (int)JobType.After,
-                JobClass = "MailToNextApprover"
-            },
-            new JobVM(){
-                Id = 3,
-                StageId = 2,
-                OrderId = 1,
-                JobType = (int)JobType.After,
-                JobClass = "MailToNextApprover"
-            },
-            new JobVM(){
-                Id = 4,
-                StageId = 3,
-                OrderId = 1,
-                JobType = (int)JobType.After,
-                JobClass = "MailForFinish",   
-            },
-
-        };
+ 
 
     }
-
 }

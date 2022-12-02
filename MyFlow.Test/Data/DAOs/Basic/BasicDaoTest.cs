@@ -6,7 +6,7 @@ namespace MyFlow.Test.Data.DAOs.Basic
 {
     public class BasicDaoTest
     {
-        private TestDao dao;
+        private TestDao? dao;
 
         [SetUp]
         public void init() 
@@ -21,7 +21,7 @@ namespace MyFlow.Test.Data.DAOs.Basic
         {
             var task = Task.Run(async () =>
             {
-                var _result = await dao.Create(new MyFlow.Data.Models.Test()
+                var _result = await dao!.Create(new MyFlow.Data.Models.Test()
                 {
                     Column1 = "Test",
                     Column2 = 1
@@ -34,13 +34,13 @@ namespace MyFlow.Test.Data.DAOs.Basic
             Assert.IsTrue(result.Id > 0);
         }
 
-        private MyFlow.Data.Models.Test getOne { get; set; }
+        private MyFlow.Data.Models.Test? getOne { get; set; }
         [Test, Order(2)]
         public async Task testGetList()
         {
-            var task = Task.Run(async () =>
+            var task = await Task.Run(async () =>
             {
-                var list = await dao.GetList(new MyFlow.Data.Models.Test()
+                var list = await dao!.GetList(new MyFlow.Data.Models.Test()
                 {
                     Column1 = "Test",
                     Column2 = 1
@@ -53,50 +53,50 @@ namespace MyFlow.Test.Data.DAOs.Basic
                 return first;      
             });
 
-            getOne = task.Result;
+            getOne = task;
             Assert.True(getOne != null);
         }
 
         [Test, Order(3)]
         public async Task testUpdate()
         {
-            var task = Task.Run(async () =>
+            var task = await Task.Run(async () =>
             {
-                getOne.Column3 = DateTime.Now;
-                dao.Update(getOne);
+                getOne!.Column3 = DateTime.Now;
+                dao!.Update(getOne);
                 await dao.SaveChangesAsync();
                 return 0;
             });
-            var result = task.Result;
+            var result = task;
         }
 
         [Test, Order(4)]
         public async Task testGet()
         {
-            var task = Task.Run(async () =>
+            var task = await Task.Run(async () =>
             {
-                return await dao.Get(getOne.Id);
+                return await dao!.Get(getOne!.Id);
             });
-            var result = task.Result;
+            var result = task;
             Assert.True(result != null);
-            Assert.True(result.Column3 != null);
+            Assert.True(result!.Column3 != null);
         }
 
         [Test, Order(5)]
         public async Task testDelete()
         {
-            var task = Task.Run(async () =>
+            var task = await Task.Run(async () =>
             {
-                dao.Delete(getOne);
+                dao!.Delete(getOne!);
                 await dao.SaveChangesAsync();
                 return 0;
             });
-            var result = task.Result;
+            var result = task;
         }
 
         [TearDown]
         public void Fin() {
-            dao.Dispose();
+            dao!.Dispose();
             dao = null;
         }
     }

@@ -19,10 +19,11 @@ namespace MyFlow.Service
 			services.AddScoped<IFormItemService,FormItemService>();
 			services.AddScoped<IFormService,FormService>();
 			services.AddScoped<IJobLogService,JobLogService>();
-			services.AddScoped<IJobService,JobService>();
+			services.AddScoped<IActionJobService,ActionJobService>();
+			services.AddScoped<IStageJobService,StageJobService>();
 			services.AddScoped<IStageService,StageService>();
 			services.AddScoped<IStageValidationService,StageValidationService>();
-			services.AddScoped<ISwitchService,SwitchService>();
+			services.AddScoped<IStageRouteService,StageRouteService>();
 			services.AddScoped<ITestService,TestService>();
 		}
 	}

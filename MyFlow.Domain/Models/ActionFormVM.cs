@@ -11,7 +11,7 @@ namespace MyFlow.Domain.Models
         public int? FormId { get; set; }
         public int? ActionType { get; set; }
         public string? ActionName { get; set; }
-        public string? ButtonName { get; set; }
         public string? ActionClass { get; set; }
+        public string? ButtonName { get; set; }
     }
 }

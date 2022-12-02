@@ -1,13 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Logging;
+using MyFlow.Domain.Enums;
+using MyFlow.Domain.Models;
+using MyFlow.Service.Impl;
 
 namespace MyFlow.Service.Actions.Forward
 {
-    public class Next : IForward
+    public class Next : GenericForward, IForward
     {
+        public Next(
+            IServiceProvider serviceProvider, 
+            ILogger<GenericForward> logger, 
+            IApplyDataService applyDataService,
+            IApproveDataService approveDataService,
+            IJobLogService jobLogService
+        ) : base(serviceProvider, logger, applyDataService, approveDataService, jobLogService)
+        {
+        }
 
+        public override async Task NextAction(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
+        {
+            ActionFormVM? actionform = null;
+
+            if(currentStage.OrderId == 1)
+            {
+                actionform = await FindActionForm((int)ActionType.送出, currentStage, flowchart);
+            } 
+            else 
+            {
+                actionform = await FindActionForm((int)ActionType.同意, currentStage, flowchart);
+            }
+
+            await DoAfterStageJob(currentStage, flowchart, applyData, approveData);
+
+            var stages = await FindNextStages(flowchart, currentStage, applyData, approveData);
+
+            foreach(var stage in stages)
+            {
+                var target = await FindStageTarget(stage, flowchart, applyData, approveData);
+
+                var deadline = await GetStageDeadline(flowchart, stage, applyData, approveData);
+
+                var nextStageData = await InitNextStageData(flowchart, currentStage, stage, applyData);
+                
+                await InsertApproveData(nextStageData);
+
+                await DoBeforeStageJob(stage, flowchart, applyData, approveData);
+
+                if(actionform != null) 
+                {
+                    await DoAfterActionJob(actionform, currentStage, stage, flowchart, applyData, approveData);
+                }
+            }
+        }
     }
 }

@@ -26,9 +26,10 @@ namespace MyFlow.Data
 			services.AddScoped<IFormDao, FormDao>(injectDbContext<FormDao>);
 			services.AddScoped<IFormItemDao, FormItemDao>(injectDbContext<FormItemDao>);
 			services.AddScoped<IJobLogDao, JobLogDao>(injectDbContext<JobLogDao>);
-			services.AddScoped<IJobDao, JobDao>(injectDbContext<JobDao>);
+			services.AddScoped<IActionJobDao, ActionJobDao>(injectDbContext<ActionJobDao>);
+			services.AddScoped<IStageJobDao, StageJobDao>(injectDbContext<StageJobDao>);
 			services.AddScoped<IStageDao, StageDao>(injectDbContext<StageDao>);
-			services.AddScoped<ISwitchDao, SwitchDao>(injectDbContext<SwitchDao>);
+			services.AddScoped<IStageRouteDao, StageRouteDao>(injectDbContext<StageRouteDao>);
 			services.AddScoped<IStageValidationDao, StageValidationDao>(injectDbContext<StageValidationDao>);
 			services.AddScoped<ITestDao, TestDao>(injectDbContext<TestDao>);
 		}
@@ -37,7 +38,7 @@ namespace MyFlow.Data
 		{
 			var type = typeof(TDao);
 			var dbContext = serviceProvider.GetService<TestDbContext>();
-			TDao resultClass = (TDao)Activator.CreateInstance(type, dbContext);
+			TDao resultClass = (TDao)Activator.CreateInstance(type, dbContext)!;
 			return resultClass;
 		}
     }
