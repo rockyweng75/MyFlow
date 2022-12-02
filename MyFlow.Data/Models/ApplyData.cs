@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MyFlow.Data.Models
+﻿namespace MyFlow.Data.Models
 {
     public partial class ApplyData : IDataModel
     {
         public int Id { get; set; }
         public int? FlowId { get; set; }
+        public string? FlowName { get; set; }
         public int? StatusCode { get; set; }
+        public int? ApplyYear { get; set; }
         public string? ApplyUser { get; set; }
         public string? ApplyName { get; set; }
         public string? DeptCode { get; set; }
