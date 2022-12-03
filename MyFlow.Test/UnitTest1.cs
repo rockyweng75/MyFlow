@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace MyFlow.Test
 {
-    public class Tests
+    public class Tests 
     {
         [SetUp]
         public void Setup()

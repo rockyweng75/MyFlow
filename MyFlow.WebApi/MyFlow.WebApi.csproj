@@ -27,4 +27,8 @@
     <Folder Include="Middlewares\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="MyFlow.Test" />
+  </ItemGroup>
+
 </Project>

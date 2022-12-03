@@ -16,9 +16,9 @@ namespace MyFlow.Data.Connection
         {
             modelBuilder.Entity<FlowchartMix>(entity =>
             {
-                entity.ToTable("Flowchart");
+                // entity.ToTable("Flowchart");
 
-                entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[FlowchartSeq])");
+                // entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[FlowchartSeq])");
 
                 entity
                     .HasMany<StageMix>(e => e.StageList)
@@ -29,9 +29,9 @@ namespace MyFlow.Data.Connection
 
             modelBuilder.Entity<StageMix>(entity =>
             {
-                entity.ToTable("Stage");
+                // entity.ToTable("Stage");
 
-                entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[StageSeq])");
+                // entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[StageSeq])");
 
                 entity
                     .HasMany(e => e.StageRouteList)

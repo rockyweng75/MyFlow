@@ -1,8 +1,29 @@
 using MyFlow.Data;
 using MyFlow.Data.Connection;
 using MyFlow.Service;
+using EnvironmentName = Microsoft.AspNetCore.Hosting.EnvironmentName;
 
-var builder = WebApplication.CreateBuilder(args);
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+var isProd = environment == EnvironmentName.Development;
+// var logger = NLogBuilder.ConfigureNLog(isProd ? "nlog.config" : "nlog.debug.config").GetCurrentClassLogger();
+
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    ApplicationName = typeof(Program).Assembly.FullName,
+    ContentRootPath = Path.GetFullPath(Directory.GetCurrentDirectory()),
+    WebRootPath = "wwwroot",
+    Args = args
+});
+
+// builder.Host.ConfigureDefaults(args);
+// builder.Host.ConfigureServices();
+builder.Host.ConfigureAppConfiguration((hostContext, config) =>
+{
+    var env = hostContext.HostingEnvironment;
+    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true);
+});
+// builder.Host.UseNLog();
 
 // Add services to the container.
 
@@ -32,3 +53,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
