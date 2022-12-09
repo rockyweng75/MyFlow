@@ -13,5 +13,7 @@ namespace MyFlow.Domain.Models
         public string? ActionName { get; set; }
         public string? ActionClass { get; set; }
         public string? ButtonName { get; set; }
+
+        public IList<ActionJobVM>? ActionJobList { get; set; }
     }
 }

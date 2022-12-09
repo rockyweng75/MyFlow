@@ -9,6 +9,7 @@ namespace MyFlow.Service.Impl
 
     public interface IActionJobService : IBasicCRUDService<ActionJobVM> 
     { 
+        Task<IList<ActionJobVM>> GetList(FlowchartVM flowchart);
     }
 
     public class ActionJobService : BasicCRUDService<ActionJobDao, ActionJob, ActionJobVM>, IActionJobService
@@ -24,6 +25,12 @@ namespace MyFlow.Service.Impl
         public ActionJobService(IActionJobDao jobDao)
         {
             this.jobDao = jobDao;
+        }
+
+        public async Task<IList<ActionJobVM>> GetList(FlowchartVM flowchart)
+        {
+            var result = await jobDao.GetList(flowchart.ToDataModel<Flowchart>());
+            return result!.Select(o => o.ToViewModel<ActionJobVM>()).ToList();
         }
     }
 }

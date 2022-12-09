@@ -9,6 +9,6 @@ namespace MyFlow.Domain.Enums
         轉單,
         放棄,
         結案,
-        
+        過期,
     }
 }

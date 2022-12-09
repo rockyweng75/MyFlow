@@ -1,26 +1,26 @@
 
 const asyncRoutes = [
     {
-        component: () => import('/@/layout/index.vue'),
+        component: () => import('@/layout/index.vue'),
         path: '/flowchart',
         children: [
             {
                 name: 'flowchart',
                 path: 'index',
-                component: () =>  import('/@/views/flowchart/index.vue'),
+                component: () =>  import('@/views/flowchart/index.vue'),
                 meta: { title: '作業管理', icon: 'el-icon-house', affix: true, roles:['admin'] },
             },
             {
                 name: 'flowchartEdit',
                 path: 'edit/:id',
-                component: () =>  import('/@/views/flowchart/edit.vue'),
+                component: () =>  import('@/views/flowchart/edit.vue'),
                 meta: { title: '編輯設定', icon: 'el-icon-house', affix: true, roles:['admin']  },
                 hidden: true
             },
             {
                 name: 'createFlowchart',
                 path: 'create',
-                component: () =>  import('/@/views/flowchart/create.vue'),
+                component: () =>  import('@/views/flowchart/create.vue'),
                 meta: { title: '編輯設定', icon: 'el-icon-house', affix: true, roles:['admin']  },
                 hidden: true
             },

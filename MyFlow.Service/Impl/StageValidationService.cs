@@ -8,6 +8,7 @@ namespace MyFlow.Service.Impl
 {
     public interface IStageValidationService : IBasicCRUDService<StageValidationVM> 
     { 
+        Task<IList<StageValidationVM>> GetList(FlowchartVM flowchart);
     }
 
     public class StageValidationService : BasicCRUDService<StageValidationDao, StageValidation, StageValidationVM>, IStageValidationService
@@ -24,5 +25,12 @@ namespace MyFlow.Service.Impl
         {
             this.stageValidationDao = stageValidationDao;
         }
+
+        public async Task<IList<StageValidationVM>> GetList(FlowchartVM flowchart)
+        {
+            var result = await stageValidationDao.GetList(flowchart.ToDataModel<Flowchart>());
+            return result!.Select(o => o.ToViewModel<StageValidationVM>()).ToList();
+        }
+
     }
 }

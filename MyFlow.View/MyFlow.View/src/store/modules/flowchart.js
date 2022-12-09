@@ -1,65 +1,114 @@
-import { fetchList, fetchListByAdmin, fetchOne } from '/@/api/flowchart'
-import paginationStore from '../pagination'
-const state = {
-    ...paginationStore,
-    selected: {},
-    defaultOpeneds: false,
-}
+import { fetchFlowcharts, fetchFlowchartsByAdmin, fetchFlowchart, create, update } from '@/api/flowchart'
+
+const state = () => ({
+  flowList: [],
+  flowchart:{ },
+  model:{
+    FlowName:'',
+    FlowType:'',
+    AdminUser:'',
+  },
+  defaultOpenedList: [],
+})
 
 const mutations = {
-    ...paginationStore,
-    setSelected: (state, data) => {
-        state.selected = data
-    }
+  setFlowList: (state, list) => {
+    state.flowList = list 
+  },
+  setFlowchart: (state, flow) => {
+    state.flowchart = flow 
+  },
+  setDefaultOpenedList: (state, list) => {
+    state.defaultOpenedList = []
+    console.log(list)
+    list.forEach(form=>{
+        if(form.children){
+            state.defaultOpenedList.push(form.name)
+        }
+    })
+  },
 }
 
 const getters = {
-    ...paginationStore,
-    selected: (state) => state.selected,
-    defaultOpeneds: (state) => state.defaultOpeneds,
+  flowList:(state, getters)=>{
+    return state.flowList
+  },
+  flowchart:(state, getters) => {
+    return state.flowchart
+  },
+  items:(state, getters)=>{
+    return getters.selectedForm.items
+  },
+  defaultOpeneds:(state, getters)=>{
+    return state.defaultOpenedList
+  }
 }
 
 const actions = {
-    getList({ commit }) {
-        return new Promise((resolve, reject) => {
-            fetchList()
-            .then(res=>{
-                commit('setPagination', res)
-                commit('setList', res)
-                resolve()
-            }).catch(error => {
-                reject(error)
-            })
+  getFlowcharts({commit}) {
+    return new Promise((resolve, reject) => {
+        fetchFlowcharts()
+        .then(response => {
+            console.log(response)
+          commit('setFlowList', response)
+          commit('setDefaultOpenedList', response)
+          resolve()
+        }).catch(error => {
+          reject(error)
         })
-    },
-    getListByAdmin({ commit }) {
-        return new Promise((resolve, reject)  => {
-            fetchListByAdmin()
-            .then(res=>{
-                commit('setPagination', res)
-                commit('setList', res)
-            }).catch(error => {
-                reject(error)
-            })
+      })
+  },
+  getFlowchartsByAdmin({commit}) {
+    return new Promise((resolve, reject) => {
+        fetchFlowchartsByAdmin().then(response => {
+          commit('setFlowList', response)
+          commit('setDefaultOpenedList', response)
+          resolve()
+        }).catch(error => {
+          reject(error)
         })
-    },
-    getOne({ commit }, id) {
-        return new Promise(resolve => {
-            fetchOne(id)
-            .then(res=>{
-                commit('setSelected', res)
-            }).catch(error => {
-                reject(error)
-            })
+      })
+  },
+  getFlowchart({commit, state}, flowId) {
+    return new Promise((resolve, reject) => {
+      if(flowId){
+        fetchFlowchart(flowId)
+        .then(response => {
+            commit('setFlowchart', response)
+            resolve(response)
+        }).catch(error => {
+          reject(error)
         })
-    },
+      } else {
+        commit('setFlowchart', state.model)
+        resolve()
+      }
+    })
+  }, 
+  insert({commit}, formData){
+    return new Promise((resolve, reject) => {
+      create(formData).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+  modify({commit}, formData){
+    return new Promise((resolve, reject) => {
+      update(formData).then(response => {
+        resolve(response)
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  }
 }
 
-
 export default {
-    namespaced: true,
-    state,
-    getters,
-    mutations,
-    actions
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions
 }

@@ -1,14 +1,22 @@
 import pagination from "./pagination";
 const testCases = [
   {
-    Id : 1,
-    FlowName : "請假單",
-    FlowType : 1,
-    AdminUser : "PA",
-    Target : "Personnel",
-    Close : 0,
-    TagFormat : "LeaveForm",
-    TitleFormat : "LeaveForm"
+    "id": 0,
+    "name": "差勤",
+    "children": [
+      {
+        "id": 1,
+        "name": "請假單",
+        "children": null
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "總務",
+    "children": [
+
+    ]
   }
 ];
   
@@ -17,20 +25,14 @@ const mock = [
       url: '/api/Flowchart',
       method: 'get',
       response: ({ query ,body }) => {
-          return {
-            ...testCases,
-            ...pagination
-          };
+        return testCases;
       },
   },
   {
     url: '/api/Flowchart/Admin',
     method: 'get',
     response: ({ query ,body }) => {
-        return {
-          ...testCases,
-          ...pagination
-        };
+        return testCases;
     },
 },
   {

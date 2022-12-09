@@ -8,6 +8,7 @@ namespace MyFlow.Service.Impl
 {
     public interface IStageRouteService : IBasicCRUDService<StageRouteVM> 
     { 
+        Task<IList<StageRouteVM>> GetList(FlowchartVM flowchart);
     }
 
     public class StageRouteService : BasicCRUDService<StageRouteDao, StageRoute, StageRouteVM>, IStageRouteService
@@ -23,6 +24,12 @@ namespace MyFlow.Service.Impl
         public StageRouteService(IStageRouteDao stageRouteDao)
         {
             this.stageRouteDao = stageRouteDao;
+        }
+
+        public async Task<IList<StageRouteVM>> GetList(FlowchartVM flowchart)
+        {
+            var result = await stageRouteDao.GetList(flowchart.ToDataModel<Flowchart>());
+            return result!.Select(o => o.ToViewModel<StageRouteVM>()).ToList();
         }
     }
 }

@@ -3,18 +3,20 @@
     <template #header>
       選擇申請表單
     </template>
+    {{forms}}
+
     <el-menu 
       v-if="forms.length != 0"
       :default-openeds="defaultOpeneds" 
       router
       class="link-menu">
-      <template v-for="form in forms" v-bind:key="form.name">
+      <template v-for="form in forms" :key="form.name">
         <el-sub-menu :index="form.name" v-if="form.children" >
           <template #title>
             <i class="el-icon-circle-plus-outline"></i>
             <span>{{t(form.name)}}</span>
           </template>
-          <template v-for="item in form.children" v-bind:key="item.name">
+          <template v-for="item in form.children" :key="item.name">
             <el-menu-item :index="'/applyForm/' + item.id">
               <template #title>
                 <div class="link">
@@ -51,7 +53,7 @@ export default {
   setup() {
     const store = useStore()
     const forms = computed(()=>{
-      return store.getters['flowchart/list']
+      return store.getters['flowchart/flowList']
     })
 
     const defaultOpeneds = computed(()=>{
@@ -59,7 +61,7 @@ export default {
     })
     
     onBeforeMount(() =>{
-      store.dispatch('flowchart/getList')
+      store.dispatch('flowchart/getFlowcharts')
     })
 
     const { t, locale } = useI18n();

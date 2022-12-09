@@ -6,11 +6,11 @@ namespace MyFlow.Service.Targets
     {
         public string Name => "自訂";
 
-        public Task<string> Invoke(StageVM stage, ApplyDataVM applyData, ApproveDataVM? approveDataVM)
+        public Task<string> Invoke(StageVM stage, ApplyDataVM? applyData, ApproveDataVM? approveDataVM)
         {
             if (approveDataVM == null)
             {
-                return applyData.DynamicFormData != null ? 
+                return applyData!.DynamicFormData != null ? 
                     applyData.DynamicFormData[stage.TargetParams] :
                     throw new Exception("取得簽核者發生錯誤：找不到申請資料");
             }

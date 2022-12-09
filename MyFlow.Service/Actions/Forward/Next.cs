@@ -12,8 +12,10 @@ namespace MyFlow.Service.Actions.Forward
             ILogger<GenericForward> logger, 
             IApplyDataService applyDataService,
             IApproveDataService approveDataService,
-            IJobLogService jobLogService
-        ) : base(serviceProvider, logger, applyDataService, approveDataService, jobLogService)
+            IJobLogService jobLogService,
+            IStageService stageService,
+            IStageRouteService stageRouteService
+        ) : base(serviceProvider, logger, applyDataService, approveDataService, jobLogService, stageService, stageRouteService)
         {
         }
 
@@ -23,11 +25,11 @@ namespace MyFlow.Service.Actions.Forward
 
             if(currentStage.OrderId == 1)
             {
-                actionform = await FindActionForm((int)ActionType.送出, currentStage, flowchart);
+                actionform = await FindActionForm((int)ActionType.送出, currentStage);
             } 
             else 
             {
-                actionform = await FindActionForm((int)ActionType.同意, currentStage, flowchart);
+                actionform = await FindActionForm((int)ActionType.同意, currentStage);
             }
 
             await DoAfterStageJob(currentStage, flowchart, applyData, approveData);

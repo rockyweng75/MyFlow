@@ -79,9 +79,8 @@ namespace MyFlow.Service.Actions.Forward
 
             var deadline = deadlines.Where(o => o.GetType().Name == currentStage.Deadline).FirstOrDefault();
             var result = deadline != null ?
-                            await deadline.Invoke(flowchart, currentStage, applyData, approveData) :
+                            await deadline.GetEndDateTime(DateTime.Now.Year, flowchart, currentStage, applyData, approveData) :
                             throw new Exception($"找不到對應的Deadline: {currentStage.Deadline}");
-
             return result;
         }
 

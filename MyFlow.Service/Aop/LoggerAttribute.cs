@@ -1,34 +1,27 @@
 ﻿using AspectCore.DependencyInjection;
 using AspectCore.DynamicProxy;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
 
 namespace MyFlow.Service.Aop
 {
-    public class TransactionAttribute : AbstractInterceptorAttribute
+    public class LoggerAttribute : AbstractInterceptorAttribute
     {
         [FromServiceContext]
-        public ILogger<TransactionAttribute>? Logger { get; set; }
+        public ILogger<LoggerAttribute>? Logger { get; set; }
 
         public async override Task Invoke(AspectContext context, AspectDelegate next)
         {
-            using (TransactionScope ts = new TransactionScope())
+        
+            try
             {
-                try
-                {
-                    await next(context);
-                    ts.Complete();  
-                }
-                catch (Exception ex)
-                {
-                    Logger!.LogError(ex.ToString());  // 記錄例外錯誤...
-                    throw;
-                }
+                Logger!.LogDebug($"Method Name :{context.ServiceMethod} Begin!!");
+                await next(context);
+                Logger!.LogDebug($"Method Name :{context.ServiceMethod} End, Return : {context.ReturnValue}");
+            }
+            catch (Exception ex)
+            {
+                Logger!.LogError(ex.ToString());  // 記錄例外錯誤...
+                throw;
             }
         }
     }

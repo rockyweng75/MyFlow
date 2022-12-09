@@ -9,15 +9,19 @@ namespace MyFlow.WebApi.Controllers
     public class StageController : ControllerBase
     {
         private StageService service;
-        public StageController(StageService service) 
+        private ILogger<FlowchartController> logger;
+        public StageController(
+            ILogger<FlowchartController> logger, 
+            StageService service) 
         {
+            this.logger = logger;
             this.service = service;
         }
         // GET: api/<StageController>
-        [HttpGet]
-        public async Task<IEnumerable<StageVM>> Get(StageVM vm)
+        [HttpGet("Flow/{id}")]
+        public async Task<IEnumerable<StageVM>> GetList(int Id)
         {
-            return await service.GetList(vm);
+            return await service.GetList(new FlowchartVM(){ Id = Id});
         }
 
         // GET api/<StageController>/5

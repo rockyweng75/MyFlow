@@ -1,11 +1,4 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
-using System;
 using Microsoft.AspNetCore.Mvc.Testing;
-using MyFlow.Service;
-using MyFlow.Data;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MyFlow.Test
 {
@@ -36,9 +29,6 @@ namespace MyFlow.Test
                     //     // });
 
                     // });
-
-            // scope = services.CreateScope();
-
         }
 
 

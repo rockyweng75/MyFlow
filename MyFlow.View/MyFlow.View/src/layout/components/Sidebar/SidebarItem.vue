@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import valid from '/@/utils/validate'
+import valid from '@/utils/validate'
 
 import Item from './Item.vue'
 import AppLink from './Link.vue'

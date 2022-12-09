@@ -9,6 +9,9 @@ namespace MyFlow.Service.Impl
 
     public interface IStageService : IBasicCRUDService<StageVM> 
     { 
+        Task<StageVM?> GetMix(int Id);
+
+        Task<StageVM?> GetFirst(FlowchartVM flowchart);
     }
 
     public class StageService : BasicCRUDService<StageDao, Stage, StageVM>, IStageService
@@ -25,5 +28,25 @@ namespace MyFlow.Service.Impl
         {
             this.stageDao = stageDao;
         }
+
+        public async Task<StageVM?> GetMix(int Id)
+        {
+            var stage = await stageDao.GetMix(Id);
+            
+            return stage!.ToViewModel<StageVM>();
+        } 
+
+        public async Task<StageVM?> GetFirst(FlowchartVM flowchart)
+        {
+            var result = await stageDao.GetFirst(flowchart.ToDataModel<Flowchart>());
+            return result!.ToViewModel<StageVM>();
+        } 
+
+        public async Task<IList<StageVM>> GetList(FlowchartVM flowchart)
+        {
+            var result = await stageDao.GetList(flowchart.ToDataModel<Flowchart>());
+            return result!.Select(o => o.ToViewModel<StageVM>()).ToList();
+        }
+
     }
 }

@@ -136,13 +136,10 @@ namespace MyFlow.Service.Actions
             await DoJobsAsync(jobs, flowchart, nextStage, applyData, approveData);
         }
 
-        public Task<ActionFormVM?> FindActionForm(int ActionType, StageVM currentStage, FlowchartVM flowchart)
+        public Task<ActionFormVM?> FindActionForm(int ActionType, StageVM currentStage)
         {
             ActionFormVM? result = null;
-            var job = flowchart.StageList!.Where(o => o.Id == currentStage.Id).FirstOrDefault();
-            if(job == null) return Task.FromResult(result);
-
-            result = flowchart.ActionFormList!
+            result = currentStage.ActionFormList!
                 .Where(o => o.ActionType.HasValue && o.ActionType.Value == ActionType)
                 .FirstOrDefault();
 

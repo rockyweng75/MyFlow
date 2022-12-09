@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using MyFlow.Data.Models;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace MyFlow.Data.DAOs.Basic
@@ -38,8 +38,14 @@ namespace MyFlow.Data.DAOs.Basic
             var dbSet = dbContext!.Set<TEntity>();
             var tableName = GetTableName();
             var _Id = new SqlParameter("Id", Id);
-            var queryable = dbSet.FromSqlRaw($"select * from {tableName} where Id = @Id", _Id);
+            var queryable = dbSet.FromSqlRaw($"select * from {tableName} where Id = @Id order by Id", _Id);
             return await queryable.FirstOrDefaultAsync();
+        }
+
+        public Task<IEnumerable<TEntity>> GetAll()
+        {
+            var dbSet = dbContext!.Set<TEntity>();
+            return Task.FromResult(dbSet.AsEnumerable());
         }
 
         public IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> predicate)
@@ -120,6 +126,7 @@ namespace MyFlow.Data.DAOs.Basic
         {
             var dbSet = dbContext!.Set<TEntity>();
             await dbSet.AddAsync(entity);
+            Debug.WriteLine(dbSet.ToQueryString());
             return entity;
         }
         public void Update(TEntity entity)

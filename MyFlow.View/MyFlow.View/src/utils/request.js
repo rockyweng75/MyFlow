@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { ElMessageBox, ElMessage } from 'element-plus'
-import store from '/@/store'
-import { getToken } from '/@/cookies/index.js'
-import router from '/@/router'
+import store from '@/store'
+import { getToken } from '@/cookies/index.js'
+import router from '@/router'
 
 // create an axios instance
 const service = axios.create({

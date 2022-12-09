@@ -22,13 +22,13 @@
           </div>
       </template> 
       </el-menu-item>-->
-      <template v-for="form in forms" v-bind:key="form.name">
+      <template v-for="form in forms" :key="form.name">
         <el-sub-menu :index="form.name" v-if="form.children" >
           <template #title>
             <i class="el-icon-circle-plus-outline"></i>
             <span>{{$t(form.name)}}</span>
           </template>
-          <template v-for="item in form.children" v-bind:key="item.name">
+          <template v-for="item in form.children" :key="item.name">
             <el-menu-item :index="'/flowchart/edit/' + item.id">
               <template #title>
                 <div class="link">

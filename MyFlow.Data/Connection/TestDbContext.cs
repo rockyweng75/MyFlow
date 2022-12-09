@@ -12,6 +12,7 @@ namespace MyFlow.Data.Connection
         public TestDbContext(DbContextOptions<TestDbContext> options)
             : base(options)
         {
+
         }
 
         public virtual DbSet<ActionForm> ActionForms { get; set; } = null!;
@@ -32,10 +33,13 @@ namespace MyFlow.Data.Connection
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
             if (!optionsBuilder.IsConfigured)
             {
                 // for Test
-                optionsBuilder.UseSqlServer("Server=localhost;Database=master;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=localhost;Database=master;Trusted_Connection=True;MultipleActiveResultSets=true;");
+
+                
                 // optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Integrated Security=SSPI;Trusted_Connection=True;AttachDBFilename=C:\\Users\\rocky\\source\\repos\\MyFlow\\MyFlow.Data\\Db\\TestDatabase.mdf");
             }
         }
@@ -47,6 +51,7 @@ namespace MyFlow.Data.Connection
                 entity.ToTable("ActionForm");
 
                 entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[ActionFormSeq])");
+
             });
 
             modelBuilder.Entity<ApplyData>(entity =>
@@ -113,6 +118,7 @@ namespace MyFlow.Data.Connection
                 entity.Property(e => e.BeginDate).HasColumnType("datetime");
 
                 entity.Property(e => e.EndDate).HasColumnType("datetime");
+      
             });
 
             modelBuilder.Entity<Flowchart>(entity =>
@@ -120,6 +126,13 @@ namespace MyFlow.Data.Connection
                 entity.ToTable("Flowchart");
 
                 entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[FlowchartSeq])");
+
+                entity
+                    .HasMany<Stage>(e => e.StageList)
+                    .WithOne()
+                    .HasForeignKey(o => o.FlowId)
+                    .IsRequired(false);
+
             });
 
             modelBuilder.Entity<Form>(entity =>
@@ -168,6 +181,31 @@ namespace MyFlow.Data.Connection
                 entity.ToTable("Stage");
 
                 entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[StageSeq])");
+
+                entity
+                    .HasMany<StageValidation>(e => e.StageValidationList)
+                    .WithOne()
+                    .HasForeignKey(o => o.StageId)
+                    .IsRequired(false);
+
+                entity
+                    .HasMany<StageRoute>(e => e.StageRouteList)
+                    .WithOne()
+                    .HasForeignKey(o => o.StageId)
+                    .IsRequired(false);
+
+                entity
+                    .HasMany<ActionForm>(e => e.ActionFormList)
+                    .WithOne()
+                    .HasForeignKey(o => o.StageId)
+                    .IsRequired(false);
+
+                entity
+                    .HasMany<StageJob>(e => e.StageJobList)
+                    .WithOne()
+                    .HasForeignKey(o => o.StageId)
+                    .IsRequired(false);
+
             });
 
             modelBuilder.Entity<StageValidation>(entity =>

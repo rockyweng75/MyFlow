@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import valid from '/@/utils/validate'
+import valid from '@/utils/validate'
 
 export default {
   props: {

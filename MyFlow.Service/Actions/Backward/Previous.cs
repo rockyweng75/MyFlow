@@ -28,7 +28,7 @@ namespace MyFlow.Service.Actions.Forward
 
         public override async Task PrevAction(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {
-            ActionFormVM? actionform = await FindActionForm((int)ActionType.不同意, currentStage, flowchart);
+            ActionFormVM? actionform = await FindActionForm((int)ActionType.不同意, currentStage);
             
             var stages = await FindPrevStages(flowchart, currentStage, applyData, approveData);
 

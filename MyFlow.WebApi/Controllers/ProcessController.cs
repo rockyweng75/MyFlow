@@ -24,17 +24,13 @@ namespace MyFlow.WebApi.Controllers
             this.stageService = stageService;
         }
 
-
-
         [HttpPost("/Agree")]
         public async Task<IActionResult> Agree([FromBody] dynamic formData)
         {
             var user = User.ToUserInfo();
             IFormData _formData = FormDataTools.Parse(formData);
 
-            var flowchart = await flowchartService.Get(_formData.FlowId!.Value);
-
-
+            var flowchart = await processService.FindCurrentFlowchart(formData);
             var result = await processService.Agree(formData, user);
             return Ok(result);
         }
@@ -45,7 +41,7 @@ namespace MyFlow.WebApi.Controllers
             var user = User.ToUserInfo();
             IFormData _formData = FormDataTools.Parse(formData);
 
-            var flowchart = await flowchartService.Get(_formData.FlowId!.Value);
+            var flowchart = await processService.FindCurrentFlowchart(formData);
             var result = await processService.Disagree(formData, user);
             return Ok(result);
         }
@@ -56,7 +52,7 @@ namespace MyFlow.WebApi.Controllers
             var user = User.ToUserInfo();
             IFormData _formData = FormDataTools.Parse(formData);
 
-            var flowchart = await flowchartService.Get(_formData.FlowId!.Value);
+            var flowchart = await processService.FindCurrentFlowchart(formData);
             var result = await processService.Submit(formData, user);
             return Ok(result);
         }
@@ -67,7 +63,7 @@ namespace MyFlow.WebApi.Controllers
             var user = User.ToUserInfo();
             IFormData _formData = FormDataTools.Parse(formData);
 
-            var flowchart = await flowchartService.Get(_formData.FlowId!.Value);
+            var flowchart = await processService.FindCurrentFlowchart(formData);
             var result = await processService.Transfer(formData, user);
             return Ok(result);
         }

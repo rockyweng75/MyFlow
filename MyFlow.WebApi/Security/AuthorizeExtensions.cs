@@ -1,7 +1,5 @@
 using System.Security.Claims;
-using Microsoft.AspNetCore.Mvc;
 using MyFlow.Domain.Models;
-using MyFlow.Service.Impl;
 
 namespace MyFlow.WebApi.Security
 {

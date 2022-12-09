@@ -1,9 +1,9 @@
-import Layout from '/@/layout/index.vue'
+import Layout from '@/layout/index.vue'
 
 const constantRoutes = [
     { 
         path: '/:pathMatch(.*)*',
-        component: () => import('/@/views/404/index.vue'),
+        component: () => import('@/views/404/index.vue'),
         name: 'NotFound'
     },
     {
@@ -13,7 +13,7 @@ const constantRoutes = [
         children: [
             {
                 path: 'home',
-                component: () => import('/@/views/home/index.vue'),
+                component: () => import('@/views/home/index.vue'),
                 name: 'Home',
                 meta: { title: '首頁', icon: 'el-icon-house', affix: true },
             },
@@ -23,54 +23,54 @@ const constantRoutes = [
     {
         name: 'login',
         path: '/login',
-        component: () => import('/@/views/login/index.vue'),
+        component: () => import('@/views/login/index.vue'),
     },
     {
         name: 'logout',
         path: '/logout',
-        component: () => import('/@/views/logout/index.vue'),
+        component: () => import('@/views/logout/index.vue'),
     },
     {
         name: '401',
         path: '/401',
-        component: () => import('/@/views/401/index.vue'),
+        component: () => import('@/views/401/index.vue'),
     },
     {
         path: '/workboard',
-        component:  () => import('/@/layout/index.vue'),
+        component:  () => import('@/layout/index.vue'),
         meta: { title: '表單申請', icon: 'el-icon-house', affix: true },
         children: [
             {
                 name: 'selectForm',
                 path: 'selectForm',
-                component:  () => import('/@/views/selectForm/index.vue'),
+                component:  () => import('@/views/selectForm/index.vue'),
                 meta: { title: '新增表單', icon: 'el-icon-house', affix: true },        
             },
             {
                 name: 'todoList',
                 path: 'todoList',
-                component: () => import('/@/views/workboard/components/todoList.vue'),
+                component: () => import('@/views/workboard/components/todoList.vue'),
                 meta: { title: '待辦表單', icon: 'el-icon-house', affix: true },
                 // hidden: true
             },
             {
                 name: 'waitList',
                 path: 'waitList',
-                component: () => import('/@/views/workboard/components/waitList.vue'),
+                component: () => import('@/views/workboard/components/waitList.vue'),
                 meta: { title: '個人即時表單', icon: 'el-icon-house', affix: true },
                 // hidden: true
             },
             {
                 name: 'historyList',
                 path: 'historyList',
-                component: () => import('/@/views/workboard/components/historyList.vue'),
+                component: () => import('@/views/workboard/components/historyList.vue'),
                 meta: { title: '個人申請記錄', icon: 'el-icon-house', affix: true },
                 // hidden: true
             },
             {
                 name: 'approveList',
                 path: 'approveList',
-                component: () => import('/@/views/workboard/components/approveList.vue'),
+                component: () => import('@/views/workboard/components/approveList.vue'),
                 meta: { title: '個人簽辦記錄', icon: 'el-icon-house', affix: true },
                 // hidden: true
             },

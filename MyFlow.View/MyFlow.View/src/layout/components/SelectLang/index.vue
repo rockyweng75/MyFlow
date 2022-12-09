@@ -22,8 +22,8 @@ import { computed, watch, onBeforeMount, getCurrentInstance, inject } from 'vue'
 import { useStore } from 'vuex'
 import { ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
-import zh from "/@/lang/zh-TW.json";
-import en from "/@/lang/en-US.json";
+import zh from "@/lang/zh-TW.json";
+import en from "@/lang/en-US.json";
 
 export default {
   name: 'logout',

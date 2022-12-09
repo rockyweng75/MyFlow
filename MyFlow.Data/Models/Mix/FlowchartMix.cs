@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace MyFlow.Data.Models
 {
-    public partial class FlowchartMix : Stage
+    public partial class Flowchart 
     {
-        public IList<StageMix>? StageList { get; set; }
-
+        public virtual IList<Stage>? StageList { get; set; }
     }
 }

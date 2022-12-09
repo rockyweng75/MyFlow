@@ -23,7 +23,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Logo from './Logo.vue'
-import variables from '/@/styles/variables.scss'
+import variables from '@/styles/variables.scss'
 import SidebarItem from './SidebarItem.vue'
 
 export default {

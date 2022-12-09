@@ -24,7 +24,30 @@ namespace MyFlow.Domain.Models
 
         public IList<StageJobVM>? StageJobList { get; set; }
 
+        public IList<StageValidationVM>? StageValidationList { get; set; }
+
         public IList<ActionFormVM>? ActionFormList { get; set; }
 
     }
+
+
+    [Serializable]
+    public class FlowchartItem
+    {
+        public int Id { get; set; }
+
+        public string? Name { get; set; }
+
+        public IList<FlowchartItem>? Children { get; set; }
+    }
+
+    // [Serializable]
+    // public class FlowchartResult
+    // {
+    //     public int id { get; set; }
+
+    //     public string name { get; set; }
+
+    //     public IList<EItem> items { get; set; }
+    // }
 }

@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using MyFlow.Data.Connection;
-using MyFlow.Data.DAOs;
+﻿using Microsoft.Extensions.DependencyInjection;
 using MyFlow.Domain.Models;
 using MyFlow.Service.Impl;
 using MyFlow.Test.Cases;
@@ -12,7 +9,7 @@ namespace MyFlow.Test.Service.Impl
     {
         private IFlowchartService? service;
 
-        private new IServiceScope? scope;
+        private IServiceScope? scope;
 
         [SetUp]
         public void init()
@@ -88,7 +85,7 @@ namespace MyFlow.Test.Service.Impl
         [TearDown]
         public void Fin()
         {
-            scope.Dispose();
+            scope!.Dispose();
             service = null;
         }
     }

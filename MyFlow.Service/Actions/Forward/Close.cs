@@ -12,15 +12,17 @@ namespace MyFlow.Service.Actions.Forward
             ILogger<GenericForward> logger, 
             IApplyDataService applyDataService, 
             IApproveDataService approveDataService,
-            IJobLogService jobLogService
+            IJobLogService jobLogService,
+            IStageService stageService,
+            IStageRouteService stageRouteService
         ) 
-            : base(serviceProvider, logger, applyDataService, approveDataService, jobLogService)
+            : base(serviceProvider, logger, applyDataService, approveDataService, jobLogService, stageService, stageRouteService)
         {
         }
 
         public override async Task NextAction(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {
-            ActionFormVM? actionform = await FindActionForm((int)ActionType.同意, currentStage, flowchart);
+            ActionFormVM? actionform = await FindActionForm((int)ActionType.同意, currentStage);
 
             if(actionform != null) 
             {

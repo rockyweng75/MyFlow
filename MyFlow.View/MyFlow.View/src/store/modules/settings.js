@@ -1,5 +1,5 @@
-import variables from '/@/styles/element-variables.scss'
-import defaultSettings from '/@/settings'
+import variables from '@/styles/element-variables.scss'
+import defaultSettings from '@/settings'
 
 const { showSettings, tagsView, fixedHeader, sidebarLogo, logoUrl, defaultOpeneds} = defaultSettings
 

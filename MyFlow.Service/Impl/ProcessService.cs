@@ -19,7 +19,7 @@ namespace MyFlow.Service.Impl
         Task<ActionResult> Disagree(dynamic formData, UserInfoVM user);
         Task<ActionResult> Submit(dynamic formData, UserInfoVM user);
         Task<ActionResult> Transfer(dynamic formData, UserInfoVM user);
-        Task<FlowchartVM?> FindCurrentFlowchart(dynamic formData);
+        Task<FlowchartVM?> FindCurrentFlowchart(IFormData formData);
 
     }
 
@@ -28,20 +28,38 @@ namespace MyFlow.Service.Impl
         private IServiceProvider serviceProvider;
         private IApplyDataService applyDataService;
         private IApproveDataService approveDataService;
-        private IFlowchartMixService flowchartMixService;
+        private IFlowchartService flowchartService;
+        private IStageService stageService;
 
+        private IStageRouteService stageRouteService;
+        private IStageJobService stageJobService;
+        private IActionFormService actionFormService;
+        private IActionJobService actionJobService;
+        private IStageValidationService stageValidationService;
 
         public ProcessService(
             IServiceProvider serviceProvider,
             IApplyDataService applyDataService,
             IApproveDataService approveDataService,
-            IFlowchartMixService flowchartMixService
+            IFlowchartService flowchartService,
+            IStageService stageService,
+            IStageRouteService stageRouteService,
+            IStageJobService stageJobService,
+            IActionFormService actionFormService,
+            IActionJobService actionJobService,
+            IStageValidationService stageValidationService
         )
         {
             this.serviceProvider = serviceProvider;
             this.applyDataService = applyDataService;
             this.approveDataService = approveDataService;
-            this.flowchartMixService = flowchartMixService;
+            this.flowchartService = flowchartService;
+            this.stageService = stageService;
+            this.stageRouteService = stageRouteService;
+            this.stageJobService = stageJobService;
+            this.actionFormService = actionFormService;
+            this.actionJobService = actionJobService;
+            this.stageValidationService = stageValidationService;
         }
 
         private async Task Submit(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData)
@@ -57,7 +75,6 @@ namespace MyFlow.Service.Impl
 
         private async Task Agree(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM approveData)
         {
-
             var actionForm = currentStage.ActionFormList!
                .Where(o => o.ActionType == (int)ActionType.同意)
                .FirstOrDefault();
@@ -110,12 +127,17 @@ namespace MyFlow.Service.Impl
         }
 
 
-        private Task<StageVM> FindCurrentStage(FlowchartVM flowchart, dynamic formData)
+        private async Task<StageVM?> FindCurrentStage(FlowchartVM flowchart, IFormData formData)
         {
             try
             {
-                StageVM stage = flowchart.StageList!.First();
-                return Task.FromResult(stage);
+                if(!formData.StageId.HasValue)
+                {
+                    throw new Exception(" StageId is null");
+                }
+
+                StageVM? stage = await stageService.GetMix(formData.StageId.Value);
+                return stage;
             }
             catch (Exception e)
             {
@@ -123,7 +145,7 @@ namespace MyFlow.Service.Impl
             }
         }
 
-        private Task<ActionFormVM> FindCurrentActionForm(StageVM stage, ActionType actionType, dynamic formData)
+        private Task<ActionFormVM> FindCurrentActionForm(StageVM stage, ActionType actionType, IFormData formData)
         {
             try
             {
@@ -247,13 +269,16 @@ namespace MyFlow.Service.Impl
 
             try
             {
-                flowchart = FindCurrentFlowchart(formData);
-                currentStage = FindCurrentStage(flowchart, formData);
-                currentActionForm = FindCurrentActionForm(currentStage, ActionType.送出, formData);
+
+                IFormData _formData = FormDataTools.Parse(formData);
+
+                flowchart = await FindCurrentFlowchart(_formData);
+                currentStage = await FindCurrentStage(flowchart!, _formData);
+                currentActionForm = await FindCurrentActionForm(currentStage!, ActionType.送出, _formData);
 
                 try
                 {
-                    formData.FlowId = flowchart.Id;
+                    formData.FlowId = flowchart!.Id;
                     formData.ApplyUser = user.UserId;
                     formData.ApplyName = user.UserName;
                     formData.ApplyDept = user.DeptCode;
@@ -287,7 +312,7 @@ namespace MyFlow.Service.Impl
                     {
                         var applyId = await applyDataService.Create(applyData);
                         applyData.Id = applyId;
-                        await Submit(flowchart, currentStage, applyData);
+                        await Submit(flowchart, currentStage!, applyData);
 
                         actionResult.Msg = "提交成功";
                     }
@@ -319,9 +344,11 @@ namespace MyFlow.Service.Impl
 
             try
             {
-                flowchart = FindCurrentFlowchart(formData);
-                currentStage = FindCurrentStage(flowchart, formData);
-                currentActionForm = FindCurrentActionForm(currentStage, ActionType.送出, formData);
+                IFormData _formData = FormDataTools.Parse(formData);
+
+                flowchart = await FindCurrentFlowchart(_formData);
+                currentStage = await FindCurrentStage(flowchart!, _formData);
+                currentActionForm = await FindCurrentActionForm(currentStage!, ActionType.同意, _formData);
 
                 try
                 {
@@ -330,7 +357,7 @@ namespace MyFlow.Service.Impl
 
                     ApproveDataVM source = await approveDataService.Get(formData.ApprId);
 
-                    formData.FlowId = flowchart.Id;
+                    formData.FlowId = flowchart!.Id;
                     formData.ApplyUser = user.UserId;
                     formData.ApplyName = user.UserName;
                     formData.ApplyDept = user.DeptCode;
@@ -355,7 +382,7 @@ namespace MyFlow.Service.Impl
                     {
                         await approveDataService.Update(source);
 
-                        await Agree(flowchart, currentStage, applyData, source);
+                        await Agree(flowchart, currentStage!, applyData, source);
 
                         actionResult.Msg = "已簽核";
                     }
@@ -388,9 +415,11 @@ namespace MyFlow.Service.Impl
 
             try
             {
-                flowchart = FindCurrentFlowchart(formData);
-                currentStage = FindCurrentStage(flowchart, formData);
-                currentActionForm = FindCurrentActionForm(currentStage, ActionType.送出, formData);
+                IFormData _formData = FormDataTools.Parse(formData);
+
+                flowchart = await FindCurrentFlowchart(_formData);
+                currentStage = await FindCurrentStage(flowchart!, _formData);
+                currentActionForm = await FindCurrentActionForm(currentStage!, ActionType.不同意, _formData);
 
                 try
                 {
@@ -416,7 +445,7 @@ namespace MyFlow.Service.Impl
 
                         await approveDataService.Update(source);
 
-                        await Disagree(flowchart, currentStage, applyData, source);
+                        await Disagree(flowchart!, currentStage!, applyData, source);
 
                         actionResult.Msg = "提交成功";
                     }
@@ -447,10 +476,11 @@ namespace MyFlow.Service.Impl
 
             try
             {
+                IFormData _formData = FormDataTools.Parse(formData);
 
-                flowchart = FindCurrentFlowchart(formData);
-                currentStage = FindCurrentStage(flowchart, formData);
-                currentActionForm = FindCurrentActionForm(currentStage, ActionType.送出, formData);
+                flowchart = await FindCurrentFlowchart(_formData);
+                currentStage = await FindCurrentStage(flowchart!, _formData);
+                currentActionForm = await FindCurrentActionForm(currentStage!, ActionType.轉送, _formData);
 
                 try
                 {
@@ -476,7 +506,7 @@ namespace MyFlow.Service.Impl
 
                         await approveDataService.Update(source);
 
-                        await Transfer(flowchart, currentStage, applyData, source);
+                        await Transfer(flowchart!, currentStage!, applyData, source);
 
                         actionResult.Msg = "提交成功";
                     }
@@ -494,11 +524,23 @@ namespace MyFlow.Service.Impl
             }
         }
 
-        public async Task<FlowchartVM?> FindCurrentFlowchart(dynamic formData)
+        public async Task<FlowchartVM?> FindCurrentFlowchart(IFormData formData)
         {
-            IFormData _formData = FormDataTools.Parse(formData);
-            var flowchart = await flowchartMixService.Get(_formData.FlowId!.Value);
-  
+            var flowchart = await flowchartService.GetMix(formData.FlowId!.Value);
+
+            if(flowchart != null)
+            {
+                flowchart!.StageRouteList = await stageRouteService.GetList(flowchart!);
+
+                flowchart!.StageValidationList = await stageValidationService.GetList(flowchart!);
+                        
+                flowchart!.StageJobList = await stageJobService.GetList(flowchart!);
+
+                flowchart!.ActionFormList = await actionFormService.GetList(flowchart!);
+
+                flowchart!.ActionJobList = await actionJobService.GetList(flowchart!);
+            }
+
             return flowchart;
         }
     }

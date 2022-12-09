@@ -1,4 +1,3 @@
-
 using MyFlow.Data.DAOs;
 using MyFlow.Data.DAOs.Basic;
 using MyFlow.Data.Models;
@@ -9,6 +8,9 @@ namespace MyFlow.Service.Impl
 
     public interface IActionFormService : IBasicCRUDService<ActionFormVM> 
     { 
+        Task<ActionFormVM?> GetMix(int Id);
+
+        Task<IList<ActionFormVM>> GetList(FlowchartVM flowchart);
     }
 
     public class ActionFormService : BasicCRUDService<ActionFormDao, ActionForm, ActionFormVM>, IActionFormService
@@ -24,6 +26,20 @@ namespace MyFlow.Service.Impl
         public ActionFormService(IActionFormDao actionFormDao)
         {
             this.actionFormDao = actionFormDao;
+        }
+
+        public async Task<ActionFormVM?> GetMix(int Id)
+        {
+            var actionForm = await actionFormDao.GetMix(Id);
+            var result = actionForm!.ToViewModel<ActionFormVM>();
+            result.ActionJobList = actionForm!.ActionJobList!.Select(o => o.ToViewModel<ActionJobVM>()).ToList();
+            return result;
+        } 
+
+        public async Task<IList<ActionFormVM>> GetList(FlowchartVM flowchart)
+        {
+            var result = await actionFormDao.GetList(flowchart.ToDataModel<Flowchart>());
+            return result!.Select(o => o.ToViewModel<ActionFormVM>()).ToList();
         }
     }
 }

@@ -130,7 +130,7 @@ export default {
         }
 
         const list = computed(() =>{
-            return store.getters['workboard/todoList']
+            return store.getters['todoList/dataList']
         })
 
         const hanldRowClick = (row, column, event) =>{
@@ -143,23 +143,23 @@ export default {
 
         const pageIndex = computed({
             get: () => {
-                return store.getters['workboard/pageIndex']
+                return store.getters['todoList/pageIndex']
             },
             set: val => {
-                store.commit('workboard/setPageIndex', val)
+                store.commit('todoList/setPageIndex', val)
             }
         })
 
         const rowNumber = computed(() =>{
-            return store.getters['workboard/rowNumber']
+            return store.getters['todoList/rowNumber']
         })
 
         const total = computed(() =>{
-            return store.getters['workboard/total']
+            return store.getters['todoList/total']
         })
 
         const query = () =>{
-            store.dispatch('workboard/getTodoList')
+            store.dispatch('todoList/getTodoList')
         }
         const currentPageChange = () =>{
             query()

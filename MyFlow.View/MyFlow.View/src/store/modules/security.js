@@ -1,7 +1,7 @@
-import constantRoutes  from '/@/router/constantRoutes'
-import asyncRoutes from "/@/router/asyncRoutes"
-import { getToken as getCookies, setToken as setCookies, removeToken as removeCookies } from '/@/cookies/index.js'
-import { login, logout, getUser } from '/@/api/security'
+import constantRoutes  from '@/router/constantRoutes'
+import asyncRoutes from "@/router/asyncRoutes"
+import { getToken as getCookies, setToken as setCookies, removeToken as removeCookies } from '@/cookies/index.js'
+import { login, logout, getUser } from '@/api/security'
 
 /**
  * Use meta.role to determine if the current user has permission

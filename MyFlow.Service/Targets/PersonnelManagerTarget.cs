@@ -6,7 +6,7 @@ namespace MyFlow.Service.Targets
     {
         public string Name => "人事主管";
 
-        public Task<string> Invoke(StageVM stage, ApplyDataVM applyData, ApproveDataVM? approveDataVM)
+        public Task<string> Invoke(StageVM stage, ApplyDataVM? applyData, ApproveDataVM? approveDataVM)
         {
             return Task.FromResult("PA");
         }
