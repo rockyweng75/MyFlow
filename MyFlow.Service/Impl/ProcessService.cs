@@ -10,6 +10,7 @@ using MyFlow.Service.Titles;
 using MyFlow.Domain.Models.Basic;
 using MyFlow.Service.Validations;
 using MyFlow.Domain.Tools;
+using MyFlow.Service.Actions.Backward;
 
 namespace MyFlow.Service.Impl
 {
@@ -20,7 +21,8 @@ namespace MyFlow.Service.Impl
         Task<ActionResult> Submit(dynamic formData, UserInfoVM user);
         Task<ActionResult> Transfer(dynamic formData, UserInfoVM user);
         Task<FlowchartVM?> FindCurrentFlowchart(IFormData formData);
-
+        Task<dynamic?> LoadApprove(int approveId);
+        Task<IList<ApproveDataVM>> LoadProcessHistory(int applyId);
     }
 
     public class ProcessService : IProcessService
@@ -36,6 +38,7 @@ namespace MyFlow.Service.Impl
         private IActionFormService actionFormService;
         private IActionJobService actionJobService;
         private IStageValidationService stageValidationService;
+
 
         public ProcessService(
             IServiceProvider serviceProvider,
@@ -542,6 +545,30 @@ namespace MyFlow.Service.Impl
             }
 
             return flowchart;
+        }
+
+        public async Task<dynamic?> LoadApprove(int approveId)
+        {
+            var approveData = await approveDataService.Get(approveId);
+
+            if(approveData != null)
+            {
+                var applyData = await applyDataService.Get(approveData.ApplyId!.Value);
+                var actionForms = await actionFormService.GetList(new ActionFormVM() { StageId = approveData.StageId });
+                return new { 
+
+                    ApplyData = applyData,
+                    ApproveData = approveData,
+                    ActionForms = actionForms
+                };
+            }
+            return null;
+        }
+
+        public async Task<IList<ApproveDataVM>> LoadProcessHistory(int applyId)
+        {
+            var approveList = await approveDataService.GetList(new ApplyDataVM(){ Id = applyId});
+            return approveList;
         }
     }
 }

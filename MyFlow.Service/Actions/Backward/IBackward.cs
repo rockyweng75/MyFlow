@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyFlow.Service.Actions.Forward
+namespace MyFlow.Service.Actions.Backward
 {
-    public interface IBackward
+    public interface IBackward : IAction
     {
     }
 }

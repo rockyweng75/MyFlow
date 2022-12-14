@@ -6,14 +6,14 @@ using MyFlow.Service.Targets;
 using MyFlow.Service.Impl;
 using MyFlow.Domain.Enums;
 
-namespace MyFlow.Service.Actions.Forward
+namespace MyFlow.Service.Actions.Backward
 {
     public abstract class GenericBackward : GenericAction, IBackward
     {
         private IServiceProvider serviceProvider;
         public GenericBackward(
             IServiceProvider serviceProvider,
-            ILogger<GenericForward> logger,
+            ILogger<GenericBackward> logger,
             IApplyDataService applyDataService,
             IApproveDataService approveDataService,
             IJobLogService jobLogService
@@ -27,6 +27,8 @@ namespace MyFlow.Service.Actions.Forward
         {
             this.serviceProvider = serviceProvider;
         }
+
+        public abstract string Name { get; }
 
         public async Task<IList<StageVM>> FindPrevStages(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData) 
         {
@@ -108,6 +110,10 @@ namespace MyFlow.Service.Actions.Forward
             return approveData;
         }
 
+        public async Task  Invoke(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
+        {
+            await PrevAction(flowchart, currentStage, applyData, approveData);
+        }
         public abstract Task PrevAction(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData);
     }
 }

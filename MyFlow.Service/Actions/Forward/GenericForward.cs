@@ -35,6 +35,8 @@ namespace MyFlow.Service.Actions.Forward
             this.stageRouteService = stageRouteService;
         }
 
+        public abstract string Name { get; }
+
         public async Task<IList<StageVM>> FindNextStages(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData) 
         {
 

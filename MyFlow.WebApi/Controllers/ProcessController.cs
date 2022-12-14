@@ -68,5 +68,43 @@ namespace MyFlow.WebApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("/Load/{id}")]
+        public async Task<dynamic?> Load(int id)
+        {
+            var list = await processService.LoadApprove(id);
+            var userId = User.Identity!.Name;
+            var authCodes = User.Claims
+                .Where(o => o.Type == CustomClaimTypes.AuthCode)
+                .Select(o => o.Value)
+                .FirstOrDefault();
+
+            var auths = authCodes!.Split(",");
+            var applyUser = list!.ApplyUser;
+            var approveData = (ApproveDataVM)list.ApproveData;
+            var approvelUser = approveData.UserId;
+            var roles = approvelUser!.Split(",");
+
+            // 申請者
+            if (applyUser == userId) 
+            {
+                return list;
+            }
+
+            // 簽核者
+            if (roles.Any(o => auths.Any(a => a == o || o == userId)))
+            {
+                return list;
+            }
+
+            return "";
+        }
+
+        [HttpGet("/LoadProcessHistory/{id}")]
+        public async Task<IList<ApproveDataVM>> LoadProcessHistory(int id)
+        {
+            var list = await processService.LoadProcessHistory(id);
+            return list;
+        }
+
     }
 }

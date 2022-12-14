@@ -6,7 +6,6 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-
     public interface IFormService : IBasicCRUDService<FormVM> 
     { 
     }
@@ -14,6 +13,8 @@ namespace MyFlow.Service.Impl
     public class FormService : BasicCRUDService<FormDao, Form, FormVM>, IFormService
     {
         private IFormDao formDao;
+        private IFormItemDao formItemDao;
+        private IActionFormDao actionFormDao;
 
         public override BasicDao<Form> dao {
             get{
@@ -21,10 +22,17 @@ namespace MyFlow.Service.Impl
             }
         }
 
-        public FormService(IFormDao formDao)
+        public FormService(
+            IFormDao formDao, 
+            IFormItemDao formItemDao,
+            IActionFormDao actionFormDao
+        )
         {
             this.formDao = formDao;
+            this.formItemDao = formItemDao;
+            this.actionFormDao = actionFormDao;
         }
         
+
     }
 }

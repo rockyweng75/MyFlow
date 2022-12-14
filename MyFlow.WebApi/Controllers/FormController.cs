@@ -8,16 +8,48 @@ namespace MyFlow.WebApi.Controllers
     [ApiController]
     public class FormController : ControllerBase
     {
-        private FormService service;
-        public FormController(FormService service) 
+        private IFormService service;
+        private IFormItemService formItemService;
+        private IActionFormService actionFormService;
+        private IFlowchartService flowchartService;
+
+        public FormController(
+            IFormService service, 
+            IFormItemService formItemService,
+            IActionFormService actionFormService,
+            IFlowchartService flowchartService
+        ) 
         {
             this.service = service;
+            this.formItemService = formItemService;
+            this.actionFormService = actionFormService;
+            this.flowchartService = flowchartService;
         }
         // GET: api/<FormController>
         [HttpGet]
         public async Task<IEnumerable<FormVM>> Get(FormVM vm)
         {
             return await service.GetList(vm);
+        }
+
+        [HttpGet("Apply/{Id}")]
+        public async Task<dynamic> GetList(int Id)
+        {
+            var flowchart = await flowchartService.Get(Id);
+
+            var actionForm = await actionFormService
+                    .GetFirst(flowchart!);
+
+            var formItem = await formItemService
+                    .GetList(actionForm);
+
+            return new
+            {
+                FlowId = flowchart!.Id,
+                FlowName = flowchart!.FlowName,
+                Items = formItem,
+                ActionForm = actionForm
+            };
         }
 
         // GET api/<FormController>/5

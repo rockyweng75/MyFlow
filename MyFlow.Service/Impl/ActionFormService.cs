@@ -5,12 +5,13 @@ using MyFlow.Domain.Models;
 
 namespace MyFlow.Service.Impl
 {
-
     public interface IActionFormService : IBasicCRUDService<ActionFormVM> 
     { 
         Task<ActionFormVM?> GetMix(int Id);
 
         Task<IList<ActionFormVM>> GetList(FlowchartVM flowchart);
+
+        Task<ActionFormVM> GetFirst(FlowchartVM flowchart);
     }
 
     public class ActionFormService : BasicCRUDService<ActionFormDao, ActionForm, ActionFormVM>, IActionFormService
@@ -40,6 +41,12 @@ namespace MyFlow.Service.Impl
         {
             var result = await actionFormDao.GetList(flowchart.ToDataModel<Flowchart>());
             return result!.Select(o => o.ToViewModel<ActionFormVM>()).ToList();
+        }
+
+        public async Task<ActionFormVM> GetFirst(FlowchartVM flowchart)
+        {
+            var result = await actionFormDao.GetFirst(flowchart.ToDataModel<Flowchart>());
+            return result.ToViewModel<ActionFormVM>();
         }
     }
 }

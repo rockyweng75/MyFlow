@@ -1,5 +1,4 @@
-﻿using MyFlow.Domain.Enums;
-using MyFlow.Domain.Models.Basic;
+﻿using MyFlow.Domain.Models.Basic;
 
 namespace MyFlow.Domain.Models
 {

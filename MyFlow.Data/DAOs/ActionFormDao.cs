@@ -7,6 +7,7 @@ namespace MyFlow.Data.DAOs
     public interface IActionFormDao : IDao<ActionForm> { 
         Task<ActionForm?> GetMix(int Id);
         Task<IList<ActionForm>> GetList(Flowchart flowchart);
+        Task<ActionForm> GetFirst(Flowchart flowchart);
     } 
     public class ActionFormDao : BasicDao<ActionForm>, IActionFormDao
     {
@@ -30,6 +31,27 @@ namespace MyFlow.Data.DAOs
                 
             queryable.ActionForm.ActionJobList = queryable.ActionJobList;
             return queryable.ActionForm;
+        } 
+
+
+        public async Task<ActionForm> GetFirst(Flowchart flowchart)
+        {
+          var queryable =
+                dbContext.Set<ActionForm>().FromSqlInterpolated(
+                $@"
+                    select a.* 
+                    from ActionForm a
+                    where a.StageId =  
+                        (
+                            select top(1) s.Id 
+                            from Flowchart f 
+                            join Stage s on f.Id = s.FlowId 
+                            where f.Id = { flowchart.Id }
+                            and a.StageId = s.Id
+                        )
+                    order by a.OrderId
+                ");
+            return await queryable.FirstAsync();
         } 
 
 

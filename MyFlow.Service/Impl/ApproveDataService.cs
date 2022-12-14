@@ -15,6 +15,7 @@ namespace MyFlow.Service.Impl
         Task<IList<dynamic>> GetDistinctApproveList(string UserId, IFilterTable filterTable);
         Task<IList<dynamic>> GetDistinctTodoList(IFilterTable filterTable, int? ApplyId = null, string? UserId = null, IList<string>? AuthCodes = null);
         Task<IList<WorkboardList>> GetTodoList(string userId, IList<string> authCodes, SortPaginationTable pagination);
+        Task<IList<ApproveDataVM>> GetList(ApplyDataVM applyDataVM);
     }
 
     public class ApproveDataService : BasicCRUDService<ApproveDataDao, ApproveData, ApproveDataVM>, IApproveDataService
@@ -32,6 +33,11 @@ namespace MyFlow.Service.Impl
         public ApproveDataService(IApproveDataDao approveDataDao)
         {
             this.approveDataDao = approveDataDao;
+        }
+
+        public async Task<IList<ApproveDataVM>> GetList(ApplyDataVM applyDataVM)
+        {
+            return await this.GetList(new ApproveDataVM(){ApplyId = applyDataVM.Id});
         }
 
 

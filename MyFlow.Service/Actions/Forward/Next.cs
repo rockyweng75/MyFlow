@@ -19,6 +19,8 @@ namespace MyFlow.Service.Actions.Forward
         {
         }
 
+        public override string Name => "下一關";
+
         public override async Task NextAction(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {
             ActionFormVM? actionform = null;

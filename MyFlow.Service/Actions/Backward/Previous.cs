@@ -3,14 +3,14 @@ using MyFlow.Domain.Models;
 using MyFlow.Service.Impl;
 using MyFlow.Domain.Enums;
 
-namespace MyFlow.Service.Actions.Forward
+namespace MyFlow.Service.Actions.Backward
 {
     public class Previous : GenericBackward, IBackward
     {
         private IServiceProvider serviceProvider;
         public Previous(
             IServiceProvider serviceProvider,
-            ILogger<GenericForward> logger,
+            ILogger<GenericBackward> logger,
             IApplyDataService applyDataService,
             IApproveDataService approveDataService,
             IJobLogService jobLogService
@@ -25,6 +25,7 @@ namespace MyFlow.Service.Actions.Forward
             this.serviceProvider = serviceProvider;
         }
 
+        public override string Name => "退回上一關";
 
         public override async Task PrevAction(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {
