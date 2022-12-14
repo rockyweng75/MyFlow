@@ -12,5 +12,7 @@ namespace MyFlow.Data.DAOs
         public JobLogDao(DbContext dbContext) : base(dbContext) 
         {
         }
+
+        
     }
 }
