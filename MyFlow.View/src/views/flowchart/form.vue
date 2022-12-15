@@ -63,18 +63,18 @@
                     text-color="#fff"
                     active-text-color="#ffd04b"
                     >
-                    <el-menu-item :index="index + 1 + ''" v-for="(item,index) in state.stages" v-bind:key="item.index">
-                        {{index + 1}}
+                    <el-menu-item :index="index + ''" v-for="(item,index) in state.stages" v-bind:key="index">
+                        {{ parseInt(index) + 1}}
                     </el-menu-item>
-                    <el-menu-item index="add"><i class="el-icon-plus"></i></el-menu-item>
-                    <el-menu-item index="delete"><i class="el-icon-delete"></i></el-menu-item>
+                    <el-menu-item index="add"><i class="el-icon-plus">+</i></el-menu-item>
+                    <el-menu-item index="delete"><i class="el-icon-delete">-</i></el-menu-item>
                 </el-menu>
-                <transition :key="state.activeIndex-1">
-                    <Stage v-if="state.stages.length > 0 && state.activeIndex != 'delete'" v-model="state.stages[state.activeIndex -1]" :index="state.activeIndex-1">
+                <transition :key="state.activeIndex">
+                    <Stage v-if="!state.loadingStage && state.activeIndex != 'delete'" v-model="state.stages[state.activeIndex]" :index="state.activeIndex">
                         <template v-slot:footer="slotProps">
-                            <ActionFormView v-model="slotProps.stage.ActionForms"></ActionFormView>  
-                            <JobsView v-model="slotProps.stage.Jobs"></JobsView>  
-                            <ValidationView v-model="slotProps.stage.Validations"></ValidationView>  
+                            <StageRouteView v-model="slotProps.stage.StageRouteList"></StageRouteView>
+                            <ActionFormView v-model="slotProps.stage.ActionFormList"></ActionFormView>  
+                            <ValidationView v-model="slotProps.stage.ValidationList"></ValidationView>
                         </template>
                     </Stage>
                     <div v-else>刪除成功</div>
@@ -88,7 +88,7 @@
 import { reactive, onBeforeMount, ref, computed  } from 'vue'
 import { useStore } from 'vuex'
 import Stage from "./components/stage.vue"
-import JobsView from "./components/jobsView.vue"
+import StageRouteView from "./components/stageRouteView.vue"
 import ValidationView from "./components/validationView.vue"
 import ActionFormView from "./components/actionFormView.vue"
 import FlowType from "./components/flowType.vue"
@@ -98,7 +98,7 @@ import Title from "./components/title.vue"
 export default {
     components:{
         Stage,
-        JobsView,
+        StageRouteView,
         ValidationView,
         ActionFormView,
         FlowType,
@@ -111,10 +111,12 @@ export default {
         const store = useStore();
 
         const flowchart = computed(()=> store.getters['flowchart/flowchart'])
+        const stageList = computed(()=> store.getters['stage/list'])
 
         const state = reactive({
-            activeIndex: '1',
+            activeIndex: '0',
             formData: null,
+            loadingStage: true,
             stages: []
         })
 
@@ -161,21 +163,26 @@ export default {
         }
 
 
-        onBeforeMount(() =>{
-            store.dispatch('flowchart/getFlowchart', props.flowid).then((res)=>{
-                state.formData = {...flowchart.value}
-                var stages = state.formData.Stages
-                // 不能直接使用formdata.Stages會導致頁面當掉
-                if(stages){
-                    stages.forEach(element => {
-                        state.stages.push({...element})
-                    })
-                }
-            })
-            store.dispatch('action/getForward')
-            store.dispatch('action/getBackward')
-            store.dispatch('action/getError')
-            store.dispatch('flowType/getFlowTypes')            
+        onBeforeMount(async () =>{
+            await store.dispatch('flowchart/getFlowchart', props.flowid)
+            state.formData = {...flowchart.value}
+
+            state.loadingStage = true
+            await store.dispatch('stage/getList', props.flowid)
+            state.stages = {...stageList.value}
+            state.loadingStage = false
+
+            // .then((res)=>{
+            //     state.formData = {...flowchart.value}
+            //     // var stages = state.formData.Stages
+            //     // // 不能直接使用formdata.Stages會導致頁面當掉
+            //     // if(stages){
+            //     //     stages.forEach(element => {
+            //     //         state.stages.push({...element})
+            //     //     })
+            //     // }
+            // })
+            await store.dispatch('actionClass/getList')
         })
  
         return {

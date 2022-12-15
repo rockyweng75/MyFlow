@@ -16,33 +16,45 @@ namespace MyFlow.WebApi.Controllers
             this.serviceProvider = serviceProvider;
         }
         // GET: api/<ActionClassController>
-        [HttpGet("{actionType}")]
-        public IActionResult Get(int actionType)
+        [HttpGet()]
+        public IActionResult Get()
         {
             Type? type = null; 
-            switch(actionType)
+            IList<dynamic> result = new List<dynamic>();
+            var key = 0;
+            foreach(var actionType in Enum.GetValues(typeof(ActionType)))
             {
-                case (int)ActionType.送出:
-                case (int)ActionType.同意:
-                    type = typeof(IForward);
-                    break;
-                case (int)ActionType.不同意:
-                    type = typeof(IBackward);
-                    break;
-                default:
-                    break;
-            }
-
-            Dictionary<string, string> result = new Dictionary<string, string>();
-            if(type is not null)
-            {
-                var actionTypes = serviceProvider.GetServices(type);
-                foreach(var a in actionTypes)
+                switch(actionType)
                 {
-                    IAction action = (IAction)a!;
-                    result.Add(action.Name, action.GetType().Name);
+                    case (int)ActionType.送出:
+                        // eq. 同意
+                        break;
+                    case (int)ActionType.同意:
+                        type = typeof(IForward);
+                        key = (int)ActionType.同意;
+                        break;
+                    case (int)ActionType.不同意:
+                        type = typeof(IBackward);
+                        key = (int)ActionType.不同意;
+                        break;
+                    default:
+                        break;
+                }
+
+                if(type is not null)
+                {
+                    var actionTypes = serviceProvider.GetServices(type);
+                    Dictionary<string, string> actionVM = new Dictionary<string, string>();
+                    foreach(var a in actionTypes)
+                    {
+                        IAction action = (IAction)a!;
+                        actionVM.Add(action.Name, action.Key);
+                    }
+
+                    result.Add(new { ActionType = key, Options = actionVM });
                 }
             }
+     
             return Ok(result);
         }
     }

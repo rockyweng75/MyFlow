@@ -12,6 +12,8 @@ namespace MyFlow.Service.Impl
         Task<StageVM?> GetMix(int Id);
 
         Task<StageVM?> GetFirst(FlowchartVM flowchart);
+
+        Task<IList<StageVM>?> GetMixList(FlowchartVM flowchart);
     }
 
     public class StageService : BasicCRUDService<StageDao, Stage, StageVM>, IStageService
@@ -32,8 +34,21 @@ namespace MyFlow.Service.Impl
         public async Task<StageVM?> GetMix(int Id)
         {
             var stage = await stageDao.GetMix(Id);
-            
             return stage!.ToViewModel<StageVM>();
+        } 
+
+        public async Task<IList<StageVM>?> GetMixList(FlowchartVM flowchart)
+        {
+            var stages = await stageDao.GetMixList(new Flowchart(){ Id = flowchart.Id });
+            return stages!.Select(o => {
+                var r = o.ToViewModel<StageVM>();
+                r.ActionFormList = o.ActionFormList!.Select(a => a.ToViewModel<ActionFormVM>()).ToList();
+                r.StageRouteList = o.StageRouteList!.Select(a => a.ToViewModel<StageRouteVM>()).ToList();
+                r.StageValidationList = o.StageValidationList!.Select(a => a.ToViewModel<StageValidationVM>()).ToList();
+                r.StageJobList = o.StageJobList!.Select(a => a.ToViewModel<StageJobVM>()).ToList();
+
+                return r;
+            }).ToList();
         } 
 
         public async Task<StageVM?> GetFirst(FlowchartVM flowchart)

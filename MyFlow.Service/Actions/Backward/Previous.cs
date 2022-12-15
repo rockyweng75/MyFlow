@@ -26,6 +26,7 @@ namespace MyFlow.Service.Actions.Backward
         }
 
         public override string Name => "退回上一關";
+        public override string Key => "Previous";
 
         public override async Task PrevAction(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {

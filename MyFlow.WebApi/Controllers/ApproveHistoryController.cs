@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyFlow.Domain.Models.Basic;
 using MyFlow.Service.Impl;
-using MyFlow.WebApi.Security;
 
 namespace MyFlow.WebApi.Controllers
 {
@@ -31,8 +29,7 @@ namespace MyFlow.WebApi.Controllers
 
             var total = await approveDataService.CountApproveList(pagination, userId!);
 
-
-          var list = await approveDataService.GetApproveList(
+            var list = await approveDataService.GetApproveList(
                 pagination,
                 userId!, 
                 pagination.Order, 

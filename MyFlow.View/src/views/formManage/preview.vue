@@ -17,8 +17,8 @@ import { reactive, ref, watch, provide } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 
-import CustomItem from "/@/components/CustomItem/index.vue"
-import Drawer from "/@/components/Drawer/index.vue"
+import CustomItem from "@/components/CustomItem/index.vue"
+import Drawer from "@/components/Drawer/index.vue"
 
 export default{
     components:{

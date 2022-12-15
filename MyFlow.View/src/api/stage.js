@@ -7,9 +7,9 @@ export const fetchStages = (flowId) => {
     })
 }
 
-export const fetchStage = (model) => {
+export const fetchStage = (stageId) => {
     return request({
-        url: '/api/Stage/' + model.id + '/' + model.action,
+        url: '/api/Stage/' + model.id ,
         method: 'get',
     })
 }

@@ -8,6 +8,8 @@ namespace MyFlow.Data.DAOs
     { 
         Task<Stage?> GetMix(int Id);
 
+        Task<IList<Stage>?> GetMixList(Flowchart flowchart);
+
         Task<Stage?> GetFirst(Flowchart flowchart);
 
         Task<IList<Stage>?> GetList(Flowchart flowchart);
@@ -43,6 +45,31 @@ namespace MyFlow.Data.DAOs
             queryable.Stage.StageValidationList = queryable.StageValidation;
 
             return queryable.Stage;
+        } 
+
+        public async Task<IList<Stage>?> GetMixList(Flowchart flowchart)
+        {
+            var StageList = new List<Stage>();
+            var queryable = 
+                await dbContext.Set<Stage>()
+                .Where(o => o.FlowId == flowchart.Id)
+                .Select(o => 
+                    new { 
+                        Stage = o,
+                        StageJob = dbContext.Set<StageJob>().Where(s=> s.StageId == o.Id).ToList(),
+                        StageRoute = dbContext.Set<StageRoute>().Where(s=> s.StageId == o.Id).ToList(),
+                        ActionForm = dbContext.Set<ActionForm>().Where(s=> s.StageId == o.Id).ToList(),
+                        StageValidation = dbContext.Set<StageValidation>().Where(s=> s.StageId == o.Id).ToList()
+                    })
+                .ToListAsync();
+                
+            return queryable.Select(o =>{
+                o.Stage.StageJobList = o.StageJob;
+                o.Stage.StageRouteList = o.StageRoute;
+                o.Stage.ActionFormList = o.ActionForm;
+                o.Stage.StageValidationList = o.StageValidation;
+                return o.Stage;
+            }).ToList();
         } 
 
         public async Task<Stage?> GetFirst(Flowchart flowchart)

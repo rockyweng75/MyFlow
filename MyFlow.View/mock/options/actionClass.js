@@ -1,12 +1,18 @@
-const testCases = 
+const testCases = [
     {
-        送出: 0,
-        同意: 1,
-        不同意: 2,
-        取消: 3,
-        轉送: 4,
-        關閉: 5
-    };
+        'ActionType': 1,
+        'Options': {
+            '下一關': 'Next',
+            '結案': 'Close'
+        }
+    },
+    {
+        'ActionType': 2,
+        'Options': {
+            '退回上一關': 'Previous'
+        }
+    }
+];
 
 const mock = [
     {

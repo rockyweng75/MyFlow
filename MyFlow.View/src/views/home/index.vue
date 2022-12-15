@@ -1,7 +1,7 @@
 <template>
   <el-row>
      <el-col :span="device !== 'mobile'? 12 : 24">
-      <el-card>
+      <!-- <el-card> -->
         <el-row>
             <el-button type="warning" effect="dark" v-on:click="gotoTodo" style="width:100%">
               <h2>
@@ -10,7 +10,7 @@
               </h2>
             </el-button>
         </el-row>
-      </el-card>
+      <!-- </el-card> -->
     <!--  <el-card>
         <el-row>
           <el-alert type="info" :closable="false">

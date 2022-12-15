@@ -14,7 +14,7 @@ const mutations = {
 }
 
 const actions = {
-  getTargets({ commit }) {
+  getList({ commit }) {
     return new Promise((resolve, reject) => {
       var data = sessionStorage.getItem(key);
       if(data){

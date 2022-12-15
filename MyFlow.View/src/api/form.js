@@ -39,13 +39,6 @@ export function fetchFormV2(id) {
 }
 
 
-export const fetchFormTypes = () => {
-    return request({
-        url: '/api/FormType',
-        method: 'get',
-    })
-}
-
 export const create = (formdata) => {
     var data = JSON.stringify(formdata)
     return request({

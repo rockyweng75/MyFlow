@@ -36,6 +36,7 @@ namespace MyFlow.Service.Actions.Forward
         }
 
         public abstract string Name { get; }
+        public abstract string Key { get; }
 
         public async Task<IList<StageVM>> FindNextStages(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData) 
         {

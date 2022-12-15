@@ -14,6 +14,10 @@ import tag from './modules/options/tag'
 import target from './modules/options/target'
 import title from './modules/options/title'
 import validation from './modules/options/validation'
+import actionClass from './modules/options/actionClass'
+import switchClass from './modules/options/switchClass'
+import actionType from './modules/options/actionType'
+import formType from './modules/options/formType'
 
 import approveList from './modules/workboard/approveList'
 import historyList from './modules/workboard/historyList'
@@ -23,6 +27,7 @@ import process from './modules/workboard/process'
 
 import flowchart from './modules/flowchart'
 import form from './modules/form'
+import stage from './modules/stage'
 
 
 const store = createStore({
@@ -39,13 +44,18 @@ const store = createStore({
    target,
    title,
    validation,
+   switchClass,
+   actionType,
+   formType,
    approveList,
    historyList,
    todoList,
    waitList,
    process,
    flowchart,
-   form
+   form,
+   actionClass,
+   stage
   }
 })
 export default store

@@ -20,7 +20,7 @@ const getters = {
 }
 
 const actions = {
-  getValidations({commit}) {
+  getList({commit}) {
     return new Promise((resolve, reject) => {
         var data = sessionStorage.getItem(key);
         if(data){

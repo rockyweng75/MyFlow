@@ -1,10 +1,10 @@
 <template>
     <el-select v-model="state.formData" v-on:change="change">
-        <el-option v-for="item in itemTypes" v-bind:key="item.value" :label="item.key" :value="item.value"></el-option>
+        <el-option v-for="item in itemTypes" v-bind:key="item.Value" :label="item.Key" :value="item.Value"></el-option>
     </el-select>
 </template>
 <script>
-import { reactive, ref, onUpdated, computed, onBeforeUpdate } from 'vue'
+import { reactive, computed, onBeforeUpdate, onBeforeMount } from 'vue'
 import { useStore } from 'vuex'
 
 export default{
@@ -19,21 +19,19 @@ export default{
         })
 
         const itemTypes = computed(()=>{
-            return store.getters['itemType/itemTypes']
+            return store.getters['itemType/options']
+        })
+
+        onBeforeMount(() =>{
+            if(itemTypes.value.length == 0){
+                store.dispatch('itemType/getList')
+            }
         })
 
         const change =()=>{
             emit('update:modelValue', state.formData)
             emit('update:itemType', state.formData)
         }
-
-        // onUpdated(()=>{
-        //     console.log('onUpdated', state.formData)
-        //     console.log('onUpdated', props)
-
-        //                 // state.formData = props.modelValue
-
-        // })
 
         onBeforeUpdate(()=>{
             state.formData = props.modelValue

@@ -16,6 +16,7 @@ namespace MyFlow.Domain.Models
         public IList<ActionFormVM>? ActionFormList { get; set; }
         public IList<StageRouteVM>? StageRouteList { get; set; }
         public IList<StageValidationVM>? StageValidationList { get; set; }
+        public IList<StageJobVM>? StageJobList { get; set; }
 
     }
 }

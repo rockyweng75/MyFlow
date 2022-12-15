@@ -1,6 +1,6 @@
 <template>
     <el-select v-model="state.formData" v-on:change="change">
-        <el-option v-for="item in formTypes" v-bind:key="item.value" :label="item.key" :value="item.value"></el-option>
+        <el-option v-for="item in formTypes" v-bind:key="item.Key" :label="item.Key" :value="item.Value"></el-option>
     </el-select>
 </template>
 <script>
@@ -18,11 +18,11 @@ export default{
         })
 
         const formTypes = computed(()=>{
-            return store.getters['form/formTypes']
+            return store.getters['formType/options']
         })
 
         onBeforeMount(() =>{
-            store.dispatch('form/getFormTypes')
+            store.dispatch('formType/getList')
         })
 
         const change =()=>{

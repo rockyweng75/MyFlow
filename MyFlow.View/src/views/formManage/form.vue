@@ -8,7 +8,6 @@
                 </el-col>
                 <el-col :span="12" style="text-align:end" >
                     <el-affix :offset="120">
-
                         <el-button type="warning" @click="toPreview()">預覽表單</el-button>
                     </el-affix>
                 </el-col>
@@ -26,7 +25,7 @@
             <el-form-item label="表單分類" 
                         :prop="'formData.FormType'"
                         :rules="{ required: true, message: '請輸入表單分類', trigger: 'blur' }">
-               <FormType v-model="state.formData.FormType"
+                <FormType v-model="state.formData.FormType"
                     placeholder="請輸入類型"
                     clearable>
                 </FormType>
@@ -35,10 +34,18 @@
                <el-card>
                    <template #header>
                         <el-row justify="end">                           
-                            <el-button icon="el-icon-sort-up" size="mini" circle v-on:click="up(index)"></el-button>
-                            <el-button icon="el-icon-sort-down" size="mini" circle v-on:click="down(index)"></el-button>
-                            <el-button icon="el-icon-plus" size="mini" circle v-on:click="add(index)"></el-button>
-                            <el-button icon="el-icon-close" size="mini" circle v-on:click="remove(index)"></el-button>
+                            <el-button size="small" circle v-on:click="up(index)">
+                                <el-icon><SortUp /></el-icon>
+                            </el-button>
+                            <el-button size="small" circle v-on:click="down(index)">
+                                <el-icon><SortDown /></el-icon>
+                            </el-button>
+                            <el-button size="small" circle v-on:click="add(index)">
+                                <el-icon><Plus /></el-icon>
+                            </el-button>
+                            <el-button size="small" circle v-on:click="remove(index)">
+                                <el-icon><Close /></el-icon>
+                            </el-button>
                         </el-row>
                    </template>
                     <Item v-if="state.items.length > 0" v-model="state.items[index]" :index="index"></Item>
@@ -47,10 +54,7 @@
         </el-form>
     </el-card>
     <Preview v-model:open="state.openPreview" :items="state.items">
-
     </Preview>
-
-    
 </template>
 
 <script>
@@ -61,11 +65,18 @@ import Item from "./components/item.vue"
 import FormType from "./components/formType.vue"
 import Preview from "./preview.vue"
 
+import { SortUp, SortDown, Plus, Close } from '@element-plus/icons-vue'
+
+
 export default{
     components:{
         Item,
         FormType,
-        Preview
+        Preview,
+        SortUp, 
+        SortDown, 
+        Plus, 
+        Close
     },
     props:['formid'],
     setup(props){
@@ -80,8 +91,8 @@ export default{
             openPreview: false
         })
 
-        onBeforeMount(()=>{
-            store.dispatch("form/getForm", props.formid).then(() =>{
+        onBeforeMount(async ()=>{
+            await store.dispatch("form/getForm", props.formid).then(() =>{
                 // 需copy to new object，直接使用vuex object會發生錯誤
 
                 state.formData = {...store.getters['form/selectedForm']}
@@ -92,8 +103,8 @@ export default{
                 // 壓回會出錯
                 // state.formData.Items = state.items
             })
-            store.dispatch('itemType/getItemTypes')
-            store.dispatch('dataRef/getDataRefs')
+            // await store.dispatch('itemType/getList')
+            // await store.dispatch('dataRef/getList')
         })
 
 

@@ -75,7 +75,7 @@
 
 import ItemType from "./itemType.vue"
 import DataRef from "./dataRef.vue"
-import CodeEditor from "/@/components/CodeEditor/index.vue"
+import CodeEditor from "@/components/CodeEditor/index.vue"
 
 export default{
     props:['modelValue', 'index'],

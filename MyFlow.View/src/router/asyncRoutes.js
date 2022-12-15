@@ -26,32 +26,32 @@ const asyncRoutes = [
             },
         ],
     },
-    // {
-    //     component: () => import('/@/layout/index.vue'),
-    //     path: '/formManage',
-    //     children: [
-    //         {
-    //             name: 'formManage',
-    //             path: 'index',
-    //             component: () =>  import('/@/views/formManage/index.vue'),
-    //             meta: { title: '表單管理', icon: 'el-icon-house', affix: true, roles:['S'] },
-    //         },
-    //         {
-    //             name: 'formManageEdit',
-    //             path: 'edit/:id',
-    //             component: () =>  import('/@/views/formManage/edit.vue'),
-    //             meta: { title: '編輯表單', icon: 'el-icon-house', affix: true, roles:['S'] },
-    //             hidden: true
-    //         },
-    //         {
-    //             name: 'createFormManage',
-    //             path: 'create',
-    //             component: () =>  import('/@/views/formManage/create.vue'),
-    //             meta: { title: '建立表單', icon: 'el-icon-house', affix: true, roles:['S'] },
-    //             hidden: true
-    //         },
-    //     ],
-    // },
+    {
+        component: () => import('@/layout/index.vue'),
+        path: '/formManage',
+        children: [
+            {
+                name: 'formManage',
+                path: 'index',
+                component: () =>  import('@/views/formManage/index.vue'),
+                meta: { title: '表單管理', icon: 'el-icon-house', affix: true, roles:['admin'] },
+            },
+            {
+                name: 'formManageEdit',
+                path: 'edit/:id',
+                component: () =>  import('@/views/formManage/edit.vue'),
+                meta: { title: '編輯表單', icon: 'el-icon-house', affix: true, roles:['admin'] },
+                hidden: true
+            },
+            {
+                name: 'createFormManage',
+                path: 'create',
+                component: () =>  import('@/views/formManage/create.vue'),
+                meta: { title: '建立表單', icon: 'el-icon-house', affix: true, roles:['admin'] },
+                hidden: true
+            },
+        ],
+    },
     // {
     //     component: () => import('/@/layout/index.vue'),
     //     path: '/permission',

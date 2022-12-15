@@ -29,6 +29,7 @@ namespace MyFlow.Service.Actions.Backward
         }
 
         public abstract string Name { get; }
+        public abstract string Key { get; }
 
         public async Task<IList<StageVM>> FindPrevStages(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData) 
         {
@@ -110,7 +111,7 @@ namespace MyFlow.Service.Actions.Backward
             return approveData;
         }
 
-        public async Task  Invoke(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
+        public async Task Invoke(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {
             await PrevAction(flowchart, currentStage, applyData, approveData);
         }

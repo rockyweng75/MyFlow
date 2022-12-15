@@ -36,10 +36,17 @@ const mock = [
   },
   {
       url: '/api/Flowchart/:id',
-      method: 'post',
+      method: 'get',
       timeout: 2000,
       response: ({ query, body, headers }) => {
-        return testCases[0];
+        return {
+          Id: 1,
+          FlowName: '請假單',
+          FlowType: 1,
+          AdminUser: 'TestUser',
+          TagFormat: 'A000',
+          TitleFormat: 'A000'
+        };
     },
   }
 ]

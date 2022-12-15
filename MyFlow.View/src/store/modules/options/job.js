@@ -11,7 +11,7 @@ const mutations = {
 }
 
 const actions = {
-  getJobs({ commit }) {
+  getList({ commit }) {
     return new Promise((resolve, reject) => {
       fetchJobs().then(response => {
           commit('setOptions', response)

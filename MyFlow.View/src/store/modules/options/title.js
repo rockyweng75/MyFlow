@@ -13,8 +13,14 @@ const mutations = {
     },
 }
 
+const getters = {
+  optons:(state, getters) =>{
+    return state.optons;
+  },
+}
+
 const actions = {
-  getTitles({ commit }) {
+  getList({ commit }) {
     return new Promise((resolve, reject) => {
       var data = sessionStorage.getItem(key);
       if(data){
@@ -33,11 +39,7 @@ const actions = {
   },
 }
 
-const getters = {
-  titles:(state, getters) =>{
-    return state.titles;
-  },
-}
+
 
 export default {
   namespaced: true,

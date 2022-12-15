@@ -8,10 +8,10 @@ const state = () => ({
 
 const mutations = {
   setForward: (state, list) => {
-    state.forward = list 
+    state.forward = list.filter(o => o.ActionType == 1)[0].Options 
   },
   setBackward: (state, list) => {
-    state.backward = list 
+    state.backward = list.filter(o => o.ActionType == 2)[0].Options
   },
   setError: (state, list) => {
     state.error = list 
@@ -33,8 +33,13 @@ const getters = {
 const actions = {
   getList({commit}) {
     return new Promise((resolve, reject) => {
-      fetchActionClasses().then(response => {
-        commit('setOptions', response)
+      fetchActionClasses()
+      .then(response => {
+        if(response != null){
+          commit('setForward', response)
+          commit('setBackward', response)
+          commit('setError', response)
+        }
         resolve()
       }).catch(error => {
         reject(error)

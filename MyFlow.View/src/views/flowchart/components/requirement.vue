@@ -1,6 +1,6 @@
 <template>
     <el-select v-model="state.formData" v-on:change="change" clearable>
-        <el-option v-for="item in requirements" v-bind:key="item.RequirementName" :label="item.RequirementName" :value="item.RequirementClass"></el-option>
+        <el-option v-for="item in requirements" v-bind:key="item.Key" :label="item.Key" :value="item.Value"></el-option>
     </el-select>
 </template>
 <script>
@@ -18,11 +18,11 @@ export default{
         })
 
         const requirements = computed(()=>{
-            return store.getters['requirement/requirements']
+            return store.getters['requirement/options']
         })
 
         onBeforeMount(() =>{
-            store.dispatch('requirement/getRequirements')
+            store.dispatch('requirement/getList')
         })
 
         const change =()=>{

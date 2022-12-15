@@ -1,6 +1,6 @@
 <template>
     <el-select v-model="state.formData" v-on:change="change" :fit-input-width="true">
-        <el-option v-for="item in tags" v-bind:key="item.Name" :label="item.Name" :value="item.Class"></el-option>
+        <el-option v-for="item in tags" v-bind:key="item.Key" :label="item.Key" :value="item.Value"></el-option>
     </el-select>
 </template>
 <script>
@@ -19,11 +19,11 @@ export default{
         })
 
         const tags = computed(()=>{
-            return store.getters['tag/tags']
+            return store.getters['tag/options']
         })
 
         onBeforeMount(() =>{
-            store.dispatch('tag/getTags')
+            store.dispatch('tag/getList')
         })
 
         const change =()=>{

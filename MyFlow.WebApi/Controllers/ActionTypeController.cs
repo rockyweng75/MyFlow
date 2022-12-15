@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using MyFlow.Domain.Enums;
-using MyFlow.Domain.Models;
-using MyFlow.Service.Impl;
 
 namespace MyFlow.WebApi.Controllers
 {
@@ -18,10 +16,10 @@ namespace MyFlow.WebApi.Controllers
         {
             var keys = Enum.GetNames(typeof(ActionType));
             var values = Enum.GetValues(typeof(ActionType));
-            var result = new Dictionary<string, int>();
+            var result = new List<dynamic>();
             for (var i = 0; i < keys.Length; i++)
             {
-                result.Add(keys[i], (int)values.GetValue(i)!);
+                result.Add(new { Key = keys[i], Value = (int)values.GetValue(i)!});
             }
             return Ok(result);
         }

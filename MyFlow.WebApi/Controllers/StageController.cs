@@ -8,20 +8,22 @@ namespace MyFlow.WebApi.Controllers
     [ApiController]
     public class StageController : ControllerBase
     {
-        private StageService service;
+        private IStageService service;
+
         private ILogger<FlowchartController> logger;
         public StageController(
             ILogger<FlowchartController> logger, 
-            StageService service) 
+            IStageService service
+            ) 
         {
             this.logger = logger;
             this.service = service;
         }
         // GET: api/<StageController>
         [HttpGet("Flow/{id}")]
-        public async Task<IEnumerable<StageVM>> GetList(int Id)
+        public async Task<IEnumerable<StageVM>?> GetList(int Id)
         {
-            return await service.GetList(new FlowchartVM(){ Id = Id});
+            return await service.GetMixList(new FlowchartVM(){ Id = Id});
         }
 
         // GET api/<StageController>/5

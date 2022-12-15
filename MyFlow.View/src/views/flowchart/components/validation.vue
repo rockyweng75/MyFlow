@@ -7,11 +7,8 @@
         >
         <el-form :model="state.selectedValue" label-width="120px">
             <el-form-item label="檢核項目">
-                <!-- <el-select v-model="state.selectedValue" value-key="JobName" placeholder="請選擇欲檢核項目">
-                    <el-option v-for="item in jobs" v-bind:key="item.JobName" :label="item.JobName" :value="item"></el-option>
-                </el-select> -->
-                <el-select v-model="state.selectedValue" value-key="ValidateName" placeholder="請選擇欲檢核項目">
-                    <el-option v-for="item in validations" v-bind:key="item.ValidateName" :label="item.ValidateName" :value="item"></el-option>
+                <el-select v-model="state.selectedValue" value-key="Key" placeholder="請選擇欲檢核項目">
+                    <el-option v-for="item in validations" v-bind:key="item.Key" :label="item.Key" :value="item"></el-option>
                 </el-select>
             </el-form-item>
         </el-form>
@@ -47,11 +44,11 @@ export default{
         })
 
         const validations = computed(()=>{
-            return store.getters['validation/validations']
+            return store.getters['validation/options']
         })
 
         onBeforeMount(() =>{
-            store.dispatch('validation/getValidations')
+            store.dispatch('validation/getList')
         })
 
         const add = () =>{

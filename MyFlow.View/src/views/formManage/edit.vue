@@ -30,7 +30,7 @@ export default {
 
         const submit = (form, formData, items)=>{
             formData.Items = items
-            form.validate((valid, vdata) => {
+            form.validate((valid) => {
                 if (valid) {
                     store.dispatch('form/modify', formData)
                     .then(res=>{

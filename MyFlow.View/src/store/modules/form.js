@@ -1,4 +1,4 @@
-import { fetchForms, fetchApplyForm, fetchForm, fetchStage, fetchFormTypes, create, update } from '../../api/form'
+import { fetchForms, fetchApplyForm, fetchForm, fetchStage, create, update } from '../../api/form'
 
 const state = () => ({
   formList: [],
@@ -18,7 +18,6 @@ const state = () => ({
   defaultOpeneds:[],
   selectedForm:{},
   stageForm: {},
-  formTypes:[], 
 })
 
 const mutations = {
@@ -30,10 +29,6 @@ const mutations = {
   },
   setSelectedForm: (state, form) => {
     state.selectedForm = form 
-  },
-  setFormTypes: (state, list) => {
-    sessionStorage.setItem('eform-formtype', JSON.stringify(list))
-    state.formTypes = list 
   },
   setDefaultOpeneds: (state, list) =>{
     state.defaultOpeneds = []
@@ -61,9 +56,6 @@ const getters = {
   stageItems:(state, getters)=>{
     return getters.stageForm.Items
   },
-  formTypes:(state, getters)=>{
-    return state.formTypes
-  },
   defaultOpeneds: (state, getters)=>{
     return state.defaultOpeneds
   }
@@ -84,7 +76,8 @@ const actions = {
   getForm({commit, state }, formId) {
     return new Promise((resolve, reject) => {
       if(formId){
-        fetchForm(formId).then(response => {
+        fetchForm(formId)
+        .then(response => {
           commit('setSelectedForm', response)
           resolve()
         }).catch(error => {
@@ -115,23 +108,6 @@ const actions = {
         reject(error)
       })
     })
-  },
-  getFormTypes({commit}) {
-    return new Promise((resolve, reject) => {
-        var data = sessionStorage.getItem('eform-formtype');
-        if(data){
-          var formTypes = JSON.parse(data)
-          commit('setFormTypes', formTypes)
-          resolve()
-        } else {
-          fetchFormTypes().then(response => {
-            commit('setFormTypes', response)
-            resolve()
-          }).catch(error => {
-            reject(error)
-          })
-        }
-      })
   },
   insert({commit}, formData){
     return new Promise((resolve, reject) => {

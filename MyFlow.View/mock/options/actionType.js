@@ -1,12 +1,13 @@
 const testCases = 
-    {
-        送出: 0,
-        同意: 1,
-        不同意: 2,
-        取消: 3,
-        轉送: 4,
-        關閉: 5
-    };
+    [
+        { Key: '送出', Value: 0 },
+        { Key: '同意', Value: 1 },
+        { Key: '不同意', Value: 2 },
+        { Key: '取消', Value: 3 },
+        { Key: '轉送', Value: 4 },
+        { Key: '撤銷', Value: 5 },
+    ]
+
 
 const mock = [
     {
