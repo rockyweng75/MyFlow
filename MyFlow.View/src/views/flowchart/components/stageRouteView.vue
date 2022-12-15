@@ -2,14 +2,14 @@
     <el-card>
         <template #header>
             <el-row justify="space-between">
-                <ActionForm v-model="state.model" :add="addRow"></ActionForm>
+                <StageRoute v-model="state.model" :add="addRow"></StageRoute>
             </el-row>
         </template>        
         <el-table :data="state.model.filter(o => !o.Delete)" :default-sort="{ prop: 'OrderId' }">
-            <el-table-column prop="OrderId" label="順序" width="90"> </el-table-column>
-            <el-table-column prop="ActionTypeName" label="功能類型" width="180"> </el-table-column>
-            <el-table-column label="按鈕名稱" prop="ButtonName" width="180"></el-table-column>
-            <el-table-column label="表單名稱" prop="FormName" width="180"></el-table-column>
+            <el-table-column prop="ActionType" label="動作類型" width="180"> </el-table-column>
+            <el-table-column prop="NextStageId" label="下一關編號" width="90"></el-table-column>
+            <el-table-column prop="RouteName" label="路由名稱" width="180"></el-table-column>
+            <el-table-column prop="SwitchClass" label="執行條件" width="180"></el-table-column>
             <el-table-column label="刪除" width="120">
                 <template #default="scope">
                     <el-button
@@ -32,15 +32,15 @@
     </el-card>
 </template>
 <script>
-import { reactive, onBeforeMount } from 'vue'
+import { reactive, onBeforeMount, computed, ref } from 'vue'
 import { useStore } from 'vuex'
-import ActionForm from "./actionForm.vue"
+import StageRoute from "./stageRoute.vue"
 
 export default {    
     props:['modelValue', 'disabled'],
     emits:['update:modelValue'],
-    components:{ ActionForm },
-    setup(props, { emit }) {
+    components:{ StageRoute },
+    setup(props, {emit}) {
 
         const store = useStore()
 
@@ -54,6 +54,7 @@ export default {
         props.modelValue.forEach( item => {
             state.model.push({...item})
         })
+
 
         const refreshList = () =>{
             return state.model
@@ -78,7 +79,9 @@ export default {
                 var list = refreshList();
                 list[index - 1].OrderId = index + 1
                 list[index].OrderId = index 
+                // [ state.model.value[index-1], list.value[index] ] = [ list.value[index], list.value[index -1] ]
                 emit('update:modelValue', state.model)
+
             }
         }
 
@@ -87,7 +90,9 @@ export default {
                 var list = refreshList();
                 list[index + 1].OrderId = index + 1
                 list[index].OrderId = index + 2
+                // [ list.value[index+1], list.value[index] ] = [ list.value[index], list.value[index +1] ]
                 emit('update:modelValue', state.model)
+
             }
         }
 
