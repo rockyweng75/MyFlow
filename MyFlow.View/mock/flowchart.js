@@ -37,7 +37,6 @@ const mock = [
   {
       url: '/api/Flowchart/:id',
       method: 'get',
-      timeout: 2000,
       response: ({ query, body, headers }) => {
         return {
           Id: 1,

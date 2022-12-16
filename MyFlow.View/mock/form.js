@@ -56,7 +56,7 @@ const testApplyForm = {
       Id: 2,
       FormId: 0,
       OrderId: 2,
-      ItemType: 6,
+      ItemType: 5,
       ItemTitle: '申請日期',
       ItemValue: 'ApplyDate',
       DataRef: 'ApplyDate',

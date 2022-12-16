@@ -2,12 +2,11 @@
     <el-row class="block" justify="space-between">
         <el-col :span="12">
             <el-button-group>
-                <template v-for="actionForm in actionForms" :key="key">
+                <template v-for="(actionForm, index) in actionForms" :key="index">
                     <el-button :type="getButtonType(actionForm)" @click="hanldClick(actionForm)">
                         {{actionForm.ButtonName}}
                     </el-button>
                 </template>
-                <!-- <el-button v-for="key in Object.keys(buttonNames)" :key="key" :type="getButtonType(key)" @click="hanldClick(key)">{{buttonNames[key]}}</el-button> -->
             </el-button-group>
         </el-col>
         <el-col :span="12" style="text-align:end" >
@@ -138,10 +137,10 @@ export default{
         }
 
         const getButtonType = (key) =>{
-            if(key == 'SUCCESS'){
+            if(key.ActionType == 1){
                 return 'primary'
             }
-            else if(key == 'CANCEL'){
+            else if(key.ActionType == 2){
                 return 'danger'
             } else {
                 return 'info'

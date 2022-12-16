@@ -85,15 +85,15 @@
 </template>
 
 <script>
-import { reactive, onBeforeMount, ref, computed  } from 'vue'
+import { reactive, onBeforeMount, ref, computed, defineAsyncComponent  } from 'vue'
 import { useStore } from 'vuex'
-import Stage from "./components/stage.vue"
-import StageRouteView from "./components/stageRouteView.vue"
-import ValidationView from "./components/validationView.vue"
-import ActionFormView from "./components/actionFormView.vue"
-import FlowType from "./components/flowType.vue"
-import Tag from "./components/tag.vue"
-import Title from "./components/title.vue"
+const Stage = defineAsyncComponent(() => import("./components/stage.vue"))
+const StageRouteView = defineAsyncComponent(() => import("./components/stageRouteView.vue"))
+const ValidationView = defineAsyncComponent(() => import("./components/validationView.vue"))
+const ActionFormView = defineAsyncComponent(() => import("./components/actionFormView.vue"))
+const FlowType = defineAsyncComponent(() => import("./components/flowType.vue"))
+const Tag = defineAsyncComponent(() => import("./components/tag.vue"))
+const Title = defineAsyncComponent(() => import("./components/title.vue"))
 
 export default {
     components:{
@@ -122,7 +122,8 @@ export default {
 
         const addStage = (index) =>{
             return new Promise((resolve, reject) =>{
-                state.stages.push(newStage(index))
+                var stage = newStage(index)
+                state.stages.push(stage)
                 resolve()
             });
         }
@@ -131,7 +132,7 @@ export default {
             var size = state.stages.length
             if(size === 1){
             } else {
-                state.stages.splice(index - 1, 1)
+                state.stages.splice(index, 1)
             }
         }
 
@@ -139,14 +140,19 @@ export default {
             if(key === 'add'){
                 var size = state.stages.length
                 key = size + 1 
-                addStage(key).then(() =>{
-                    state.activeIndex = key
+                addStage(key)
+                .then(() =>{
+                    state.activeIndex = (key - 1)
                 })
             } else if(key === 'delete'){
                 //TODO 剩一筆時有bug
-                key = state.activeIndex == '1' ? '1' : parseInt(state.activeIndex) - 1
+                key = state.activeIndex == '0' ? '0' : parseInt(state.activeIndex)
                 removeStage(parseInt(state.activeIndex))
-                state.activeIndex = key
+                if( key == 0){
+                    state.activeIndex = 0
+                } else {
+                    state.activeIndex = key - 1
+                }
             } else {
                 state.activeIndex = key
             }
@@ -156,9 +162,10 @@ export default {
             return {
                 OrderId: index, 
                 StageName: '',
-                Jobs:[],
-                Validations:[],
-                ActionForms:[]
+                StageRouteList: [],
+                ActionFormList: [],
+                ValidationList: [],
+                StageJobList: []
             }
         }
 
@@ -169,7 +176,7 @@ export default {
 
             state.loadingStage = true
             await store.dispatch('stage/getList', props.flowid)
-            state.stages = {...stageList.value}
+            state.stages = [...stageList.value]
             state.loadingStage = false
 
             // .then((res)=>{

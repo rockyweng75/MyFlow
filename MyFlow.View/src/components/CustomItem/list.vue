@@ -1,4 +1,5 @@
 <template>
+
     <div v-if="state.isAreas" >
         <el-steps v-if="state.items.some(o => o.ItemType === 202)" 
             direction="vertical"
@@ -21,7 +22,6 @@
                 </el-step>
             </template>   
         </el-steps>
-
          <template v-else v-for="item in state.items" v-bind:key="item.ItemName" >
             <el-card v-if="item.ItemType === 201" :class="item.ItemDesc">
                 <template #header>
@@ -55,8 +55,8 @@ import { onBeforeUpdate, reactive, onBeforeMount, ref, toRefs } from 'vue'
 
 export default{
     props:{
-        items: {type: [Array, Object]},
-        data: {type: Object},
+        items: { type: [Array, Object] },
+        data: { type: Object },
         readonly: {
             type: Boolean,
             default: false

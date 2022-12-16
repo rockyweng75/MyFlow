@@ -30,7 +30,9 @@ const mock = [
     response: ({ query ,body }) => {
       return {
           ApplyData: {
-
+            ApplyUser: 'TestUser',
+            ApplyDate: new Date(),
+            ApplyReason: 1
           },
           ApproveData: {
 
@@ -65,7 +67,6 @@ const mock = [
           FormData: {},
           CloseDate: new Date() + 7
         }
-
       ];
     },
   },

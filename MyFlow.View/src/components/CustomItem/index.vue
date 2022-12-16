@@ -1,5 +1,5 @@
 <template>
-    <template v-if="item.ItemType == 1">
+    <template v-if="item.ItemType == 0">
         <el-form-item :label="item.ItemTitle" 
                     :prop="item.ItemValue"
                     :rules="getRules(item)"
@@ -13,7 +13,7 @@
             </el-input>
         </el-form-item>
     </template>
-    <template v-if="item.ItemType == 2">
+    <template v-if="item.ItemType == 1">
         <el-form-item :label="item.ItemTitle" 
                 :prop="item.ItemValue" 
                 :rules="getRules(item)"
@@ -32,7 +32,7 @@
             </el-select>
         </el-form-item>
     </template>
-    <template v-if="item.ItemType == 3">
+    <template v-if="item.ItemType == 2">
         <el-form-item :label="item.ItemTitle" 
                     :prop="item.ItemValue"
                     :rules="getRules(item)"
@@ -44,7 +44,7 @@
                 :readonly="readonly"></MultipleCheckbox>
         </el-form-item>
     </template>
-    <template v-if="item.ItemType == 4">
+    <template v-if="item.ItemType == 3">
         <el-form-item :label="item.ItemTitle" 
                     :prop="item.ItemValue"
                     :rules="getRules(item)"
@@ -58,7 +58,7 @@
             </el-radio-group>
         </el-form-item>
     </template>
-    <template v-if="item.ItemType == 5">
+    <template v-if="item.ItemType == 4">
         <el-form-item :label="item.ItemTitle" 
                     :prop="item.ItemValue"
                     :rules="getRules(item)"
@@ -74,7 +74,7 @@
             </el-date-picker>
         </el-form-item>
     </template>
-    <template v-if="item.ItemType == 6">
+    <template v-if="item.ItemType == 5">
         <el-form-item :label="item.ItemTitle" 
                     :prop="item.ItemValue"
                     :rules="getRules(item)"
@@ -91,7 +91,7 @@
             </el-date-picker>
         </el-form-item>
     </template>
-    <template v-if="item.ItemType == 7">
+    <template v-if="item.ItemType == 6">
         <el-form-item :label="item.ItemTitle" 
                     :prop="item.ItemValue"
                     :rules="getRules(item)"
@@ -106,7 +106,7 @@
             </el-time-picker>
         </el-form-item>
     </template>
-    <template v-if="item.ItemType == 8">
+    <template v-if="item.ItemType == 7">
         <el-form-item :label="item.ItemTitle" 
                     :prop="item.ItemValue"
                     :rules="getRules(item)"
@@ -120,7 +120,7 @@
         </el-form-item>        
     </template>
     <!-- type=9,是messageBox-->
-    <template v-if="item.ItemType == 10">
+    <!-- <template v-if="item.ItemType == 9">
         <el-card style="margin-bottom:30px">
             <el-descriptions direction="vertical" v-if="Array.isArray(modelValue)">
                 <el-descriptions-item :label="_key" v-for="(_key,index) in Object.keys(modelValue)" :key="index">{{modelValue[_key]}}</el-descriptions-item>
@@ -155,7 +155,7 @@
                 </template>
             </el-alert>
         </el-form-item>
-    </template>
+    </template> -->
 </template>
 <script>
 import MultipleCheckbox from "@/components/FormItem/MultipleCheckbox/index.vue"

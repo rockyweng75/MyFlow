@@ -7,11 +7,6 @@
         >
         <el-form :model="state.selectedValue" label-width="120px">
             <el-form-item label="功能">
-                <!-- <el-select v-model="state.selectedValue.ActionType" placeholder="請選擇功能">
-                    <el-option :value="1" label="SUCCESS(送出)"></el-option>
-                    <el-option :value="2" label="FAIL(錯誤)"></el-option>
-                    <el-option :value="3" label="CANCEL(退回)"></el-option>
-                </el-select> -->
                 <ActionType v-model="state.selectedValue.ActionType" placeholder="請選擇功能"></ActionType>
             </el-form-item>
             <el-form-item label="功能名稱">

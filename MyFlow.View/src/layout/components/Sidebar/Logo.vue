@@ -79,7 +79,7 @@ export default {
   position: relative;
   width: 100%;
   height: 165px;
-  background: #1ab394 !important;
+  background: #2da7b8 !important;
   overflow: hidden;
   box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.34), 0 0 6px 0 rgba(0, 0, 0, 0.14);
   margin-bottom: 3px;
