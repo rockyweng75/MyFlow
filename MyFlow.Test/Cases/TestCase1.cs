@@ -289,6 +289,5 @@ namespace MyFlow.Test.Cases
                 Required = "Y"
             }
         };
-
     }
 }

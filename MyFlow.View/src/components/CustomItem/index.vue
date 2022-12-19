@@ -111,14 +111,28 @@
                     :prop="item.ItemValue"
                     :rules="getRules(item)"
                     :label-width="100">
+            <el-input
+                v-model="modelValue"
+                :placeholder="getPlaceholder(item,'請輸入')"
+                :rows="3"
+                v-on:change="changeValue"
+                type="textarea"
+            />
+        </el-form-item>        
+    </template>
+    <template v-if="item.ItemType == 8">
+        <el-form-item :label="item.ItemTitle" 
+                    :prop="item.ItemValue"
+                    :rules="getRules(item)"
+                    :label-width="100">
             <UploadImageFile 
                 ref="uploadImageFile"
                 :disabled="disabled || readonly"
                 v-on:change="changeValue"
                 v-model="modelValue" 
             />
-        </el-form-item>        
-    </template>
+        </el-form-item>       
+    </template> 
     <!-- type=9,是messageBox-->
     <!-- <template v-if="item.ItemType == 9">
         <el-card style="margin-bottom:30px">

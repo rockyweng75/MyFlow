@@ -4,18 +4,19 @@ using MyFlow.Domain.Tools;
 using MyFlow.Data.Models;
 using Microsoft.Extensions.DependencyInjection;
 
+
 namespace MyFlow.Test.Data.DAOs.Basic
 {
-    public class FlowchartDaoTest : BasicTestServer
+    public class ActionFormDaoTest : BasicTestServer
     {
-        private IFlowchartDao? dao;
+        private IActionFormDao? dao;
         private IServiceScope? scope;
 
         [SetUp]
         public void init() 
         {
             scope = services.CreateScope();
-            dao = scope.ServiceProvider.GetService<IFlowchartDao>();
+            dao = scope.ServiceProvider.GetService<IActionFormDao>();
         }
 
         [Test, Order(1)]
@@ -24,8 +25,8 @@ namespace MyFlow.Test.Data.DAOs.Basic
             var task = Task.Run(async () =>
             {
                 var testCase = new TestCase1();
-                var testEntity = new Flowchart();
-                ObjectClone.Clone(testCase.flowchartVM, testEntity);
+                var testEntity = new ActionForm();
+                ObjectClone.Clone(testCase.forms, testEntity);
                 var _result = await dao!.Create(testEntity);
                 await dao!.SaveChangesAsync();
                 return _result;
@@ -35,14 +36,14 @@ namespace MyFlow.Test.Data.DAOs.Basic
             Assert.IsTrue(result.Id > 0);
         }
 
-        private MyFlow.Data.Models.Flowchart? getOne { get; set; }
+        private MyFlow.Data.Models.ActionForm? getOne { get; set; }
         [Test, Order(2)]
         public void testGetList()
         {
             var task = Task.Run(async () =>
             {
                 
-                var list = await dao!.GetList(new Flowchart()
+                var list = await dao!.GetList(new ActionForm()
                 {
                     Id = 1
                 });
@@ -60,7 +61,7 @@ namespace MyFlow.Test.Data.DAOs.Basic
         {
             var task = Task.Run(async () =>
             {
-                getOne!.AdminUser = "Test";
+                getOne!.ActionName = "Test";
                 dao!.Update(getOne);
                 await dao.SaveChangesAsync();
                 return 0;
@@ -78,19 +79,6 @@ namespace MyFlow.Test.Data.DAOs.Basic
             });
             var result = task.Result;
             Assert.True(result != null);
-        }
-
-
-        [Test, Order(5)]
-        [TestCase(1)]
-        public void testGetMix(int Id)
-        {
-            var task = Task.Run(async () =>
-            {
-                return await dao!.GetMix(Id);
-
-            });
-            var result = task.Result;
         }
 
         [Test, Order(999)]

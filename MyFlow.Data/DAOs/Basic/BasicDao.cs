@@ -38,8 +38,8 @@ namespace MyFlow.Data.DAOs.Basic
             var dbSet = dbContext!.Set<TEntity>();
             var tableName = GetTableName();
             var _Id = new SqlParameter("Id", Id);
-            var queryable = dbSet.FromSqlRaw($"select * from {tableName} where Id = @Id order by Id", _Id);
-            return await queryable.FirstOrDefaultAsync();
+            var queryable = dbSet.FromSqlRaw($"select * from {tableName} where Id = @Id", _Id);
+            return await queryable.SingleOrDefaultAsync();
         }
 
         public Task<IEnumerable<TEntity>> GetAll()
@@ -129,8 +129,10 @@ namespace MyFlow.Data.DAOs.Basic
             Debug.WriteLine(dbSet.ToQueryString());
             return entity;
         }
+
         public void Update(TEntity entity)
         {
+            
             dbContext!.Entry(entity).State = EntityState.Modified;
         }
 

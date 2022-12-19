@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyFlow.Domain.Enums
+﻿namespace MyFlow.Domain.Enums
 {
     public enum ItemType
     {
@@ -15,6 +9,8 @@ namespace MyFlow.Domain.Enums
         Label,
         Date,
         DateTime,
+        Textarea,
 
+        FileUpload,
     }
 }

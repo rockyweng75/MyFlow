@@ -148,10 +148,10 @@ export default{
         }
 
         const hanldClick = (key) =>{
-            if(key == 'SUCCESS'){
+            if(key.ActionType == 1){
                 return agree()
             }
-            else if(key == 'CANCEL'){
+            else if(key.ActionType == 2){
                 return disagree()
             } else {
                 return () => {}

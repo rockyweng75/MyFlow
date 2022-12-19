@@ -62,6 +62,28 @@ const testApplyForm = {
       DataRef: 'ApplyDate',
       Required: true,
       Disabled: false,
+    },
+    {
+      Id: 3,
+      FormId: 0,
+      OrderId: 3,
+      ItemType: 7,
+      ItemTitle: '請假原因',
+      ItemValue: 'ApplyDesc',
+      DataRef: 'ApplyDesc',
+      Required: false,
+      Disabled: false,
+    },
+    {
+      Id: 4,
+      FormId: 0,
+      OrderId: 3,
+      ItemType: 8,
+      ItemTitle: '證明文件',
+      ItemValue: 'Files',
+      DataRef: 'Files',
+      Required: false,
+      Disabled: false,
     }
   ],
   ActionForm: [{
@@ -89,7 +111,25 @@ const mock = [
     url: '/api/Form/:id',
     method: 'get',
     response: ({ query ,body }) => {
-      return testApplyForm;
+      return {
+        FlowId: 1,
+        FormType: 0,
+        FormName: "通用簽核單",
+        StageName: "代理人簽核",
+        Items: [
+          {
+            Id: 0,
+            FormId: 0,
+            OrderId: 1,
+            ItemType: 7,
+            ItemTitle: '意見說明',
+            ItemValue: 'ApproveMessage',
+            DataRef: 'ApproveMessage',
+            Required: false,
+            Disabled: true
+          },
+        ],
+      };
     },
 },
 ]
