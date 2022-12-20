@@ -7,7 +7,6 @@
       </div>
 
       <el-form-item prop="username">
-   
         <el-input
           ref="username"
           v-model="loginForm.username"

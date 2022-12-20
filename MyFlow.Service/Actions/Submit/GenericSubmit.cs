@@ -6,17 +6,17 @@ using MyFlow.Service.Targets;
 using MyFlow.Service.Impl;
 using MyFlow.Domain.Enums;
 
-namespace MyFlow.Service.Actions.Forward
+namespace MyFlow.Service.Actions.Submit
 {
-    public abstract class GenericForward : GenericAction, IForward
+    public abstract class GenericSubmit : GenericAction, ISubmit
     {
         private IServiceProvider serviceProvider;
         private IStageRouteService stageRouteService;
         private IStageService stageService;
 
-        public GenericForward(
+        public GenericSubmit(
             IServiceProvider serviceProvider,
-            ILogger<GenericForward> logger,
+            ILogger<GenericSubmit> logger,
             IApplyDataService applyDataService,
             IApproveDataService approveDataService,
             IJobLogService jobLogService,
@@ -38,16 +38,15 @@ namespace MyFlow.Service.Actions.Forward
         public abstract string Name { get; }
         public abstract string Key { get; }
 
-        public async Task<IList<StageVM>> FindNextStages(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData) 
+        public async Task<IList<StageVM>> FindNextStages(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {
-
-            return await FindNextStages(ActionType.同意, flowchart, currentStage, applyData, approveData);
+            return await FindNextStages(ActionType.送出, flowchart, currentStage, applyData, approveData);
         }
 
         public async Task<string> FindStageTarget(StageVM stage, FlowchartVM flowchart, ApplyDataVM applyData, ApproveDataVM? approveData) 
         {
             var targetServices = serviceProvider.GetServices<ITarget>();
-            if(targetServices == null || targetServices.Count() == 0) throw new Exception($"找不到對應的Deadline: {stage.Target}");
+            if(targetServices == null || targetServices.Count() == 0) throw new Exception($"找不到對應的Target: {stage.Target}");
 
             var service = targetServices.Where(o => o.GetType().Name == stage.Target).FirstOrDefault();
             var result = service != null ?
@@ -58,10 +57,11 @@ namespace MyFlow.Service.Actions.Forward
 
         public async Task<DateTime?> GetStageDeadline(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {
-
+            var className = currentStage.Deadline;
+            if(string.IsNullOrEmpty(currentStage.Deadline)) className = "AnyTime";
             var deadlines = serviceProvider.GetServices<IDeadline>();
             if(deadlines == null || deadlines.Count() == 0) throw new Exception($"找不到對應的Deadline: {currentStage.Deadline}");
-            var deadline = deadlines.Where(o => o.GetType().Name == currentStage.Deadline).FirstOrDefault();
+            var deadline = deadlines.Where(o => o.GetType().Name == className).FirstOrDefault();
             var result = deadline != null ?
                             await deadline.GetEndDateTime(DateTime.Now.Year, flowchart, currentStage, applyData, approveData) :
                             throw new Exception($"找不到對應的Deadline: {currentStage.Deadline}");

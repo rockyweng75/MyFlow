@@ -32,16 +32,16 @@ namespace MyFlow.Test.Cases
                 FlowId = 1,
                 OrderId = 2,
                 StageName = "代理人核可",
-                Deadline = "",
-                Target = "Design",
-                TargetParams = ""
+                Deadline = "AnyTime",
+                Target = "CustomTarget",
+                TargetParams = "ProxyUser"
             },
             new StageVM(){
                 Id = 3,
                 FlowId = 1,
                 OrderId = 3,
                 StageName = "主管核可",
-                Deadline = "",
+                Deadline = "AnyTime",
                 Target = "Director",
                 TargetParams = ""
             }

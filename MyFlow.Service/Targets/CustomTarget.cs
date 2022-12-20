@@ -10,15 +10,19 @@ namespace MyFlow.Service.Targets
         {
             if (approveDataVM == null)
             {
-                return applyData!.DynamicFormData != null ? 
+                var result = applyData!.DynamicFormData != null ? 
                     applyData.DynamicFormData[stage.TargetParams] :
                     throw new Exception("取得簽核者發生錯誤：找不到申請資料");
+
+                return Task.FromResult(result.Value);
             }
             else 
             {
-                return approveDataVM.DynamicFormData != null ?
+                var result = approveDataVM!.DynamicFormData != null ? 
                     approveDataVM.DynamicFormData[stage.TargetParams] :
                     throw new Exception("取得簽核者發生錯誤：找不到簽核資料");
+
+                return Task.FromResult(result.Value);
             }
         }
     }

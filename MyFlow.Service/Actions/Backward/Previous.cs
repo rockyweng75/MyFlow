@@ -30,9 +30,10 @@ namespace MyFlow.Service.Actions.Backward
 
         public override async Task PrevAction(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {
-            ActionFormVM? actionform = await FindActionForm((int)ActionType.不同意, currentStage);
+            ActionFormVM? actionform = await FindActionForm(ActionType.不同意, currentStage);
             
             var stages = await FindPrevStages(flowchart, currentStage, applyData, approveData);
+            if(stages.Count == 0) throw new Exception("找不到下一階段");
 
             foreach(var stage in stages)
             {

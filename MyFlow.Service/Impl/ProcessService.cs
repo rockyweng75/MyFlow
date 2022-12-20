@@ -11,6 +11,7 @@ using MyFlow.Domain.Models.Basic;
 using MyFlow.Service.Validations;
 using MyFlow.Domain.Tools;
 using MyFlow.Service.Actions.Backward;
+using MyFlow.Service.Actions.Submit;
 
 namespace MyFlow.Service.Impl
 {
@@ -72,7 +73,7 @@ namespace MyFlow.Service.Impl
                .FirstOrDefault();
             if (actionForm == null) throw new Exception($"找不到設定的Action:{Enum.GetName(typeof(ActionType), ActionType.送出)}");
             var progName = actionForm.ActionClass!;
-            var action = (IAction)serviceProvider.GetService<IForward>(progName);
+            var action = (IAction)serviceProvider.GetService<ISubmit>(progName);
             await action.Invoke(flowchart, currentStage, applyData, null);
         }
 

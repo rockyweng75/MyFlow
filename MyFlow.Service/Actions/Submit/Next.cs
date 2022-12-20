@@ -3,13 +3,13 @@ using MyFlow.Domain.Enums;
 using MyFlow.Domain.Models;
 using MyFlow.Service.Impl;
 
-namespace MyFlow.Service.Actions.Forward
+namespace MyFlow.Service.Actions.Submit
 {
-    public class Next : GenericForward, IForward
+    public class Next : GenericSubmit, ISubmit
     {
         public Next(
             IServiceProvider serviceProvider, 
-            ILogger<GenericForward> logger, 
+            ILogger<GenericSubmit> logger, 
             IApplyDataService applyDataService,
             IApproveDataService approveDataService,
             IJobLogService jobLogService,
@@ -25,8 +25,15 @@ namespace MyFlow.Service.Actions.Forward
 
         public override async Task NextAction(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {
-            ActionFormVM? actionform = null;
+            ActionType actionType = ActionType.送出;
 
+            await doNext(actionType, flowchart, currentStage, applyData, null);
+        }
+
+    public async Task doNext(ActionType actionType, FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
+        {
+
+            ActionFormVM? actionform = null;
             if((currentStage.ActionFormList == null || currentStage.ActionFormList.Count == 0) 
                 && (flowchart.ActionFormList != null && flowchart.ActionFormList.Count > 0))
             {
@@ -35,11 +42,11 @@ namespace MyFlow.Service.Actions.Forward
                     .ToList();
             }
 
-            actionform = await FindActionForm(ActionType.同意, currentStage);
+            actionform = await FindActionForm(actionType, currentStage);
 
             await DoAfterStageJob(currentStage, flowchart, applyData, approveData);
 
-            var stages = await FindNextStages(flowchart, currentStage, applyData, approveData);
+            var stages = await FindNextStages(actionType, flowchart, currentStage, applyData, approveData);
 
             if(stages.Count == 0) throw new Exception("找不到下一階段");
             foreach(var stage in stages)
@@ -60,5 +67,6 @@ namespace MyFlow.Service.Actions.Forward
                 }
             }
         }
+        
     }
 }

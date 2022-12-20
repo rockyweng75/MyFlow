@@ -1,5 +1,4 @@
 using MyFlow.Data;
-using MyFlow.Data.Connection;
 using MyFlow.Service;
 using EnvironmentName = Microsoft.AspNetCore.Hosting.EnvironmentName;
 
@@ -36,6 +35,14 @@ string connString = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext(connString);
 builder.Services.AddDAOs();
 builder.Services.AddServices();
+builder.Services.AddActions();
+builder.Services.AddTag();
+builder.Services.AddTarget();
+builder.Services.AddTitle();
+builder.Services.AddValidation();
+builder.Services.AddDeadline();
+builder.Services.AddSwitch();
+builder.Services.AddJob();
 
 var app = builder.Build();
 

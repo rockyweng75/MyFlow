@@ -26,7 +26,7 @@ namespace MyFlow.Service.Actions.Forward
 
         public override async Task NextAction(FlowchartVM flowchart, StageVM currentStage, ApplyDataVM applyData, ApproveDataVM? approveData)
         {
-            ActionFormVM? actionform = await FindActionForm((int)ActionType.同意, currentStage);
+            ActionFormVM? actionform = await FindActionForm(ActionType.同意, currentStage);
 
             if(actionform != null) 
             {
