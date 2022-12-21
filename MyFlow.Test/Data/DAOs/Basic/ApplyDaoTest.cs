@@ -25,7 +25,7 @@ namespace MyFlow.Test.Data.DAOs.Basic
             {
                 var testCase = new TestCase1();
                 var testEntity = new ApplyData(){
-                    Id = 1,
+                    // Id = 1,
                     FlowId = testCase.flowchartVM.Id,
                     FlowName = testCase.flowchartVM.FlowName,
                     StatusCode = (int)StatusCode.送出,

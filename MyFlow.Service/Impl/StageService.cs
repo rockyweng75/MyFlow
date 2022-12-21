@@ -34,7 +34,13 @@ namespace MyFlow.Service.Impl
         public async Task<StageVM?> GetMix(int Id)
         {
             var stage = await stageDao.GetMix(Id);
-            return stage!.ToViewModel<StageVM>();
+
+            var vm = stage!.ToViewModel<StageVM>();
+            vm.ActionFormList = stage!.ActionFormList!.Select(o => o.ToViewModel<ActionFormVM>()).ToList();
+            vm.StageRouteList = stage!.StageRouteList!.Select(o => o.ToViewModel<StageRouteVM>()).ToList();
+            vm.StageValidationList = stage!.StageValidationList!.Select(o => o.ToViewModel<StageValidationVM>()).ToList();
+            vm.StageJobList = stage!.StageJobList!.Select(o => o.ToViewModel<StageJobVM>()).ToList();
+            return vm;
         } 
 
         public async Task<IList<StageVM>?> GetMixList(FlowchartVM flowchart)

@@ -42,7 +42,7 @@ namespace MyFlow.Test.Cases
                 OrderId = 3,
                 StageName = "主管核可",
                 Deadline = "AnyTime",
-                Target = "Director",
+                Target = "PersonnelManager",
                 TargetParams = ""
             }
         };
@@ -99,6 +99,26 @@ namespace MyFlow.Test.Cases
                 ActionName = "Rollback",
                 ButtonName = "不同意",
                 ActionClass = "Previous",
+            },
+            new ActionFormVM(){
+                Id = 4,
+                StageId = 3,
+                OrderId = 1,
+                FormId = 2,
+                ActionType = (int)ActionType.同意,
+                ActionName = "End",
+                ButtonName = "結案",
+                ActionClass = "Close",
+            },
+            new ActionFormVM(){
+                Id = 5,
+                StageId = 3,
+                OrderId = 2,
+                FormId = 2,
+                ActionType = (int)ActionType.不同意,
+                ActionName = "Withdraw",
+                ButtonName = "不同意",
+                ActionClass = "Withdraw",
             },
         };
 

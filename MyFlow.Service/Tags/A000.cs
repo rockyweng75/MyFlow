@@ -8,7 +8,9 @@ namespace MyFlow.Service.Tags
         public string Name => "{流程名稱},{申請人}";
 
         public Task<string> Invoke(ApplyDataVM applyData){
-            var applyName = string.IsNullOrEmpty(applyData.ApplyName);
+            var applyName = string.IsNullOrEmpty(applyData.ApplyName) ? 
+                applyData.Id.ToString() : 
+                applyData.ApplyName ;
             return Task.FromResult($"{applyName},{applyData.FlowName}");
         }
     }

@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using MyFlow.Domain.Models.Basic;
+using System.Dynamic;
 
 namespace MyFlow.Domain.Models
 {
@@ -13,7 +11,7 @@ namespace MyFlow.Domain.Models
         public int? ApprId { get; set; }
     }
 
-    public class FormData : IFormData
+    public class FormData: IFormData
     {
         public int? FlowId { get; set; }
         public int? StageId { get; set; }
@@ -21,4 +19,6 @@ namespace MyFlow.Domain.Models
         public int? ApplyId { get; set; }
         public int? ApprId { get; set; }
     }
+
+    
 }

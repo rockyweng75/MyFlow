@@ -5,8 +5,8 @@ using MyFlow.Domain.Models.Basic;
 namespace MyFlow.Service.Impl
 {
     public abstract class BasicCRUDService<TDao, TDataModel, TViewModel> : IBasicCRUDService<TViewModel>
-        where TDao : BasicDao<TDataModel>
-        where TDataModel : class, new()
+        where TDao : BasicDao<TDataModel> 
+        where TDataModel : class, IDataModel, new()
         where TViewModel : class, new()
     {
         public abstract BasicDao<TDataModel> dao { get; }

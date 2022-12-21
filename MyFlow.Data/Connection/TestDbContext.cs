@@ -52,6 +52,12 @@ namespace MyFlow.Data.Connection
 
                 entity.Property(e => e.Id).HasDefaultValueSql("(NEXT VALUE FOR [dbo].[ActionFormSeq])");
 
+                entity
+                    .HasMany<ActionJob>(e => e.ActionJobList)
+                    .WithOne()
+                    .HasForeignKey(o => o.ActionId)
+                    .IsRequired(false);
+
             });
 
             modelBuilder.Entity<ApplyData>(entity =>
@@ -100,6 +106,7 @@ namespace MyFlow.Data.Connection
                 entity.Property(e => e.UserId).HasMaxLength(200);
 
                 entity.Property(e => e.UserName).HasMaxLength(500);
+
             });
 
             modelBuilder.Entity<Attachment>(entity =>

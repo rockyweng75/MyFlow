@@ -12,7 +12,7 @@
     [DeptName] NVARCHAR(100) NULL, 
     [JobCode] NVARCHAR(50) NULL,
     [JobName] NVARCHAR(100) NULL,
-    [StatusCode] NVARCHAR(100) NULL,
+    [StatusCode] INT NULL, 
     [FormData] NVARCHAR(MAX) NULL,
     [CreatedDate] DATETIME NULL,
     [SubmitDate] DATETIME NULL,

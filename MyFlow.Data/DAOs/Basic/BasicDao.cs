@@ -1,12 +1,13 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using MyFlow.Data.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace MyFlow.Data.DAOs.Basic
 {
-    public class BasicDao<TEntity> : IDao<TEntity> where TEntity : class, new()
+    public class BasicDao<TEntity> : IDao<TEntity> where TEntity : class, IDataModel, new()
     {
         private DbContext? dbContext;
 
@@ -132,7 +133,12 @@ namespace MyFlow.Data.DAOs.Basic
 
         public void Update(TEntity entity)
         {
-            
+            var entry = dbContext!.Set<TEntity>().Where(o => o.Id == entity.Id).FirstOrDefault();
+
+            if(entry != null){
+                dbContext!.Entry(entry).State =  EntityState.Detached;
+            }
+
             dbContext!.Entry(entity).State = EntityState.Modified;
         }
 

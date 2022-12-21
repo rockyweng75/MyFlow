@@ -2,7 +2,7 @@
 
 namespace MyFlow.Service.Targets
 {
-    public class PersonnelManagerTarget : ITarget
+    public class PersonnelManager : ITarget
     {
         public string Name => "人事主管";
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MyFlow.Data.Models
+﻿namespace MyFlow.Data.Models
 {
     public partial class ActionForm : IDataModel
     {
@@ -12,5 +9,6 @@ namespace MyFlow.Data.Models
         public int? ActionType { get; set; }
         public string? ActionName { get; set; }
         public string? ButtonName { get; set; }
+        public string? ActionClass { get; set; }
     }
 }

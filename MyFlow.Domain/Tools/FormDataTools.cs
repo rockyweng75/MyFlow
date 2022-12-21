@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using MyFlow.Domain.Models;
 
 namespace MyFlow.Domain.Tools
@@ -14,23 +8,42 @@ namespace MyFlow.Domain.Tools
         {
             if(FormData is null) return null;
 
-            var keyValue = FormData as IDictionary<string, object>;
             var props = typeof(IFormData).GetProperties();
-            // Assembly? assembly = Assembly.GetAssembly(typeof(FormData)) ?? throw new Exception("assembly is null");
-            // IFormData? formData = assembly.CreateInstance(typeof(FormData).Name) as IFormData;
 
             IFormData? formData = (IFormData)Activator.CreateInstance(typeof(FormData))!;
 
+            var obj = FormData as object;
+            var type = obj.GetType();
+            if(type.IsArray) throw new Exception("FormData can't be Array");
 
-            foreach(var prop in props)
+            if(FormData is IDictionary<string, object>)
             {
-                if(keyValue!.ContainsKey(prop.Name))
-                {
-                    var value = keyValue[prop.Name];
-                    prop.SetValue(formData, value);
-                } 
-            }
+                var keyValue = FormData as IDictionary<string, object>;
 
+                foreach(var prop in props)
+                {
+                    if(keyValue!.ContainsKey(prop.Name))
+                    {
+                        var value = keyValue[prop.Name];
+                        prop.SetValue(formData, value);
+                    } 
+                }
+            } 
+            else 
+            {
+                // object
+                var iProps = type.GetProperties();
+                foreach(var prop in props)
+                {
+                    if(iProps!.Any(p => p.Name == prop.Name))
+                    {
+                        var iProp = iProps.Where(p => p.Name == prop.Name).First();
+                        var value = iProp.GetValue(FormData);
+                        prop.SetValue(formData, value);
+                    } 
+                }
+            }
+     
             return formData;
         }
     }

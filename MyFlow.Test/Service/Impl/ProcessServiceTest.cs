@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
+using System.Dynamic;
 using Microsoft.Extensions.DependencyInjection;
 using MyFlow.Domain.Models;
 using MyFlow.Service.Impl;
-using MyFlow.Test.Cases;
 
 namespace MyFlow.Test.Service.Impl
 {
@@ -23,12 +23,12 @@ namespace MyFlow.Test.Service.Impl
         [Test, Order(1)]
         public async Task testSubmit()
         {
-            var applyData = new { 
-                FlowId = 1,
-                StageId = 1,
-                FormId = 1,
-                ProxyUser = "Test" 
-            };
+            dynamic? applyData = new ExpandoObject();
+            applyData.FlowId = 1;
+            applyData.StageId = 1;
+            applyData.FormId = 1;
+            applyData.ProxyUser = "Test"; 
+
             var userInfo = new UserInfoVM(){
                 UserId = "Test",
                 UserName = "Test",
@@ -43,6 +43,53 @@ namespace MyFlow.Test.Service.Impl
             }
         }
 
+        [Test, Order(2)]
+        public async Task testAgree()
+        {
+            dynamic? approveData = new ExpandoObject();
+            approveData.FlowId = 1;
+            approveData.StageId = 2;
+            approveData.FormId = 2;
+            approveData.ApplyId = 1;
+            approveData.ApprId = 1;
+
+            var userInfo = new UserInfoVM(){
+                UserId = "Test",
+                UserName = "Test",
+            };
+            try
+            {
+                await service!.Agree(approveData, userInfo);
+            } 
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+        
+        [Test, Order(2)]
+        public async Task testDisagree()
+        {
+            dynamic? approveData = new ExpandoObject();
+            approveData.FlowId = 1;
+            approveData.StageId = 2;
+            approveData.FormId = 2;
+            approveData.ApplyId = 1;
+            approveData.ApprId = 1;
+
+            var userInfo = new UserInfoVM(){
+                UserId = "Test",
+                UserName = "Test",
+            };
+            try
+            {
+                await service!.Disagree(approveData, userInfo);
+            } 
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
 
         [TearDown]
         public void Fin()

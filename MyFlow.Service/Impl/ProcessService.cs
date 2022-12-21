@@ -139,8 +139,17 @@ namespace MyFlow.Service.Impl
                 {
                     throw new Exception(" StageId is null");
                 }
+                StageVM? stage = null;
+                if(flowchart.StageList == null || flowchart.ActionFormList == null)
+                {
+                    stage = await stageService.GetMix(formData.StageId.Value);
+                } 
+                else 
+                {
+                    stage = flowchart.StageList.Where(o => o.Id == formData.StageId).FirstOrDefault();
+                    stage!.ActionFormList = flowchart.ActionFormList.Where(o => o.StageId == stage.Id).ToList();
+                }
 
-                StageVM? stage = await stageService.GetMix(formData.StageId.Value);
                 return stage;
             }
             catch (Exception e)
@@ -212,10 +221,18 @@ namespace MyFlow.Service.Impl
 
         private async Task<ActionResult> ValidateForm(FlowchartVM flowchart, StageVM stage, dynamic formData, UserInfoVM user)
         {
+            if(stage.StageValidationList == null)
+            {
+                return new ActionResult()
+                {
+                    Success = true
+                };
+            }
+
             try
             {
                 var errorList = new List<string>();
-
+       
                 foreach (var stageValidation in stage.StageValidationList!)
                 {
                     var validation = (IValidation)serviceProvider.GetService<IValidation>(stageValidation.ValidateClass!);

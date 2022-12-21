@@ -19,6 +19,7 @@ namespace MyFlow.Service
 
         public static void AddServices(this IServiceCollection services)
         {
+			services.AddScoped<IProcessService,ProcessService>();
 
 			services.AddScoped<IActionFormService,ActionFormService>();
 			services.AddScoped<IApplyDataService,ApplyDataService>();
@@ -43,6 +44,8 @@ namespace MyFlow.Service
 			services.AddScoped<IForward, Close>();
 
 			services.AddScoped<IBackward, Previous>();
+			services.AddScoped<IBackward, Withdraw>();
+
 
 			services.AddScoped<ISubmit, Actions.Submit.Next>();
 
@@ -70,6 +73,7 @@ namespace MyFlow.Service
 
 		public static void AddTarget(this IServiceCollection services)
 		{
+			services.AddScoped<ITarget, PersonnelManager>();
 			services.AddScoped<ITarget, CustomTarget>();
 			services.AddScoped<ITarget, AnyOne>();
 		}

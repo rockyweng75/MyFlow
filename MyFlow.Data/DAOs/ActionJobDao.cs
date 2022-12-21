@@ -20,7 +20,7 @@ namespace MyFlow.Data.DAOs
 
         public async Task<IList<ActionJob>> GetList(Flowchart flowchart)
         {
-          var queryable =
+            var queryable =
                 dbContext.Set<ActionJob>().FromSqlInterpolated(
                 $@"
                     select a.* 
@@ -33,7 +33,30 @@ namespace MyFlow.Data.DAOs
                         and s.Id = ff.StageId
                     )
                 ");
+
             return await queryable.ToListAsync();
+
+            // linq join 
+            // return await
+            //     dbContext.Set<Flowchart>()
+            //     .Where(o => o.Id == flowchart.Id)
+            //     .Join( 
+            //         dbContext.Set<Stage>(),
+            //         f => f.Id,
+            //         s => s.FlowId,
+            //         (f, s) => s
+            //     ).Join(
+            //         dbContext.Set<ActionForm>(),
+            //         s => s.Id,
+            //         a => a.StageId,
+            //         (s, a) => a
+            //     ).Join(
+            //         dbContext.Set<ActionJob>(),
+            //         a => a.Id,
+            //         f => f.ActionId,
+            //         (a, f) => f
+            //     )
+            //     .ToListAsync();
         } 
     }
 }
