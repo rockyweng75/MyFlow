@@ -10,6 +10,7 @@ jobs:
       MY_SECRET   : ${{secrets.COMMIT_SECRET}}
       USER_NAME   : rockyweng75
       PUBLISH_DIR : ./MyFlow.View/dist
+      VIEW_PROJECT: ./MyFlow.View
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,6 +23,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: npm install
       run: |
+        cd $VIEW_PROJECT
         npm install
     - name: npm run build
       run: |
