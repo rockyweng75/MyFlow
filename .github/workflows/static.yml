@@ -9,11 +9,11 @@ jobs:
     env:
       MY_SECRET   : ${{secrets.COMMIT_SECRET}}
       USER_NAME   : rockyweng75
-      PUBLISH_DIR : ./dist
+      PUBLISH_DIR : ./MyFlow.View/dist
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [16.x]
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
