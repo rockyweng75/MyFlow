@@ -27,6 +27,7 @@ jobs:
         npm install
     - name: npm run build
       run: |
+        cd $VIEW_PROJECT
         npm run gulp m
         npm run build
     - name: Commit files
