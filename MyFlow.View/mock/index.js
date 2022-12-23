@@ -23,6 +23,8 @@ import testTitle from '../mock/options/title';
 import testValidation from '../mock/options/validation';
 import testSwitchClass from '../mock/options/switchClass';
 import testFormType from '../mock/options/formType';
+import testForm from '../mock/form';
+
 
 export function setupProdMockServer() {
   createProdMockServer([
@@ -46,6 +48,7 @@ export function setupProdMockServer() {
     ...testTitle,
     ...testValidation,
     ...testSwitchClass,
-    ...testFormType
+    ...testFormType,
+    ...testForm
   ]);
 }
