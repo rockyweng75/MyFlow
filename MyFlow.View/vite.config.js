@@ -6,7 +6,7 @@ import { viteMockServe } from 'vite-plugin-mock'
 export default defineConfig(({command, mode}) => {
   let prodMock = true
   return {
-    base: '/myflow/',
+    base: '/MyFlow/',
     mode: command !== 'serve',
     plugins: [
       vue(),
@@ -27,9 +27,9 @@ export default defineConfig(({command, mode}) => {
         "@": path.resolve(__dirname, "src"),
       },
     },
-    build: {
-      assetsDir: './'
-    },
+    // build: {
+    //   assetsDir: './'
+    // },
     css: {
       postcss: {
         plugins: [
