@@ -2,13 +2,9 @@ import { defineConfig } from 'vite';
 import vue from "@vitejs/plugin-vue";
 import path from 'path'
 import { viteMockServe } from 'vite-plugin-mock'
-// import commonjsExternals from 'vite-plugin-commonjs-externals';
 
-// import { UserConfigExport, ConfigEnv } from 'vite';
-
-// console.log(path.resolve(__dirname, './src/lang/**'))
 export default defineConfig(({command, mode}) => {
-  let prodMock = false
+  let prodMock = true
   return {
     base: '/myflow/',
     mode: command !== 'serve',
@@ -18,16 +14,21 @@ export default defineConfig(({command, mode}) => {
         supportTs: false,
         mockPath: 'mock',
         localEnabled: command === 'serve',
+        // prodEnabled: true,
         prodEnabled: command !== 'serve' && prodMock,
+        injectCode: `
+          import { setupProdMockServer } from '../mock/index';
+          setupProdMockServer();
+        `,
       })
-      // viteRequire({
-      //   externals: ['path', /^electron(\/.+)?$/]
-      // })
     ],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),
       },
+    },
+    build: {
+      assetsDir: './'
     },
     css: {
       postcss: {
