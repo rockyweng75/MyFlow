@@ -49,6 +49,7 @@ export default {
     }
   },
   beforeMount(){
+    console.log(this)
     this.$store.commit('app/setWindowsWidth', this.$windowWidth)
   },
   watch:{

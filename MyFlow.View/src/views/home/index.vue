@@ -1,29 +1,53 @@
 <template>
+  {{ device }}
   <el-row>
-    <el-col :span="device !== 'mobile'? 8 : 24">
+    <el-card style="width:100%">
       <el-row>
-        <el-card style="width:100%">
-          <el-button type="warning" effect="dark" v-on:click="gotoTodo">
+        <el-col :span="device !== 'mobile'? 6 : 24">
+          <el-button type="warning" style="width:100%" effect="dark" round v-on:click="gotoTodo">
             <h2>
-              <el-space wrap :size="30">待處理件數:</el-space>
-              <el-space wrap :size="30">{{todoList.length}} 筆</el-space>
+              <el-space wrap :size="28">待辦:</el-space>
+              <el-space wrap :size="28">{{todoList.length}} 筆</el-space>
             </h2>
           </el-button>
-        </el-card>
+        </el-col>
+        <el-col :span="device !== 'mobile'? 6 : 24">
+          <el-button type="primary" style="width:100%" effect="dark" round v-on:click="gotoWait">
+            <h2>
+              <el-space wrap :size="28">等待:</el-space>
+              <el-space wrap :size="28">{{waitList.length}} 筆</el-space>
+            </h2>
+          </el-button>
+        </el-col>
+        <el-col :span="device !== 'mobile'? 12 : 24">
+          <el-button class="clock" style="width:100%" effect="dark" round>
+            <h3>
+              {{ time.toLocaleDateString() }} {{ time.toLocaleTimeString() }}
+            </h3>
+          </el-button>
+        </el-col>
+      </el-row>
+    </el-card>
+  </el-row>
+  <el-row>
+    <el-col :span="device !== 'mobile'? 10 : 24">
+      <el-row>
         <el-card style="width:100%">
           <template #header>
-            近期開放表單
+            本日行程
           </template>
-          <el-timeline v-if="deadlines.length > 0">
-            <el-timeline-item
-              v-for="(deadline, index) in deadlines"
-              :key="index"
-              :timestamp="$moment(deadline.BeginDate).format('YYYY-MM-DD hh:mm') + ' ~ ' + $moment(deadline.EndDate).format('YYYY-MM-DD hh:mm')"
-              placement="top"
-            >
-              <p>{{ deadline.FlowName }}</p>
-              <p>{{ $moment(deadline.EndDate).fromNow() }} <span style="color:red">{{$t('關閉')}}</span></p>
-            </el-timeline-item>
+          <el-timeline v-if="scheduleList.length > 0">
+              <el-timeline-item
+                v-for="(schedule, index) in scheduleList.filter(o => o.BeginDate > new Date())"
+                :key="index"
+                :timestamp="$moment(schedule.BeginDate).format('hh:mm') + ' ~ ' + $moment(schedule.EndDate).format('hh:mm')"
+                placement="top"
+              >
+                  <p>{{ schedule.Name }}</p>
+                  <p >
+                    {{ $moment(schedule.BeginDate).fromNow() }} <span style="color:red">{{$t('開始')}}</span>
+                  </p>
+              </el-timeline-item>
           </el-timeline>
           <div v-else>
             <el-empty description="暫時沒有開放的申請" />
@@ -31,7 +55,7 @@
         </el-card>
       </el-row>
     </el-col>
-    <el-col :span="device !== 'mobile'? 16 : 24">
+    <el-col :span="device !== 'mobile'? 14 : 24">
       <el-card style="width:100%">
         <template #header>
           公佈欄
@@ -43,7 +67,7 @@
 </template>
 
 <script>
-import { onBeforeMount, computed } from 'vue'
+import { onBeforeMount, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -51,15 +75,40 @@ export default({
 
   setup() {
     const store = useStore()
-    // const router = useRouter()
+    const router = useRouter()
+
+    const time = ref(new Date())
+
+    setInterval(() => {
+      time.value = new Date();
+    }, 1000);
+
     const todoList = computed(() =>{
-        // return store.getters['workboard/todoList']
-        return 1;
+        return store.getters['todoList/dataList']
+    })
+    const waitList = computed(() =>{
+        return store.getters['waitList/dataList']
     })
 
-    const deadlines = computed(() =>{
+    const scheduleList = computed(() =>{
 
-      return [];
+      return [
+        { 
+          BeginDate: new Date().setHours(8, 10, 0, 0),
+          EndDate: new Date().setHours(11, 0, 0, 0),
+          Name: '工作會報'
+        },
+        { 
+          BeginDate: new Date().setHours(14, 10, 0, 0),
+          EndDate: new Date().setHours(15, 0, 0, 0),
+          Name: '會議'
+        },
+        { 
+          BeginDate: new Date().setHours(16, 50, 0, 0),
+          EndDate: new Date().setHours(17, 0, 0, 0),
+          Name: '作業交接'
+        }
+      ];
 
 
         // let list = store.getters['deadline/list']
@@ -78,11 +127,10 @@ export default({
         // return result;
     })
 
-    // onBeforeMount(() =>{
-    //   store.dispatch('eDeadline/getDeadlines').then(()=>{
-    //     store.dispatch('workboard/getTodoList')
-    //   })
-    // })
+    onBeforeMount(async () =>{
+      await store.dispatch('todoList/getTodoList')
+      await store.dispatch('waitList/getWaitList')
+    })
 
     const device = computed(() =>{
         return store.getters['app/device']
@@ -92,12 +140,26 @@ export default({
       router.push('/workboard/todoList')
     }
 
+    const gotoWait = () =>{
+      router.push('/workboard/waitList')
+    }
+
+
     return {
+      time,
       todoList,
-      deadlines,
+      waitList,
+      scheduleList,
       device,
-      gotoTodo
+      gotoTodo,
+      gotoWait
     }
   },
 })
 </script>
+<style>
+  .clock{
+    background-color: black;
+    color: white;
+  }
+</style>

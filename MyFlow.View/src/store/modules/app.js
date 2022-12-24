@@ -34,10 +34,15 @@ const mutations = {
     Cookies.set('size', size)
   },
   setWindowsWidth: (state, width) => {
+    if(width > 960){
+      state.device = 'desktop'
+    } else {
+      state.device = 'mobile'
+    }
     state.windowsWidth = width
   },
   setAvatar: (state, avatar) => {
-    state.windowsWidth = avatar
+    state.avatar = avatar
   }
 }
 
