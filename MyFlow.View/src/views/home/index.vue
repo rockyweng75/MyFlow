@@ -1,5 +1,4 @@
 <template>
-  {{ device }}
   <el-row>
     <el-card style="width:100%">
       <el-row>
@@ -60,7 +59,26 @@
         <template #header>
           公佈欄
         </template>
-        <el-empty description="暫時沒有公告" />
+        <div class="infinite-list-wrapper" style="overflow: auto" v-if="bulletinList.length > 0">
+          <ul
+            v-infinite-scroll="load"
+            class="list"
+            :infinite-scroll-disabled="disabled"
+          >
+            <li v-for="(bulletin, index) in bulletinList" :key="index" class="list-item">
+              <p class="day">
+                <el-icon :size="15"><Star /></el-icon>
+                {{ $moment(bulletin.BeginDate).format('L') }}
+              </p>
+              <p class="title">
+                {{ bulletin.Title }}
+              </p>
+            </li>
+            <p v-if="loading">Loading...</p>
+            <p v-if="noMore">No more</p>
+          </ul>
+        </div>
+        <el-empty v-else description="暫時沒有公告" />
       </el-card>
     </el-col>
   </el-row>
@@ -70,9 +88,13 @@
 import { onBeforeMount, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { Star } from '@element-plus/icons-vue'
+import moment from 'moment/min/moment-with-locales'
 
 export default({
-
+  components:{
+    Star
+  },
   setup() {
     const store = useStore()
     const router = useRouter()
@@ -109,23 +131,61 @@ export default({
           Name: '作業交接'
         }
       ];
-
-
-        // let list = store.getters['deadline/list']
-        // let result = list.filter(o =>{
-        //   return o.BeginDate && o.EndDate && o.EndDate > new Date().toISOString()
-        // });
-
-        // result = result.sort((a,b) =>{
-        //   if(a.BeginDate < b.BeginDate) return -1;
-        //   if(a.BeginDate > b.BeginDate) return 1;
-        //   if(a.FlowId < b.FlowId) return -1;
-        //   if(a.FlowId > b.FlowId) return 1;
-        //   return 0;
-        // })
-
-        // return result;
     })
+
+    const bulletinList = computed(() =>{
+
+      return [
+        { 
+          BeginDate: moment().add(-1, 'days'),
+          EndDate:  moment().add(2, 'days'),
+          Title: '簽核系統上線囉',
+          Content: ''
+        },
+        { 
+          BeginDate: moment().add(-3, 'days'),
+          EndDate:  moment().add(2, 'days'),
+          Title: '消防演練公告',
+          Content: ''
+        },
+        { 
+          BeginDate: moment().add(-5, 'days'),
+          EndDate:  moment().add(2, 'days'),
+          Title: '測試環境即將關閉',
+          Content: ''
+        },
+        { 
+          BeginDate: moment().add(-6, 'days'),
+          EndDate:  moment().add(2, 'days'),
+          Title: '測試案例5',
+          Content: ''
+        },
+        { 
+          BeginDate: moment().add(-6, 'days'),
+          EndDate:  moment().add(2, 'days'),
+          Title: '測試案例4',
+          Content: ''
+        },
+        { 
+          BeginDate: moment().add(-6, 'days'),
+          EndDate:  moment().add(2, 'days'),
+          Title: '測試案例3',
+          Content: ''
+        },
+      ];
+    })
+
+    const count = ref(bulletinList.value.length);  
+    const loading = ref(false)
+    const noMore = computed(() => count.value >= bulletinList.value.length)
+    const disabled = computed(() => loading.value || noMore.value)
+    const load = () => {
+      loading.value = true
+      setTimeout(() => {
+        count.value += 2
+        loading.value = false
+      }, 2000)
+    }
 
     onBeforeMount(async () =>{
       await store.dispatch('todoList/getTodoList')
@@ -147,19 +207,54 @@ export default({
 
     return {
       time,
+      count,
+      loading,
+      noMore, 
+      disabled,
       todoList,
       waitList,
       scheduleList,
+      bulletinList,
       device,
       gotoTodo,
-      gotoWait
+      gotoWait,
+      load
     }
   },
 })
 </script>
 <style>
   .clock{
-    background-color: black;
+    background-color: gray;
     color: white;
   }
+  .infinite-list-wrapper {
+    height: 300px;
+    text-align: left;
+  }
+  .infinite-list-wrapper .list {
+    padding: 0;
+    margin: 0;
+    /* list-style: none; */
+  }
+
+  .infinite-list-wrapper .list-item {
+    height: 50px;
+    background: gainsboro;
+  }
+
+  .infinite-list-wrapper .list-item p.day{
+    margin: 2px 0 2px 0;
+    padding-top: 5px;
+    color: dimgray;
+  }
+  .infinite-list-wrapper .list-item p.title{
+    margin: 2px 0px 0px 5em;
+    font-weight: bold;
+    color: black;
+  }
+
+  /* .infinite-list-wrapper .list-item + .list-item {
+    margin-top: 2px;
+  } */
 </style>
