@@ -28,6 +28,7 @@ import process from './modules/workboard/process'
 import flowchart from './modules/flowchart'
 import form from './modules/form'
 import stage from './modules/stage'
+import weather from './modules/weather'
 
 
 const store = createStore({
@@ -55,7 +56,8 @@ const store = createStore({
    flowchart,
    form,
    actionClass,
-   stage
+   stage,
+   weather
   }
 })
 export default store

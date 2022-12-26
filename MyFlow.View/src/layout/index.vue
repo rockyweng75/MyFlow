@@ -49,7 +49,6 @@ export default {
     }
   },
   beforeMount(){
-    console.log(this)
     this.$store.commit('app/setWindowsWidth', this.$windowWidth)
   },
   watch:{
@@ -58,13 +57,13 @@ export default {
     },
     $route() {
       if (this.device === 'mobile' && this.sidebar.opened) {
-        this.$store.commit('app/closeSideBar', { withoutAnimation: false })
+        this.$store.commit('app/closeSidebar', { withoutAnimation: false })
       }
     }
   },
   methods: {
     handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+      this.$store.commit('app/closeSidebar', { withoutAnimation: false })
     }
   }
 }

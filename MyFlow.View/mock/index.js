@@ -24,6 +24,7 @@ import testValidation from '../mock/options/validation';
 import testSwitchClass from '../mock/options/switchClass';
 import testFormType from '../mock/options/formType';
 import testForm from '../mock/form';
+import testWeather from '../mock/weather';
 
 
 export function setupProdMockServer() {
@@ -49,6 +50,7 @@ export function setupProdMockServer() {
     ...testValidation,
     ...testSwitchClass,
     ...testFormType,
-    ...testForm
+    ...testForm,
+    ...testWeather
   ]);
 }

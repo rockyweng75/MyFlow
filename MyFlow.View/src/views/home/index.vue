@@ -54,8 +54,8 @@
         <div class="workboard-header">
           天氣
         </div>
-        <div class="workboard-weather">
-          <el-row>
+        <div class="workboard-weather" v-loading="weatherLoading">
+          <el-row v-if="weather">
             <el-col :span="5">
               <el-icon :size="40" class="image"><component :is="weather.Icon"></component></el-icon>
             </el-col>
@@ -69,6 +69,16 @@
               <div class="range">{{weather.MaximumTemperature}}° / {{weather.MinimumTemperature}}°</div>
             </el-col>
           </el-row>
+          <div v-else>
+            <el-row>
+              <el-col :span="24">
+                <el-icon :size="40"><WarningFilled /></el-icon>
+              </el-col>
+              <el-col :span="24">
+                查無目前天氣
+              </el-col>
+            </el-row>
+          </div>
         </div>
       </el-card>
     </el-col>
@@ -157,7 +167,7 @@
                 {{ bulletin.Title }}
               </p>
             </li>
-            <p v-if="loading">Loading...</p>
+            <p v-if="bulletinLoading">Loading...</p>
             <p v-if="noMore">No more</p>
           </ul>
         </div>
@@ -171,7 +181,7 @@
 import { onBeforeMount, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { Star, Sunny, MostlyCloudy, PartlyCloudy, Pouring, Lightning, Search } from '@element-plus/icons-vue'
+import { Star, Sunny, MostlyCloudy, PartlyCloudy, Pouring, Lightning, Search, WarningFilled } from '@element-plus/icons-vue'
 import moment from 'moment/min/moment-with-locales'
 
 
@@ -183,7 +193,8 @@ export default({
     PartlyCloudy, 
     Pouring, 
     Lightning,
-    Search
+    Search,
+    WarningFilled
   },
   setup() {
     const store = useStore()
@@ -203,7 +214,6 @@ export default({
     })
 
     const scheduleList = computed(() =>{
-
       return [
         { 
           BeginDate: new Date().setHours(8, 10, 0, 0),
@@ -225,7 +235,6 @@ export default({
     })
 
     const bulletinList = computed(() =>{
-
       return [
         { 
           BeginDate: moment().add(-1, 'days'),
@@ -299,7 +308,10 @@ export default({
       ]
     });
 
+    const weatherLoading = ref(true)
     const weather = computed(() =>{
+      // return store.getters['weather/model'];
+
       return {
         Location: 'YunLin',
         Weather: '晴天',
@@ -312,20 +324,22 @@ export default({
     });
 
     const count = ref(bulletinList.value.length);  
-    const loading = ref(false)
+    const bulletinLoading = ref(false)
     const noMore = computed(() => count.value >= bulletinList.value.length)
-    const disabled = computed(() => loading.value || noMore.value)
+    const disabled = computed(() => bulletinLoading.value || noMore.value)
     const load = () => {
-      loading.value = true
+      bulletinLoading.value = true
       setTimeout(() => {
         count.value += 2
-        loading.value = false
+        bulletinLoading.value = false
       }, 2000)
     }
 
     onBeforeMount(async () =>{
       await store.dispatch('todoList/getTodoList')
       await store.dispatch('waitList/getWaitList')
+      await store.dispatch('weather/getOne')
+      weatherLoading.value = false
     })
 
     const device = computed(() =>{
@@ -344,14 +358,15 @@ export default({
     return {
       time,
       count,
-      loading,
       noMore, 
       disabled,
       todoList,
       waitList,
       scheduleList,
+      bulletinLoading,
       bulletinList,
       memberList,
+      weatherLoading,
       weather,
       device,
       gotoTodo,

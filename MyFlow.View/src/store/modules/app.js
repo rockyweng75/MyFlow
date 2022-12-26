@@ -22,8 +22,9 @@ const mutations = {
       Cookies.set('sidebarStatus', 0)
     }
   },
-  closeSidebar: (state) => {
+  closeSidebar: (state, sidebar) => {
     Cookies.set('sidebarStatus', 0)
+    state.sidebar.withoutAnimation = sidebar.withoutAnimation
     state.sidebar.opened = false
   },
   toggleDevice: (state, device) => {
