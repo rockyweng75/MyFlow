@@ -9,7 +9,7 @@ export const fetchForms = () => {
 
 export const fetchApplyForm = (flowId) => {
     return request({
-        url: '/api/Form/Apply/' + flowId,
+        url: '/api/ApplyForm/' + flowId,
         method: 'get',
     })
 }

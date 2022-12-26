@@ -48,7 +48,12 @@ const getters = {
     return state.selectedForm
   },
   items:(state, getters)=>{
-    return getters.selectedForm.Items
+    if(state.selectedForm){
+      return state.selectedForm.Items
+    } else {
+      return []
+    }
+
   },
   stageForm:(state, getters)=>{
     return state.stageForm
@@ -91,7 +96,8 @@ const actions = {
   },
   getApplyForm({commit}, flowId) {
     return new Promise((resolve, reject) => {
-      fetchApplyForm(flowId).then(response => {
+      fetchApplyForm(flowId)
+      .then(response => {
           commit('setSelectedForm', response)
           resolve()
         }).catch(error => {

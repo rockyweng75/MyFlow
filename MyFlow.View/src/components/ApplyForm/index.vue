@@ -48,23 +48,23 @@
                 userInfo: userinfo.value
             })
     
-            //解決沒給預設值無法正常表單檢核問題
-            const initFormData = () =>{
-                items.value.forEach(item =>{
-                    if(!state.formData[item.ItemValue]){
-                        state.formData[item.ItemValue] = '';
-                    }
-                })
-            }
-    
             provide('userInfo', state.userInfo)
             provide('formData', state.formData)
             
             onBeforeMount(() =>{
-                store.dispatch('form/getApplyForm', props.flowid )
+               store.dispatch('form/getApplyForm', props.flowid )
                 .then(()=>{
-                    initFormData()
+                    //解決沒給預設值無法正常表單檢核問題
+                    if(items.value)
+                    {
+                        items.value.forEach(item =>{
+                            if(!state.formData[item.ItemValue]){
+                                state.formData[item.ItemValue] = '';
+                            }
+                        })
+                    }
                 })
+                console.log(res)
             })
     
             const refForm = ref({})

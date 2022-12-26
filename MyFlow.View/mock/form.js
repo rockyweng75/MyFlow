@@ -81,8 +81,8 @@ const testApplyForm = {
       OrderId: 3,
       ItemType: 8,
       ItemTitle: '證明文件',
-      ItemValue: 'Files',
-      DataRef: 'Files',
+      ItemValue: 'FileList',
+      DataRef: '',
       Required: false,
       Disabled: false,
     }
@@ -102,7 +102,8 @@ const mock = [
     },
   },
   {
-      url: '/api/Form/Apply/:id',
+    
+      url: '/api/ApplyForm/:id',
       method: 'get',
       response: ({ query ,body }) => {
         return testApplyForm;

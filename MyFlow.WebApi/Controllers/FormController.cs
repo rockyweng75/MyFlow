@@ -32,7 +32,7 @@ namespace MyFlow.WebApi.Controllers
             return await service.GetList(vm);
         }
 
-        [HttpGet("Apply/{Id}")]
+        [HttpGet("/ApplyForm/{Id}")]
         public async Task<dynamic> GetList(int Id)
         {
             var flowchart = await flowchartService.Get(Id);
