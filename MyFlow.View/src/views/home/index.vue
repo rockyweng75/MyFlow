@@ -1,41 +1,101 @@
 <template>
   <el-row>
-    <el-card style="width:100%">
-      <el-row>
-        <el-col :span="device !== 'mobile'? 6 : 24">
-          <el-button type="warning" style="width:100%" effect="dark" round v-on:click="gotoTodo">
-            <h2>
-              <el-space wrap :size="28">待辦:</el-space>
+    <el-col :span="device !== 'mobile'? 6 : 24">
+      <el-card style="width:100%" class="workboard-block small">
+        <div class="workboard-header">
+          即時狀態
+        </div>
+        <div class="workboard-todo" >
+          <el-row justify="space-between" v-on:click="gotoTodo" class="workboard-button" >
+            <el-col :span="10">
+              <span class="dot bg-warning"></span>
+              <spad>待辦</spad>
+            </el-col>
+            <el-col :span="14" style="text-align:end">
               <el-space wrap :size="28">{{todoList.length}} 筆</el-space>
-            </h2>
-          </el-button>
-        </el-col>
-        <el-col :span="device !== 'mobile'? 6 : 24">
-          <el-button type="primary" style="width:100%" effect="dark" round v-on:click="gotoWait">
-            <h2>
-              <el-space wrap :size="28">等待:</el-space>
+            </el-col>
+          </el-row>
+        </div>
+        <div class="workboard-wait">
+          <el-row justify="space-between" v-on:click="gotoWait" class="workboard-button">
+            <el-col :span="10">
+              <span class="dot bg-primary"></span>
+              <span>等待</span>
+            </el-col>
+            <el-col :span="14" style="text-align:end">
               <el-space wrap :size="28">{{waitList.length}} 筆</el-space>
-            </h2>
-          </el-button>
-        </el-col>
-        <el-col :span="device !== 'mobile'? 12 : 24">
-          <el-button class="clock" style="width:100%" effect="dark" round>
-            <h3>
-              {{ time.toLocaleDateString() }} {{ time.toLocaleTimeString() }}
-            </h3>
-          </el-button>
-        </el-col>
-      </el-row>
-    </el-card>
+            </el-col>
+          </el-row>
+        </div>
+      </el-card>
+    </el-col>
+    <el-col :span="device !== 'mobile'? 6 : 24">
+      <el-card style="width:100%"  class="workboard-block small">
+        <div class="workboard-header">
+          快速查詢
+        </div>
+        <div class="workboard-search">
+          <el-input
+            v-model="input3"
+            placeholder="Please input"
+            class="input-with-select"
+          >
+            <template #append>
+              <el-button>
+                <el-icon :size="15"><Search /></el-icon>
+              </el-button>
+            </template>
+          </el-input>
+        </div>
+      </el-card>
+    </el-col>
+    <el-col :span="device !== 'mobile'? 6 : 24">
+      <el-card style="width:100%"  class="workboard-block small">
+        <div class="workboard-header">
+          天氣
+        </div>
+        <div class="workboard-weather">
+          <el-row>
+            <el-col :span="5">
+              <el-icon :size="40" class="image"><component :is="weather.Icon"></component></el-icon>
+            </el-col>
+            <el-col :span="13">
+              <div class="local">{{weather.Location}}</div>
+              <div class="weather">{{weather.Weather}}</div>
+              <div class="humidity">下雨機率：{{ weather.ProbabilityOfPrecipitation * 100 }}%</div>
+            </el-col>
+            <el-col class="temperature" :span="6">
+              <div class="current">{{weather.Temperature}}°</div>
+              <div class="range">{{weather.MaximumTemperature}}° / {{weather.MinimumTemperature}}°</div>
+            </el-col>
+          </el-row>
+        </div>
+      </el-card>
+    </el-col>
+    <el-col :span="device !== 'mobile'? 6 : 24">
+      <el-card style="width:100%"  class="workboard-block small">
+        <div class="workboard-header">
+          系統時間
+        </div>
+        <div class="workboard-clock" >
+          <el-row class="date">
+            <span>{{ time.toLocaleDateString() }}</span>
+          </el-row>
+          <el-row class="time">
+            <span >{{ time.toLocaleTimeString() }}</span>
+          </el-row>
+        </div>
+      </el-card>
+    </el-col>
   </el-row>
   <el-row>
-    <el-col :span="device !== 'mobile'? 10 : 24">
+    <el-col :span="device !== 'mobile'? 6 : 24">
       <el-row>
-        <el-card style="width:100%">
+        <el-card class="workboard-block medium">
           <template #header>
             本日行程
           </template>
-          <el-timeline v-if="scheduleList.length > 0">
+          <el-timeline style="height: 300px;overflow: auto" v-if="scheduleList.length > 0">
               <el-timeline-item
                 v-for="(schedule, index) in scheduleList.filter(o => o.BeginDate > new Date())"
                 :key="index"
@@ -49,20 +109,43 @@
               </el-timeline-item>
           </el-timeline>
           <div v-else>
-            <el-empty description="暫時沒有開放的申請" />
+            <el-empty description="無後續行程" />
           </div>
         </el-card>
       </el-row>
     </el-col>
-    <el-col :span="device !== 'mobile'? 14 : 24">
-      <el-card style="width:100%">
+    <el-col :span="device !== 'mobile'? 6 : 24">
+      <el-row>
+        <el-card class="workboard-block medium">
+          <template #header>
+            人員狀態
+          </template>
+          <ul class="board-list">
+            <li class="list-item" v-for="(member,index) in memberList" :key="index">
+              <el-row class="member-info" justify="space-between" >
+                <el-col :span="20">{{ member.Name }}</el-col>
+                <el-col :span="4" style="text-align:end">
+                  <span class="avatar" :class='"bg-" + member.Status'></span>
+                </el-col>
+              </el-row>
+              <el-row class="member-status" justify="space-between">
+                <el-col :span="18">{{ member.Title }}</el-col>
+                <el-col :span="6" style="text-align:end">分機:{{ member.TelExt }}</el-col>
+              </el-row>
+            </li>
+          </ul>
+        </el-card>
+      </el-row>
+    </el-col>
+    <el-col :span="device !== 'mobile'? 12 : 24">
+      <el-card style="width:100%" class="workboard-block medium">
         <template #header>
           公佈欄
         </template>
-        <div class="infinite-list-wrapper" style="overflow: auto" v-if="bulletinList.length > 0">
+        <div style="height: 300px;overflow: auto" v-if="bulletinList.length > 0">
           <ul
+            class="board-list"
             v-infinite-scroll="load"
-            class="list"
             :infinite-scroll-disabled="disabled"
           >
             <li v-for="(bulletin, index) in bulletinList" :key="index" class="list-item">
@@ -88,12 +171,19 @@
 import { onBeforeMount, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
-import { Star } from '@element-plus/icons-vue'
+import { Star, Sunny, MostlyCloudy, PartlyCloudy, Pouring, Lightning, Search } from '@element-plus/icons-vue'
 import moment from 'moment/min/moment-with-locales'
+
 
 export default({
   components:{
-    Star
+    Star,
+    Sunny,
+    MostlyCloudy, 
+    PartlyCloudy, 
+    Pouring, 
+    Lightning,
+    Search
   },
   setup() {
     const store = useStore()
@@ -129,7 +219,8 @@ export default({
           BeginDate: new Date().setHours(16, 50, 0, 0),
           EndDate: new Date().setHours(17, 0, 0, 0),
           Name: '作業交接'
-        }
+        },
+
       ];
     })
 
@@ -157,7 +248,7 @@ export default({
         { 
           BeginDate: moment().add(-6, 'days'),
           EndDate:  moment().add(2, 'days'),
-          Title: '測試案例5',
+          Title: '測試案例512312312313213213123132',
           Content: ''
         },
         { 
@@ -174,6 +265,51 @@ export default({
         },
       ];
     })
+
+    const memberList = computed(() =>{
+      return [
+        { 
+          Name: '陳大成',
+          Title: '總經理',
+          Status: 'online',
+          Department: '',
+          TelExt: '100'
+        },
+        { 
+          Name: '王小玫',
+          Title: '總經理秘書',
+          Status: 'online',
+          Department: '',
+          TelExt: '100'
+        },
+        { 
+          Name: '吳一天',
+          Title: '人事部經理',
+          Status: 'busy',
+          Department: '',
+          TelExt: '200'
+        },
+        { 
+          Name: '李三',
+          Title: '人事部部員',
+          Status: 'offline',
+          Department: '',
+          TelExt: '202'
+        },
+      ]
+    });
+
+    const weather = computed(() =>{
+      return {
+        Location: 'YunLin',
+        Weather: '晴天',
+        ProbabilityOfPrecipitation: 0.5,
+        Temperature: 31,
+        MaximumTemperature: 32,
+        MinimumTemperature: 12,
+        Icon: 'Sunny',
+      }
+    });
 
     const count = ref(bulletinList.value.length);  
     const loading = ref(false)
@@ -215,6 +351,8 @@ export default({
       waitList,
       scheduleList,
       bulletinList,
+      memberList,
+      weather,
       device,
       gotoTodo,
       gotoWait,
@@ -223,38 +361,162 @@ export default({
   },
 })
 </script>
-<style>
-  .clock{
-    background-color: gray;
-    color: white;
-  }
-  .infinite-list-wrapper {
-    height: 300px;
-    text-align: left;
-  }
-  .infinite-list-wrapper .list {
+
+
+<style scoped>
+  .board-list {
     padding: 0;
     margin: 0;
-    /* list-style: none; */
+    list-style: none;
   }
 
-  .infinite-list-wrapper .list-item {
-    height: 50px;
-    background: gainsboro;
+  .list-item {
+    min-height: 50px;
+    border-bottom: 1px solid var(--el-card-border-color);
   }
 
-  .infinite-list-wrapper .list-item p.day{
+  .list-item p.day{
     margin: 2px 0 2px 0;
     padding-top: 5px;
     color: dimgray;
   }
-  .infinite-list-wrapper .list-item p.title{
+  .list-item p.title{
     margin: 2px 0px 0px 5em;
     font-weight: bold;
     color: black;
   }
 
-  /* .infinite-list-wrapper .list-item + .list-item {
-    margin-top: 2px;
-  } */
+  .workboard-block {
+    width: 100%;
+    padding-bottom: 10px;;
+  }
+
+  .workboard-block.small{
+    height: 133px;
+  }
+
+  .workboard-block.medium{
+    height: 340px;
+  }
+
+  .workboard-header{
+    font-weight: bold;
+    padding: 0 0 10px 0;
+  }
+
+  .workboard-button {
+    cursor: pointer;
+    transition: 0.1s;
+  }
+
+  .workboard-button {
+    padding: 5px 10px 5px 10px;
+  }
+  .workboard-button:active {
+    background-color: var(--el-fill-color);
+  }
+
+  .workboard-button:hover {
+    background-color: var(--el-fill-color-light);
+  }
+  .workboard-clock{
+    background: linear-gradient(mediumblue 0%, rgb(0, 153, 255) 80%);
+    color: white;
+    border-radius: 1ch;
+  }
+
+  .workboard-clock .date {
+    padding: 10px 10px 0px 1em;
+    font-size: medium;
+    font-family:'Times New Roman', Times, serif;
+    font-weight: bold;
+  }
+  .workboard-clock .time {
+    padding: 0px 10px 5px 3em;
+    font-size: larger;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+  }
+
+  .workboard-weather {
+    text-align:center;
+  }
+
+  .workboard-weather .image {
+    color: goldenrod;
+    padding-top: 14px;
+  }
+
+
+  .workboard-weather .local {
+    font-size:large;
+    font-weight:bold;
+  }
+  .workboard-weather .weather {
+    font-size:small;
+    color: goldenrod
+  }
+
+  .workboard-weather .humidity {
+    font-size:small;
+    font-weight:bold;
+    color: var(--el-color-info)
+  }
+
+  .workboard-weather .temperature .current {
+    font-size:xx-large;
+    color: var(--el-color-primary);
+  }
+
+  .workboard-weather .temperature .range {
+    font-size:small;
+    color: var(--el-color-info);
+  }
+
+  .avatar {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+
+  .member-status{
+    font-size: small;
+    padding-left: 2em;
+    padding-top: 5px;
+    color: var(--el-color-info);
+  }
+
+  .dot {
+      width: 0.625rem;
+      height: 0.625rem;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.5rem;
+  }
+  .bg-primary {
+    --falcon-bg-opacity: 1;
+    background-color: var(--el-color-primary) !important;
+  }
+  .bg-success, .bg-online {
+    --falcon-bg-opacity: 1;
+    background-color: var(--el-color-success) !important;
+  }
+
+  .bg-warning, .bg-leave {
+    --falcon-bg-opacity: 1;
+    background-color: var(--el-color-warning) !important;
+  }
+
+  .bg-danger, .bg-busy{
+    --falcon-bg-opacity: 1;
+    background-color: var(--el-color-danger) !important;
+  }
+
+  .bg-info, .bg-offline{
+    --falcon-bg-opacity: 1;
+    background-color: var(--el-color-info) !important;
+  }
+
+
 </style>
