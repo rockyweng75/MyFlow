@@ -82,3 +82,33 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+  .link-menu {
+    border-right: 0px;
+    border-left: 3px solid var(--el-color-success);
+  }
+
+  .link-menu .el-menu-item {
+    border-bottom: 1px solid var(--el-border-color);
+    border-right: 0px;
+  }
+
+  .link-menu .el-sub-menu {
+    border-bottom: 1px solid var(--el-border-color);
+
+  }
+
+  .link-menu .el-sub-menu.is-opened {
+    border-bottom: 0px;
+  }
+
+  .link-menu .el-sub-menu.is-opened .el-menu-item {
+    border-left: 4px solid var(--el-color-success);
+  }
+
+
+  .link-menu .el-sub-menu.is-opened >>> .el-sub-menu__title {
+    border-bottom: 1px solid var(--el-border-color);
+  }
+</style>
