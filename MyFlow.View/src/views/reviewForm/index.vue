@@ -20,10 +20,11 @@ import ApplyForm from "@/components/ApplyForm/index.vue"
 import ProcessHistory from "@/components/ProcessHistory/index.vue"
 import ApproveForm from "@/components/ApproveForm/index.vue"
 import Details from "./details.vue"
-import { ElMessageBox, ElMessage } from 'element-plus'
+import { ElMessageBox, ElMessage, ElLoading } from 'element-plus'
 import { reactive, onBeforeMount, computed, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+
 
 export default{
     components:{
@@ -51,9 +52,17 @@ export default{
         const store = useStore();
 
         onBeforeMount(()=>{
+            const fullLoading = ElLoading.service({
+                lock: true,
+                text: 'Loading',
+                background: 'rgba(0, 0, 0, 0.7)',
+            })
             store.dispatch('process/load',  route.params.apprid )
             .then(()=>{
                 state.loading = false
+            })
+            .finally(()=>{
+                fullLoading.close()
             })
         })
 

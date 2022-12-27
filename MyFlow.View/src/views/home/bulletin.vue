@@ -3,15 +3,12 @@
         <template #header>
             公佈欄
         </template>
-        <div style="height: 300px;overflow: auto" v-if="bulletinList.length > 0">
+        <div style="height: 300px;overflow: auto" v-if="bulletinList.length > 0" v-loading="initLoading">
             <ul
-            class="board-list"
-            v-infinite-scroll="load"
-            :infinite-scroll-disabled="disabled"
-            :infinite-scroll-immediate="false"
+                class="board-list"
+                v-infinite-scroll="load"
+                :infinite-scroll-distance="50"
             >
-            <!-- {{ noMore }}
-            {{ pagination }} -->
             <li v-for="(bulletin, index) in bulletinList" :key="index" class="list-item">
                 <p class="day">
                 <el-icon :size="15"><Star /></el-icon>
@@ -34,7 +31,6 @@
     import { useStore } from 'vuex'
     import { Star } from '@element-plus/icons-vue'
 
-
     export default({
         components:{
             Star
@@ -50,31 +46,32 @@
                 return store.getters['bulletin/pagination']
             });
 
+            const initLoading = ref(true)
             const bulletinLoading = ref(false)
             const noMore = computed(() => (pagination.value.pageIndex * pagination.value.pageCount) >= pagination.value.total)
             const disabled = computed(() => bulletinLoading.value || noMore.value)
             // todo fix
             const load = () => {
                 bulletinLoading.value = true
-                if(!noMore){
-                    store.dispatch('bulletin/getList', 
-                    { 
-                        pageIndex: pagination.value.pageIndex + 1 
-                    }
-                    ).then(()=>{
-                        bulletinLoading.value = false
-                    })
+                store.dispatch('bulletin/load', 
+                { 
+                    pageIndex: pagination.value.pageIndex + 1 
                 }
+                ).then(()=>{
+                    bulletinLoading.value = false
+                })
        
             }
 
-            onBeforeMount(()=>{
-                store.dispatch('bulletin/getList')
+            onBeforeMount(async ()=>{
+                await store.dispatch('bulletin/getList')
+                initLoading.value = false
             })
 
             return{
                 bulletinList,
                 pagination,
+                initLoading,
                 bulletinLoading,
                 noMore,
                 disabled,

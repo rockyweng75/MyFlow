@@ -49,7 +49,6 @@ export const getters = {
         return state.pager.PageIndex
     },
     rowNumber:(state, getters)=>{
-        console.log(state)
         return state.pager.PageSize
     },
     total:(state, getters)=>{

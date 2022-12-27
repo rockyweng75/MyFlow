@@ -9,12 +9,18 @@ const mock = [
     method: 'get',
     response: ({ query, body, headers }) => {
       var result = []
+
       for(var i = 1; i <=parseInt(query.pageSize); i++){
+        var index = i;
+        if(parseInt(query.pageIndex) > 1){
+          index = i + ((parseInt(query.pageIndex) - 1) * parseInt(query.pageSize))
+        }
+
         result.push(
           { 
-            BeginDate: addDate(i * -1),
+            BeginDate: addDate(index * -1),
             // EndDate:  moment().add((i * -1) + 2, 'days'),
-            Title: '公告' + (i + 1),
+            Title: '公告' + (index + 1),
             Content: ''
           }
         );

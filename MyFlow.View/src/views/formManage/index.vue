@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card v-loading="loading">
     <template #header>
       <el-row justify="space-between">
         <el-col :span="12">
@@ -50,7 +50,7 @@
 
 <script>
 
-import { computed, onBeforeMount } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -65,8 +65,10 @@ export default {
       return store.getters['form/defaultOpeneds']
     })
     
-    onBeforeMount(() =>{
-      store.dispatch('form/getForms')
+    const loading = ref(true)
+    onBeforeMount(async() =>{
+      await store.dispatch('form/getForms')
+      loading.value = false
     })
 
     const router = useRouter()
@@ -78,6 +80,7 @@ export default {
       forms,
       defaultOpeneds,
       toCreate,
+      loading
     }
   },
 }

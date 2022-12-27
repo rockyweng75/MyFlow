@@ -1,5 +1,5 @@
 <template>
-    <el-card class="green-card">
+    <el-card class="green-card" v-loading="loading">
         <template #header>
             {{form.StageName}}
         </template>
@@ -30,6 +30,7 @@
         setup(props, { emit }){
             const store = useStore()
     
+            const loading = ref(true)
             const form = computed(()=>{
                 return store.getters['form/stageForm'];
             })
@@ -60,6 +61,7 @@
                 .then(()=>{
                     state.formData = {...data.value}
                     initFormData()
+                    loading.value = false
                 })
             })
     
@@ -89,7 +91,8 @@
                 refForm,
                 customItems,
                 fileAction,
-                setRefForm
+                setRefForm,
+                loading
             }
         }
     }

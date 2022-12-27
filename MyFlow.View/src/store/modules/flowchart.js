@@ -20,7 +20,6 @@ const mutations = {
   },
   setDefaultOpenedList: (state, list) => {
     state.defaultOpenedList = []
-    console.log(list)
     list.forEach(form=>{
         if(form.children){
             state.defaultOpenedList.push(form.name)

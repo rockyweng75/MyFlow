@@ -1,9 +1,10 @@
 <template>
-    <el-card>
+    <el-card v-loading="loading">
         <template #header>
             個人即時表單
         </template>
         <el-table
+           
             :data="list"
             ref="singleTable"
             header-row-class-name="el-custom-header"
@@ -75,7 +76,7 @@
 </template>
 
 <script>
-import { reactive, computed, onBeforeMount } from 'vue'
+import { reactive, computed, onBeforeMount, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter} from 'vue-router'
 
@@ -119,6 +120,7 @@ export default {
             return store.getters['waitList/total']
         })
 
+        const loading = ref(true)
         const query = () =>{
             store.dispatch('waitList/getWaitList')
         }
@@ -126,8 +128,9 @@ export default {
             query()
         }
 
-        onBeforeMount(() =>{
-            query()
+        onBeforeMount(async () =>{
+            await query()
+            loading.value = false
         })
 
         const device = computed(() =>{

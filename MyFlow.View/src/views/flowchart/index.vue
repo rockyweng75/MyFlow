@@ -49,7 +49,7 @@
 
 <script>
 
-import { computed, onBeforeMount } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -64,9 +64,13 @@ export default {
       return store.getters['flowchart/defaultOpeneds']
     })
     
-    onBeforeMount(() =>{
-      store.dispatch('flowchart/getFlowchartsByAdmin')
+    const loading = ref(true)
+
+    onBeforeMount(async () =>{
+      await store.dispatch('flowchart/getFlowchartsByAdmin')
+      loading.value = false
     })
+
 
     const router = useRouter()
     const toCreate = ()=>{
@@ -77,7 +81,8 @@ export default {
     return {
       forms,
       defaultOpeneds,
-      toCreate
+      toCreate,
+      loading
     }
   },
 }

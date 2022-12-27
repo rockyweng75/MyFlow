@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card v-loading="loading">
     <template #header>
       選擇申請表單
     </template>
@@ -45,7 +45,7 @@
 
 <script>
 
-import { computed, onBeforeMount } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useI18n } from "vue-i18n";
 
@@ -59,9 +59,11 @@ export default {
     const defaultOpeneds = computed(()=>{
       return store.getters['flowchart/defaultOpeneds']
     })
-    
-    onBeforeMount(() =>{
-      store.dispatch('flowchart/getFlowcharts')
+    const loading = ref(true)
+
+    onBeforeMount(async() =>{
+      await store.dispatch('flowchart/getFlowcharts')
+      loading.value = false
     })
 
     const { t, locale } = useI18n();
@@ -69,7 +71,8 @@ export default {
     return {
       forms,
       defaultOpeneds,
-      t
+      t,
+      loading
     }
   },
 }

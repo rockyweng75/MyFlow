@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card v-loading="loading">
         <template #header>
             個人申請記錄
         </template>
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { reactive, computed, onBeforeMount } from 'vue'
+import { reactive, computed, onBeforeMount, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute, useRouter} from 'vue-router'
 
@@ -102,8 +102,10 @@ export default {
             router.push('/reviewForm/' + row.FlowId + '/'+ row.CurrentStage + '/' + row.ApplyId + '/' + row.DataId  )
         }
 
-        onBeforeMount(() =>{
-            query()
+        const loading = ref(true)
+        onBeforeMount(async () =>{
+            await query()
+            loading.value = false
         })
 
         const pageIndex = computed({
@@ -142,7 +144,8 @@ export default {
             rowNumber,
             total,
             currentPageChange,
-            device
+            device,
+            loading
         }
     },
 }

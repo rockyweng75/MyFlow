@@ -1,5 +1,5 @@
 <template>
-    <el-row class="block" justify="space-between">
+    <el-row class="block" justify="space-between" v-loading="state.loading">
         <el-col :span="12">
             <el-button-group>
                 <template v-for="(actionForm, index) in actionForms" :key="index">

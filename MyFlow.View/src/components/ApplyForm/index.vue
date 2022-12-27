@@ -1,5 +1,5 @@
 <template>
-    <el-card class="blue-card"> 
+    <el-card class="blue-card" v-loading="loading"> 
         <template #header>
             申請{{form.FlowName}}
         </template>
@@ -43,6 +43,8 @@
                 return store.getters['process/applyData'];
             })
     
+            const loading = ref(true)
+
             const state = reactive({
                 formData: {...formData.value},
                 userInfo: userinfo.value
@@ -52,6 +54,7 @@
             provide('formData', state.formData)
             
             onBeforeMount(() =>{
+
                store.dispatch('form/getApplyForm', props.flowid )
                 .then(()=>{
                     //解決沒給預設值無法正常表單檢核問題
@@ -63,6 +66,7 @@
                             }
                         })
                     }
+                    loading.value = false
                 })
             })
     
@@ -92,7 +96,8 @@
                 items,
                 form,
                 refForm,
-                setRefForm
+                setRefForm,
+                loading
             }
         }
     }
