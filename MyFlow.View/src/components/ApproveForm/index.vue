@@ -22,12 +22,12 @@
             CustomItems
         },
         props:{
-            stageid: {type: [Number, String], required: true },
+            stageid: { type: [Number, String], required: true },
             action: { type: String, required: true },
             disabled: { type: Boolean },
         }, 
         //emits:['update:action'],
-        setup(props, {emit}){
+        setup(props, { emit }){
             const store = useStore()
     
             const form = computed(()=>{

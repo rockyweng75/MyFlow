@@ -7,8 +7,6 @@
       </el-row>
       <el-row justify="center" align="middle">
         <el-link href="./login"><h3>重新登入</h3></el-link>
-        ／
-        <el-link href="https://webapp.yuntech.edu.tw/YunTechSSO/Account/Login"><h3>返回單一入口</h3></el-link>
       </el-row>
   </div>
 </template>

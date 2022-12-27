@@ -7,13 +7,17 @@ import store from './store'
 import './permission'
 import App from './App.vue'
 import { VueWindowSizePlugin } from 'vue-window-size/option-api';
-import moment from 'moment/min/moment-with-locales'
+import * as dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/zh-tw'
+
 import { createI18n } from 'vue-i18n'
 // import zh from "./lang/zh-TW.json";
 // import en from "./lang/en-US.json";
 
 const defaultI18n = 'zh-tw';
-moment.locale(defaultI18n)
+dayjs.locale(defaultI18n)
+dayjs.extend(relativeTime)
 
 const i18n = createI18n({
     legacy: false,
@@ -33,14 +37,14 @@ const app = createApp(App)
 .use(VueWindowSizePlugin)
 .use(i18n)
 
-app.config.globalProperties.$moment = moment;
+app.config.globalProperties.$dayjs = (value) => { return dayjs(value) }  
 
 app.config.globalProperties.$filters = {
     'formatDate': value =>{
         if (value) {
-            return moment(String(value)).format('YYYY/MM/DD hh:mm')
+            return dayjs(value).format('YYYY/MM/DD hh:mm')
         }
-    }
+    },
 }
 
 app.mount('#app')

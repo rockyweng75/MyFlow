@@ -11,11 +11,14 @@ const mutations = {
     setList: (state, list) => {
         state.list = list
     },
+    setPageIndex: (state, index ) =>{
+        state.pagination.pageIndex = index
+    },
     setPagination: (state, data) => {
         state.pagination = {
-            pageIndex: data[0].PageIndex,
-            pageSize: data[0].PageSize,
-            total: data[0].TotalCount
+            pageIndex: data.PageIndex,
+            pageSize: data.PageSize,
+            total: data.TotalCount
         }
     }
 }

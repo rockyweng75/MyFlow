@@ -26,10 +26,10 @@ const mock = [
         url: '/api/ApproveHistory',
         method: 'get',
         response: ({ query ,body }) => {
-        return {
-            Data: testCases,
-            Pager: pager
-        };
+            return {
+                Data: testCases,
+                Pager: pager
+            };
         },
     },
 ]

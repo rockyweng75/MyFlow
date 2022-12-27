@@ -64,7 +64,6 @@
                         })
                     }
                 })
-                console.log(res)
             })
     
             const refForm = ref({})

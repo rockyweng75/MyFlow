@@ -32,7 +32,7 @@ const mock = [
           ApplyData: {
             ApplyUser: 'TestUser',
             ApplyDate: new Date(),
-            ApplyReason: 1
+            ApplyReason: '1',
           },
           ApproveData: {
 

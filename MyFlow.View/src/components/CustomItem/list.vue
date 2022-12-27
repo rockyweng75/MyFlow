@@ -1,5 +1,4 @@
 <template>
-
     <div v-if="state.isAreas" >
         <el-steps v-if="state.items.some(o => o.ItemType === 202)" 
             direction="vertical"

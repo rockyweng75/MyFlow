@@ -103,14 +103,14 @@ const mock = [
   },
   {
     
-      url: '/api/ApplyForm/:id',
+      url: '/api/Apply/:id',
       method: 'get',
       response: ({ query ,body }) => {
         return testApplyForm;
       },
   },
   {
-    url: '/api/Form/:id',
+    url: '/api/Stage/:id',
     method: 'get',
     response: ({ query ,body }) => {
       return {

@@ -49,7 +49,6 @@ const actions = {
     return new Promise((resolve, reject) => {
         fetchFlowcharts()
         .then(response => {
-            console.log(response)
           commit('setFlowList', response)
           commit('setDefaultOpenedList', response)
           resolve()

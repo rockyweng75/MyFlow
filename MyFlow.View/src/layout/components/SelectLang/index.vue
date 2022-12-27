@@ -26,7 +26,7 @@ import zh from "@/lang/zh-TW.json";
 import en from "@/lang/en-US.json";
 
 export default {
-  name: 'logout',
+  name: 'SelectLang',
   setup(){
     const store = useStore()
     const click = (lang)=>{
@@ -39,7 +39,7 @@ export default {
       return store.getters['app/lang']
     })
 
-    const moment = getCurrentInstance().appContext.config.globalProperties.$moment;
+    // const dayjs = getCurrentInstance().appContext.config.globalProperties.$dayjs;
 
     // const { locale } = useI18n({
     //   messages: {
@@ -49,7 +49,7 @@ export default {
     // })
 
     onBeforeMount(()=>{
-      moment.locale(lang.value)
+      // dayjs().locale(lang.value)
       // locale.value = lang.value
     })
 
