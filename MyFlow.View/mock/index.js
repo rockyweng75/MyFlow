@@ -25,7 +25,8 @@ import testSwitchClass from '../mock/options/switchClass';
 import testFormType from '../mock/options/formType';
 import testForm from '../mock/form';
 import testWeather from '../mock/weather';
-
+import testMember from '../mock/member';
+import testBulletin from '../mock/bulletin';
 
 export function setupProdMockServer() {
   createProdMockServer([
@@ -51,6 +52,8 @@ export function setupProdMockServer() {
     ...testSwitchClass,
     ...testFormType,
     ...testForm,
-    ...testWeather
+    ...testWeather,
+    ...testMember,
+    ...testBulletin
   ]);
 }

@@ -34,7 +34,7 @@
     "lodash.mapkeys": "^4.6.0",
     "lodash.pick": "^4.4.0",
     "lodash.pickby": "^4.6.0",
-    "moment": "^2.29.2",
+    "dayjs": "^1.11.7",
     "papaparse": "^5.3.1",
     "path-to-regexp": "^6.2.0",
     "sass": "^1.37.5",
