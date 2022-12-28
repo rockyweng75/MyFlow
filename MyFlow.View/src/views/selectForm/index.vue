@@ -79,7 +79,7 @@ export default {
 </script>
 <style scoped>
   .link-menu {
-    border-right: 0px;
+    border-right: 3px solid var(--el-color-success);
     border-left: 3px solid var(--el-color-success);
   }
 
@@ -90,15 +90,17 @@ export default {
 
   .link-menu .el-sub-menu {
     border-bottom: 1px solid var(--el-border-color);
-
+    background-color: var(--el-fill-color-light);
   }
 
   .link-menu .el-sub-menu.is-opened {
     border-bottom: 0px;
+
   }
 
   .link-menu .el-sub-menu.is-opened .el-menu-item {
     border-left: 4px solid var(--el-color-success);
+    border-right: 4px solid var(--el-color-success);
   }
 
 

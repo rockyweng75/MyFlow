@@ -50,7 +50,6 @@
             const bulletinLoading = ref(false)
             const noMore = computed(() => (pagination.value.pageIndex * pagination.value.pageCount) >= pagination.value.total)
             const disabled = computed(() => bulletinLoading.value || noMore.value)
-            // todo fix
             const load = () => {
                 bulletinLoading.value = true
                 store.dispatch('bulletin/load', 
