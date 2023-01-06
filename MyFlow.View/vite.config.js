@@ -3,6 +3,20 @@ import vue from "@vitejs/plugin-vue";
 import path from 'path'
 import { viteMockServe } from 'vite-plugin-mock'
 
+
+
+// const myPlugin = () => ({
+//   name: 'configure-server',
+//   configureServer(server) {
+//     server.middlewares.use((req, res, next) => {
+//       // custom handle request...
+//       console.log(req)
+
+//       // next()
+//     })
+//   },
+// })
+
 export default defineConfig(({command, mode}) => {
   let prodMock = true
   return {
@@ -21,15 +35,22 @@ export default defineConfig(({command, mode}) => {
           setupProdMockServer();
         `,
       })
+      // myPlugin()
     ],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),
       },
     },
-    // build: {
-    //   assetsDir: './'
-    // },
+    server: {
+      proxy: {
+        '/ws': {
+          target: 'ws://localhost:5173',
+          // changeOrigin: true,
+          ws: true
+        }
+      }
+    },
     css: {
       postcss: {
         plugins: [

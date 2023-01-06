@@ -33,7 +33,7 @@ import FormStatus from './formStatus.vue'
 import Weather from './weather.vue'
 import Clock from './clock.vue'
 import Schedule from './schedule.vue'
-import Member from './member.vue'
+import Member from './member/index.vue'
 import Bulletin from './bulletin.vue'
 import Search from './search.vue'
 

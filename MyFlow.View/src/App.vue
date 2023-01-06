@@ -4,7 +4,7 @@
 
 <script>
 import { provide, ref, nextTick } from 'vue'
-
+import { useStore } from 'vuex'
 export default {
   name: 'App',
   setup(){
@@ -14,6 +14,9 @@ export default {
       nextTick( ()=> { isRouterAlive.value = true } ) ;
     }
     provide('reload', reload)
+
+    // const store = useStore()
+    // store.dispatch('websocket/initWebSocket')
 
     return {
       isRouterAlive,

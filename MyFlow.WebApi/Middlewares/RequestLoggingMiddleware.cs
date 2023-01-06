@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
-
-namespace MyFlow.WebApi.Middlewares
+﻿namespace MyFlow.WebApi.Middlewares
 {
     public class RequestLoggingMiddleware
     {

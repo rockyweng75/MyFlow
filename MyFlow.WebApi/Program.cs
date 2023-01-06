@@ -1,5 +1,7 @@
 using MyFlow.Data;
 using MyFlow.Service;
+using MyFlow.WebApi.Controllers;
+using MyFlow.WebApi.Security;
 using EnvironmentName = Microsoft.AspNetCore.Hosting.EnvironmentName;
 
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -24,8 +26,6 @@ builder.Host.ConfigureAppConfiguration((hostContext, config) =>
 });
 // builder.Host.UseNLog();
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -46,14 +46,29 @@ builder.Services.AddJob();
 
 var app = builder.Build();
 
+
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
+var webSocketOptions = new WebSocketOptions
+{
+    KeepAliveInterval = TimeSpan.FromMinutes(2)
+};
+
+app.UseWebSockets(webSocketOptions);
+
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
 
 app.UseAuthorization();
 

@@ -32,6 +32,7 @@ import weather from './modules/weather'
 import member from './modules/member'
 import bulletin from './modules/bulletin'
 
+import chat from './modules/chat'
 
 const store = createStore({
   modules:{
@@ -61,7 +62,8 @@ const store = createStore({
    stage,
    weather,
    member,
-   bulletin
+   bulletin,
+   chat
   }
 })
 export default store

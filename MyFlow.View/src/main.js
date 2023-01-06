@@ -10,6 +10,7 @@ import { VueWindowSizePlugin } from 'vue-window-size/option-api';
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/zh-tw'
+import CKEditor from '@ckeditor/ckeditor5-vue'
 
 import { createI18n } from 'vue-i18n'
 // import zh from "./lang/zh-TW.json";
@@ -35,6 +36,7 @@ const app = createApp(App)
 .use(router)
 .use(ElementPlus)
 .use(VueWindowSizePlugin)
+.use(CKEditor)
 .use(i18n)
 
 app.config.globalProperties.$dayjs = (value) => { return dayjs(value) }  
