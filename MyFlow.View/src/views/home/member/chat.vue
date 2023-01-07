@@ -29,7 +29,7 @@
             </el-col>
             <el-col :span="3">
                 <el-upload
-                    v-model:file-list="fileList"
+                    v-model:file-list="state.FileList"
                     action=""
                     multiple
                 >
@@ -41,11 +41,15 @@
                 </el-upload>
             </el-col>
             <el-col :span="3">
-                <el-button type="primary" link>
-                    <el-icon :size="28">
-                        <Camera />
-                    </el-icon>
-                </el-button>
+                <Photograph v-model="Photo">
+                    <template v-slot="slotProps">
+                        <el-button type="primary" link v-on:click="slotProps.click">
+                            <el-icon :size="28" >
+                                <Camera />
+                            </el-icon>
+                        </el-button>
+                    </template>
+                </Photograph>
             </el-col>
             <!-- <el-col :span="2">
                 <el-button type="primary" link>
@@ -71,7 +75,8 @@
 <script>
     import { reactive, computed, ref, onBeforeUpdate, watch } from 'vue'
     import { useStore } from 'vuex'
-    import { ArrowLeftBold, Paperclip, Camera, Location, MoreFilled, Select } from '@element-plus/icons-vue'
+    import { ArrowLeftBold, Paperclip, Camera, Location, MoreFilled, Select, UserFilled } from '@element-plus/icons-vue'
+    import Photograph from './photograph.vue';
     export default({
         props:['modelValue', 'target'],
         emits:['update:modelValue'],
@@ -81,15 +86,21 @@
             Camera,
             Location,
             MoreFilled,
-            Select
+            Select,
+            UserFilled,
+            Photograph
         },
         setup(props, {emit}){
             const store = useStore()
             const state = reactive({
                 Target: 'Test',
-                Message: ''
+                Message: '',
+                FileList: [],
+                Photo: ''
             })
             const chatForm = ref({})
+
+
             const drawerSize = computed(() =>{
                 if( store.getters['app/device'] === 'mobile'){
                     return '100%'
@@ -121,6 +132,7 @@
                 drawer.value = false
             }
 
+           
             const drawer = computed({
                 get() {
                     return store.getters['chat/showDrawer']
@@ -137,7 +149,7 @@
                 drawer,
                 close,
                 drawerSize,
-                messageList
+                messageList,
             }
         }
     });
@@ -183,14 +195,6 @@
         }
     }
  
-    // .remote{
-    //     text-align: left;
-    // }
-
-    // .local{
-    //     text-align: right;
-    // }
-
     .remote {
         .message-box {
             margin-left: 20px;
