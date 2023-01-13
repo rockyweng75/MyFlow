@@ -34,7 +34,7 @@ import Weather from './weather.vue'
 import Clock from './clock.vue'
 import Schedule from './schedule.vue'
 import Member from './member/index.vue'
-import Bulletin from './bulletin.vue'
+import Bulletin from './bulletin/index.vue'
 import Search from './search.vue'
 
 export default({

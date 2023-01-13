@@ -9,7 +9,7 @@
                 v-infinite-scroll="load"
                 :infinite-scroll-distance="50"
             >
-            <li v-for="(bulletin, index) in bulletinList" :key="index" class="list-item">
+            <li v-for="(bulletin, index) in bulletinList" :key="index" class="list-item" v-on:click="handleCheck(bulletin)">
                 <p class="day">
                 <el-icon :size="15"><Star /></el-icon>
                 {{ $dayjs(bulletin.BeginDate).format('YYYY-MM-DD') }}
@@ -28,6 +28,8 @@
 <script>
 
     import { onBeforeMount, computed, ref } from 'vue'
+    import { useRouter } from 'vue-router'
+
     import { useStore } from 'vuex'
     import { Star } from '@element-plus/icons-vue'
 
@@ -37,7 +39,7 @@
         },
         setup(){
             const store = useStore()
-
+            const router = useRouter()
             const bulletinList = computed(() =>{
                 return store.getters['bulletin/list']
             })
@@ -59,7 +61,10 @@
                 ).then(()=>{
                     bulletinLoading.value = false
                 })
-       
+            }
+
+            const handleCheck = (row)=>{
+                router.push('/bulletin/' + row.Id)
             }
 
             onBeforeMount(async ()=>{
@@ -74,7 +79,8 @@
                 bulletinLoading,
                 noMore,
                 disabled,
-                load
+                load,
+                handleCheck
             }
         }
     })

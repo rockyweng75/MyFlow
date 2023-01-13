@@ -11,7 +11,9 @@
             <h4>{{ state.Target }}</h4>
         </el-row>
         <div class="chat-list">
-            <div class="user" :class="row.From === 'Target' ? 'remote': 'local'"  v-for="(row, index) in messageList" :key="index">
+            <div class="user" 
+                :class="row.From === 'Target' ? 'remote': 'local'" 
+                 v-for="(row, index) in messageList" :key="index">
                 <div class="avatar">
                     <el-avatar :icon="UserFilled" />
                     <div class="name">{{row.Name}}</div>
@@ -20,14 +22,14 @@
             </div>
         </div>
         <el-row class="chat-inputs">
-            <el-col :span="3">
+            <el-col :span="isMobile ? 3 : 1">
                 <el-button type="primary" link>
                     <el-icon :size="28">
                         <MoreFilled />
                     </el-icon>
                 </el-button>
             </el-col>
-            <el-col :span="3">
+            <el-col :span="isMobile ? 3 : 1">
                 <el-upload
                     v-model:file-list="state.FileList"
                     action=""
@@ -40,7 +42,7 @@
                     </el-button>
                 </el-upload>
             </el-col>
-            <el-col :span="3">
+            <el-col :span="isMobile ? 3 : 1">
                 <Photograph v-model="Photo">
                     <template v-slot="slotProps">
                         <el-button type="primary" link v-on:click="slotProps.click">
@@ -58,10 +60,10 @@
                     </el-icon>
                 </el-button>
             </el-col> -->
-            <el-col :span="14">
+            <el-col :span="isMobile ? 14 : 18">
                 <el-input v-model="state.Message">
                     <template #append>
-                        <el-button disabled>
+                        <el-button :disabled="state.Message === ''" v-on:click="sendMessage">
                             <el-icon>
                                 <Select />
                             </el-icon>
@@ -77,6 +79,8 @@
     import { useStore } from 'vuex'
     import { ArrowLeftBold, Paperclip, Camera, Location, MoreFilled, Select, UserFilled } from '@element-plus/icons-vue'
     import Photograph from './photograph.vue';
+    import { ElMessage } from 'element-plus';
+
     export default({
         props:['modelValue', 'target'],
         emits:['update:modelValue'],
@@ -100,6 +104,9 @@
             })
             const chatForm = ref({})
 
+            const isMobile = computed(() =>{
+                return store.getters['app/device'] === 'mobile'
+            })
 
             const drawerSize = computed(() =>{
                 if( store.getters['app/device'] === 'mobile'){
@@ -143,6 +150,11 @@
                 }
             })
 
+            
+            const sendMessage = () =>{
+                ElMessage.warning('暫時不支援')
+            }
+
             return {
                 state,
                 chatForm,
@@ -150,6 +162,8 @@
                 close,
                 drawerSize,
                 messageList,
+                isMobile,
+                sendMessage
             }
         }
     });

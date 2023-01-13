@@ -114,6 +114,19 @@ const constantRoutes = [
             },
         ],
         hidden: true
+    },
+    {
+        component: Layout,
+        path: '/bulletin',
+        children: [
+            {
+                name: 'bulletin',
+                path: ':id',
+                component: () =>  import('@/views/home/bulletin/detail.vue'),
+                meta: { title: '公告事項', affix: true },
+            },
+        ],
+        hidden: true
     }
 ];
 

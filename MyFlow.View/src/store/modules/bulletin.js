@@ -1,8 +1,10 @@
-import { fetchBulletinList } from '@/api/bulletin'
+import { fetchBulletin, fetchBulletinList } from '@/api/bulletin'
 import pagination from '../pagination'
 
 const state = () => ({
   ...pagination.state,
+  selected:{
+  },
   pagination:{
     pageIndex: 1,
     pageSize: 5,
@@ -17,13 +19,30 @@ const mutations = {
       state.list.push(o)
     })
   },
+  setSelected:(state, model) =>{
+    state.selected = model
+  }
 }
 
 const getters = {
-  ...pagination.getters
+  ...pagination.getters,
+  selected:(state, getters) => {
+    return state.selected
+  },
 }
 
 const actions = {
+  getOne({commit, state}, id){
+    return new Promise((resolve, reject) => {
+      fetchBulletin(id)
+      .then(response => {
+        commit('setSelected', response)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
   getList({commit, state}) {
     return new Promise((resolve, reject) => {
       fetchBulletinList(state.pagination)
