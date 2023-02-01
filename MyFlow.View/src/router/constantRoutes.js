@@ -13,7 +13,6 @@ const constantRoutes = [
         redirect: to => {
             // the function receives the target route as the argument
             // we return a redirect path/location here.
-            console.log(to)
             return { path: to.params.path }
           },
         hidden: true

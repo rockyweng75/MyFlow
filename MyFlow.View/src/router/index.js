@@ -4,7 +4,7 @@ import asyncRoutes from "./asyncRoutes"
 
 const base = import.meta.env.VITE_BASE
 const router = createRouter({
-    history: createWebHistory(base),
+    history: createWebHashHistory(base),
     routes: [...constantRoutes, ...asyncRoutes ]
 })
 
