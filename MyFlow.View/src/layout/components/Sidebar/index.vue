@@ -25,9 +25,16 @@ import { mapGetters } from 'vuex'
 import Logo from './Logo.vue'
 import variables from '@/styles/variables.scss'
 import SidebarItem from './SidebarItem.vue'
-
+import { useRouter } from 'vue-router'
 export default {
   components: { SidebarItem },
+  setup(){
+    const router = useRouter();
+
+    return {
+      
+    }
+  },
   computed: {
     ...mapGetters({
       permission_routes: 'security/routes',
