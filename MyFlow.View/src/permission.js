@@ -1,6 +1,6 @@
 import router from './router'
 import store from './store'
-import { ElMessage, rowContextKey } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getTokenAsync } from '@/cookies' // get token from cookie
