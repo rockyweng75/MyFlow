@@ -1,11 +1,13 @@
+import Layout from '@/layout/index.vue'
 
 const asyncRoutes = [
     {
-        component: () => import('@/layout/index.vue'),
+        name: 'flowchart',
+        component: Layout,
         path: '/flowchart',
         children: [
             {
-                name: 'flowchart',
+                name: 'flowchartIndex',
                 path: 'index',
                 component: () =>  import('@/views/flowchart/index.vue'),
                 meta: { title: '作業管理', icon: 'el-icon-house', affix: true, roles:['admin'] },
@@ -27,11 +29,12 @@ const asyncRoutes = [
         ],
     },
     {
+        name: 'formManage',
         component: () => import('@/layout/index.vue'),
         path: '/formManage',
         children: [
             {
-                name: 'formManage',
+                name: 'formManageIndex',
                 path: 'index',
                 component: () =>  import('@/views/formManage/index.vue'),
                 meta: { title: '表單管理', icon: 'el-icon-house', affix: true, roles:['admin'] },

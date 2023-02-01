@@ -9,6 +9,7 @@ export function getToken() {
 export function getTokenAsync() {
   return new Promise((resolve, reject) => {
     let token = Cookies.get(TokenKey)
+    console.log('cookies', token)
     resolve(token)
   })
 }

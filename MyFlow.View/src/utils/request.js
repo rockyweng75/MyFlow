@@ -22,7 +22,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    var token = store.getters['user/token'];
+    var token = store.getters['security/token'];
     if (token) {
       // let each request carry token
       // ['X-Token'] is a custom headers keygetters
@@ -54,12 +54,13 @@ service.interceptors.response.use(
     const res = response
     // if the custom code is not 20000, it is judged as an error.
     if (res.status !== 20000 && res.status !== 200) {
+      console.log('error!!')
+
       Message({
         message: res.message || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
-
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.status === 50008 || res.status === 50012 || res.status === 50014 || res.status === 403) {
         // to re-login
@@ -69,7 +70,7 @@ service.interceptors.response.use(
           type: 'warning'
         }).then(() => {
           console.log('resetToken!!')
-          store.dispatch('user/resetToken').then(() => {
+          store.dispatch('security/resetToken').then(() => {
             location.reload()
           })
         })
@@ -89,6 +90,8 @@ service.interceptors.response.use(
             type: 'error',
             duration: 5 * 1000
         })
+        console.log('error 401!!')
+
         store.dispatch('security/resetToken').then(()=>
         {
           location.reload()

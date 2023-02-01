@@ -1,6 +1,6 @@
 import router from './router'
 import store from './store'
-import { ElMessage } from 'element-plus'
+import { ElMessage, rowContextKey } from 'element-plus'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getTokenAsync } from '@/cookies' // get token from cookie
@@ -25,41 +25,45 @@ router.beforeEach(async(to, from) => {
   } else if (to.name !== 'login' && !isAuthenticated) {
      return '/login?redirect=' + to.name
   } else {
-    try{
-      let user = store.getters['security/user'];
-
-      if(!user.Roles){
-        await store.dispatch('security/getUserinfo')
-      } 
-      let roles  = store.getters['security/roles']
-      if(roles !== null && roles.length > 0){
-        const accessedRoutes = await store.dispatch('security/generateRoutes', roles)
-        accessedRoutes.forEach(r => {
-          router.addRoute(r)
-        })
-        if( to.meta && to.meta.roles){
-          if(roles.some(o => to.meta.roles.indexOf(o) >= 0)){
-            return true
-          } else {
-            return '/401'
-          }
-        } else {
-          return true
-        }
-      } else {
-        return '/401'
-      }
-    } catch(e){
-      console.log(e)
-      return '/404'
-    }
-  
-
+    return true
   }
-
 })
 
-router.beforeResolve((to, from) =>{
+router.beforeResolve(async (to, from) =>{
+  if (whiteList.indexOf(to.name) >= 0){
+    return true
+  }
+
+  try{
+
+    let user = store.getters['security/user'];
+
+    if(!user.Roles){
+      await store.dispatch('security/getUserinfo')
+    } 
+
+    let roles = store.getters['security/roles']
+
+    if(roles !== null && roles.length > 0){
+      await store.dispatch('security/generateRoutes', roles)
+
+      if( to.meta && to.meta.roles){
+        if(roles.some(o => to.meta.roles.indexOf(o) >= 0)){
+          return true
+        } else {
+          return '/401'
+        }
+      } else {
+        return true      
+      }
+    } else {
+      return '/401'
+    }
+  } catch(e){
+    console.log(e)
+    return '/404'
+  }
+
 });
 
 

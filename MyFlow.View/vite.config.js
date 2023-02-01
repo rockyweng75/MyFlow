@@ -42,15 +42,15 @@ export default defineConfig(({command, mode}) => {
         "@": path.resolve(__dirname, "src"),
       },
     },
-    server: {
-      proxy: {
-        '/ws': {
-          target: 'ws://localhost:5173',
-          // changeOrigin: true,
-          ws: true
-        }
-      }
-    },
+    // server: {
+    //   proxy: {
+    //     '/ws': {
+    //       target: 'ws://localhost:5173',
+    //       // changeOrigin: true,
+    //       ws: true
+    //     }
+    //   }
+    // },
     css: {
       postcss: {
         plugins: [

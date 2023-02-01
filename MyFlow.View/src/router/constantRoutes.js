@@ -7,6 +7,18 @@ const constantRoutes = [
         name: 'NotFound'
     },
     {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index.vue'),
+        name: 'Redirect',
+        redirect: to => {
+            // the function receives the target route as the argument
+            // we return a redirect path/location here.
+            console.log(to)
+            return { path: to.params.path }
+          },
+        hidden: true
+    },
+    {
         path: '/',
         component: Layout,
         redirect: '/home',
@@ -36,8 +48,9 @@ const constantRoutes = [
         component: () => import('@/views/401/index.vue'),
     },
     {
+        name: 'workboard',
         path: '/workboard',
-        component:  () => import('@/layout/index.vue'),
+        component:  () => Layout,
         meta: { title: '表單申請', icon: 'el-icon-house', affix: true },
         children: [
             {

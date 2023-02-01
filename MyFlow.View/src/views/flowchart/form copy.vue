@@ -52,7 +52,6 @@
                 </el-checkbox>
             </el-form-item>
             <el-card>
-                <!-- <Flow></Flow> -->
                 <template #header>
                     階段
                 </template>
@@ -95,7 +94,6 @@ const ActionFormView = defineAsyncComponent(() => import("./components/actionFor
 const FlowType = defineAsyncComponent(() => import("./components/flowType.vue"))
 const Tag = defineAsyncComponent(() => import("./components/tag.vue"))
 const Title = defineAsyncComponent(() => import("./components/title.vue"))
-// const Flow = defineAsyncComponent(() => import("@/components/Flow/index.vue"))
 
 export default {
     components:{
@@ -105,8 +103,7 @@ export default {
         ActionFormView,
         FlowType,
         Tag,
-        Title,
-        // Flow
+        Title
     },
     props:['flowid'],
     setup(props){

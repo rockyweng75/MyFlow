@@ -17,7 +17,7 @@ import { useStore } from 'vuex'
 export default {
     setup() {
         var store = useStore()
-        store.dispatch('user/resetToken')
+        // store.dispatch('security/resetToken')
     },
 }
 </script>
